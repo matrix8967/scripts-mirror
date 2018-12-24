@@ -3,8 +3,10 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
-VERS=$(gnome-shell --version | cut -d " " -f 3)
+VERS=$(gnome-shell  | cut -d " " -f 3)
 
+# Prime the Sudo rights
+sudo echo "Sudo Primed"
 
 # Get updated...
 echo -e ${GREEN}"Getting Updated..."${NC}
@@ -16,7 +18,7 @@ sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characte
 
 # Install packages in the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
-sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline htop wavemon vim vlc tilix tmux gparted fail2ban leafpad arc-theme
+sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline htop wavemon vim vlc tilix tmux gparted fail2ban leafpad arc-theme curl
 
 # Install Signal...
 echo -e "Installing ${GREEN}Signal...${NC}"
@@ -60,7 +62,7 @@ EOF
 # Setup Sublime Text...
 
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-sudo apt-get install apt-transport-https
+sudo apt install -y apt-transport-https
 echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 sudo apt update
 sudo apt install sublime-text
@@ -71,17 +73,17 @@ sudo wget -O /usr/local/bin/gnomeshell-extension-manage "https://raw.githubuserc
 
 sudo chmod +x /usr/local/bin/gnomeshell-extension-manage
 
-gnomeshell-extension-manage --install --extension-id 1228 --version $VERS --user
+gnomeshell-extension-manage --install --extension-id 1228 --user
 
-gnomeshell-extension-manage --install --extension-id 307 --version $VERS --user
+gnomeshell-extension-manage --install --extension-id 307 --user
 
-gnomeshell-extension-manage --install --extension-id 800 --version $VERS --user
+gnomeshell-extension-manage --install --extension-id 800 --user
 
-gnomeshell-extension-manage --install --extension-id 19 --version $VERS --user
+gnomeshell-extension-manage --install --extension-id 19 --user
 
-gnomeshell-extension-manage --install --extension-id 841 --version $VERS --user
+gnomeshell-extension-manage --install --extension-id 841 --user
 
-gnomeshell-extension-manage --install --extension-id 826 --version $VERS --user
+gnomeshell-extension-manage --install --extension-id 826 --user
 
 gnome-shell --replace &
 
@@ -89,4 +91,4 @@ gnome-shell --replace &
 echo -e "Installing Nvidia Drivers..."
 sudo add-apt-repository ppa:graphics-drivers
 sudo apt update
-sudo apt install nvidia-driver-415
+sudo apt install -y nvidia-driver-415
