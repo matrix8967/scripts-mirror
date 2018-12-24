@@ -7,7 +7,7 @@ VERS=$(gnome-shell --version | cut -d " " -f 3)
 
 
 # Get updated...
-echo -e "Getting Updated..."
+echo -e ${GREEN}"Getting Updated..."${NC}
 sudo apt update && sudo apt upgrade -y
 
 # remove default snaps that should be apps instead...
@@ -15,7 +15,7 @@ echo -e "Removing default apps that are ${RED}snaps${NC}, that should have been 
 sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characters
 
 # Install packages in the default repos...
-echo -e "Installing packages that are found in the default repos..."
+echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
 sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline htop wavemon vim vlc tilix tmux gparted fail2ban leafpad arc-theme
 
 # Install Signal...
