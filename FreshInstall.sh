@@ -83,4 +83,10 @@ gnomeshell-extension-manage --install --extension-id 841 --version $VERS --user
 
 gnomeshell-extension-manage --install --extension-id 826 --version $VERS --user
 
-# gnome-shell --replace &
+gnome-shell --replace &
+
+# Install Nvidia Drivers...
+echo -e "Installing Nvidia Drivers..."
+sudo add-apt-repository ppa:graphics-drivers
+sudo apt update
+sudo apt install nvidia-driver-415
