@@ -18,7 +18,7 @@ sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characte
 
 # Install packages in the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
-sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline htop wavemon vim vlc tilix tmux gparted fail2ban leafpad arc-theme curl
+sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline htop wavemon vim vlc tilix tmux gparted fail2ban leafpad arc-theme curl steam-devices python-pip guake
 
 # Install Signal...
 echo -e "Installing ${GREEN}Signal...${NC}"
@@ -68,6 +68,8 @@ sudo apt update
 sudo apt install sublime-text
 
 # Install Gnome Shell Extensions...(Thanks https://github.com/NicolasBernaerts/)
+
+echo -e "Attempting to install Gnome Extensions."
 
 sudo wget -O /usr/local/bin/gnomeshell-extension-manage "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage"
 
