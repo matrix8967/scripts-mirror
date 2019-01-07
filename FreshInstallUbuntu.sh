@@ -57,6 +57,8 @@ sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel9k\/powerlevel9k"/' 
 cat <<EOF > ~/.nanorc
 set constantshow
 set linenumbers
+set nonewlines
+set softwrap
 EOF
 
 # Setup Sublime Text...
