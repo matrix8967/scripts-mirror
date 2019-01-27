@@ -18,7 +18,7 @@ sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characte
 
 # Install packages in the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
-sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline htop wavemon vim vlc tilix tmux gparted fail2ban leafpad arc-theme curl steam-devices python-pip guake
+sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline wavemon vim vlc tilix tmux gparted fail2ban leafpad arc-theme curl steam-devices python-pip guake
 
 # Install Signal...
 echo -e "Installing ${GREEN}Signal...${NC}"
@@ -112,6 +112,8 @@ EOF
 cat <<EOF > ~/.nanorc
 set constantshow
 set linenumbers
+set nonewlines
+set softwrap
 EOF
 
 # Setup Sublime Text...
