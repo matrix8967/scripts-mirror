@@ -102,6 +102,7 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='\ufb0c '
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time battery)
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
 # =====Misc. Env Variables=====
 
