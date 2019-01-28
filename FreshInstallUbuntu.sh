@@ -41,11 +41,11 @@ echo -e "Downloading Bitwarden to ${GREEN}~/Downloads/AppImages/${NC}"
 curl -L https://vault.bitwarden.com/download/\?app\=desktop\&platform\=linux --output "~/Downloads/Appimages/BitWarden.AppImage"
 
 # Install Sweet-Dark
-echo -e "Downloading and Installing Sweet-Dark Theme..."
-sudo mkdir -p /usr/share/themes/Sweet-Dark/
-git clone https://github.com/EliverLara/Sweet.git /usr/share/themes/Sweet-Dark/
-gsettings set org.gnome.desktop.interface gtk-theme "Sweet-Dark"
-gsettings set org.gnome.desktop.wm.preferences theme "Sweet-Dark"
+# echo -e "Downloading and Installing Sweet-Dark Theme..."
+# sudo mkdir -p /usr/share/themes/Sweet-Dark/
+# git clone https://github.com/EliverLara/Sweet.git /usr/share/themes/Sweet-Dark/
+# gsettings set org.gnome.desktop.interface gtk-theme "Sweet-Dark"
+# gsettings set org.gnome.desktop.wm.preferences theme "Sweet-Dark"
 
 # Install Zsh, OhMyZsh, PowerLevel9K Theme, and NerdFonts...
 echo -e "Installing ${GREEN}OhMyZsh${NC} and ${GREEN}PowerLevel9K${NC} Theme..."
