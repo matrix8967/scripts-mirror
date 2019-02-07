@@ -1,10 +1,12 @@
 #!/bin/bash/
 
-sudo apt-get update && sudo apt-get install libav-tools libssl-dev
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
+
+# Prime the Sudo rights
+sudo echo ${GREEN}"Sudo Primed"${NC}
 
 # Upgrade Exisiting Packages...
 echo -e ${GREEN}"Getting Updated..."${NC}
