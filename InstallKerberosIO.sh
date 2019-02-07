@@ -22,12 +22,12 @@ wget https://github.com/kerberos-io/machinery/releases/download/v2.6.2/rpi3-mach
 sudo dpkg -i rpi3-machinery-kerberosio-armhf-2.6.2.deb
 
 # Prompt User to turn on Camera...
-echo -e ${RED}"You will now need to enable the RPI Cam from the Raspi-Config utility."${NC}
+echo -e ${RED}"You will now need to enable the RPI Cam from the Raspi-Config utility. Cool?"${NC}
 
-select yn in "Yes" "No"; do
+select yn in "Yeah! 👍" "Nah... 👎"; do
     case $yn in
-        "Proceed...") break;;
-        "Naw dude, fuck this.") exit;;
+        "Yeah! 👍") break;;
+        "Nah... 👎") exit;;
     esac
 done
 
