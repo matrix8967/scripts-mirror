@@ -40,10 +40,10 @@ sudo service kerberosio start
 
 # Prompt User for Reboot.
 echo -e ${RED}"Gotta Reboot. Cool?"${NC}
-select yn in "Yes" "No"; do
+select yn in "Yeah! 👍" "Nah... 👎"; do
     case $yn in
-        "Proceed...") break;;
-        "Naw dude, fuck this.") exit;;
+        "Yeah! 👍") break;;
+        "Nah... 👎") exit;;
     esac
 done
 sudo reboot
