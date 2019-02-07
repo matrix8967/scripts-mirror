@@ -37,8 +37,8 @@ mkdir ~/Downloads/Appimages
 mkdir ~/Downloads/Debs
 
 # Install Bitwarden...
-echo -e "Downloading Bitwarden to ${GREEN}~/Downloads/AppImages/${NC}"
-curl -L https://vault.bitwarden.com/download/\?app\=desktop\&platform\=linux --output "~/Downloads/Appimages/BitWarden.AppImage"
+# echo -e "Downloading Bitwarden to ${GREEN}~/Downloads/AppImages/${NC}"
+# curl -L https://vault.bitwarden.com/download/\?app\=desktop\&platform\=linux --output "~/Downloads/Appimages/BitWarden.AppImage"
 
 # Install Sweet-Dark
 # echo -e "Downloading and Installing Sweet-Dark Theme..."
@@ -107,6 +107,7 @@ POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 # =====Misc. Env Variables=====
 
 export GOPATH=$HOME/Git/Misc/Go/
+
 EOF
 
 # Setup NanoRC
