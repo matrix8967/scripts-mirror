@@ -16,31 +16,30 @@ sudo apt update && sudo apt upgrade -y
 echo -e "Removing default apps that are ${RED}snaps${NC}, that should have been ${GREEN}packages${NC}..."
 sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characters
 
-# Install packages in the default repos...
+# Install packages from the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
-sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline wavemon vim vlc tilix tmux gparted fail2ban leafpad arc-theme curl steam-devices python-pip guake
+sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline wavemon vim vlc tilix tmux gparted fail2ban arc-theme curl steam-devices python-pip guake
 
-# Install Signal...
+# Install Signal Rep...
 echo -e "Installing ${GREEN}Signal...${NC}"
 curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
 echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
-sudo apt update && sudo apt install -y signal-desktop
 
-# Install Riot.im...
+# Install Riot.im Rep...
 echo -e "Installing ${GREEN}Riot.im...${NC}"
-sudo sh -c "echo 'deb https://riot.im/packages/debian/ bionic main' > /etc/apt/sources.list.d/matrix-riot-im.list"
-curl -L https://riot.im/packages/debian/repo-key.asc | sudo apt-key add -
-sudo apt update && sudo apt -y install riot-web
+sudo wget -O /usr/share/keyrings/riot-im-archive-keyring.gpg https://packages.riot.im/debian/riot-im-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/riot-im-archive-keyring.gpg] https://packages.riot.im/debian/ $(lsb_release -cs) main" |
+    sudo tee /etc/apt/sources.list.d/riot-im.list
 
 # Create folders in ~/
 mkdir ~/Downloads/Appimages
 mkdir ~/Downloads/Debs
 
-# Install Bitwarden...
-echo -e "Downloading Bitwarden to ${GREEN}~/Downloads/AppImages/${NC}"
-curl -L https://vault.bitwarden.com/download/\?app\=desktop\&platform\=linux --output "~/Downloads/Appimages/BitWarden.AppImage"
+# Install Bitwarden... (fix this)
+# echo -e "Downloading Bitwarden to ${GREEN}~/Downloads/AppImages/${NC}"
+# curl -L https://vault.bitwarden.com/download/\?app\=desktop\&platform\=linux --output "~/Downloads/Appimages/BitWarden.AppImage"
 
-# Install Sweet-Dark
+# Install Sweet-Dark (fix this)
 # echo -e "Downloading and Installing Sweet-Dark Theme..."
 # sudo mkdir -p /usr/share/themes/Sweet-Dark/
 # git clone https://github.com/EliverLara/Sweet.git /usr/share/themes/Sweet-Dark/
@@ -52,7 +51,7 @@ echo -e "Installing ${GREEN}OhMyZsh${NC} and ${GREEN}PowerLevel9K${NC} Theme..."
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel9k\/powerlevel9k"/' ~/.zshrc
-sed -i ' 1 s/.*/&POWERLEVEL9K_MODE='nerdfont-complete'\n/' .zshrc
+sed -i ' 1 s/.*/&POWERLEVEL9K_MODE='nerdfont-complete'\n/' ~/.zshrc
 cat <<EOF >> ~/.zshrc
 screenfetch
 
@@ -147,8 +146,4 @@ gnomeshell-extension-manage --install --extension-id 826 --user
 
 gnome-shell --replace &
 
-# Install Nvidia Drivers...
-echo -e "Installing Nvidia Drivers..."
-sudo add-apt-repository ppa:graphics-drivers
-sudo apt update
-sudo apt install -y nvidia-driver-415
+sudo apt update && sudo apt install signal-desktop riot-web 
