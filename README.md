@@ -1,7 +1,15 @@
 # Scripts
 
-Scripts that I keep around. Currently working on making a better Post OS Install script to automate most of the post-install work after a fresh OS install.
+Typical script repo. Right now It's only tested in Ubuntu 19.04. I'll be adding a feature to autodetect the distor and adjust package managers accordingly. 
 
-FreshInstall.sh - Post OS install script.
+I've subdivided the monolith script so that in the future I can prompt (or auto) for desired package/setup groups. For example, for some burner machine, I may need my dev tools, but not my communications packages like Riot, Keybase, etc.
 
-MXErgo.sh - Adjust the Mouse Acceleration of the MXErgo beyond what the GUI offers with `xinput.`
+To Do:
+
+* Auto detect OS and vary the package manager/installation syntax.
+
+* Add Prompts for package groups.
+
+* Add NetSec scripts.
+
+
