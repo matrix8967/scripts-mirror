@@ -10,6 +10,6 @@ To Do:
 
 * Add Prompts for package groups.
 
+	* Add prompt to accept packages after they're explicity listed, and abort if they don't want them. Or continue without installing packages (so user can just get the dotfiles.)
+
 * Add NetSec scripts.
-
-

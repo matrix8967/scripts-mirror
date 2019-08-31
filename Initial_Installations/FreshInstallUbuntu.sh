@@ -24,7 +24,7 @@ sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characte
 
 # Install packages from the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
-sudo apt install -y git gnome-calculator gnome-logs gnome-system-monitor gnome-characters screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline wavemon vim vlc tilix tmux gparted fail2ban arc-theme curl steam-devices python-pip guake tldr
+sudo apt install -y git screenfetch neofetch unrar zsh gnome-tweak-tool chrome-gnome-shell steam htop iftop glances fonts-powerline wavemon vim vlc tilix tmux gparted fail2ban arc-theme curl steam-devices python-pip guake tldr ipcalc pwgen ncdu
 
 # Create folders in ~/
 mkdir ~/Downloads/Appimages
@@ -34,6 +34,13 @@ mkdir ~/Downloads/Debs
 # echo -e "Downloading Bitwarden to ${GREEN}~/Downloads/AppImages/${NC}"
 # curl -L https://vault.bitwarden.com/download/\?app\=desktop\&platform\=linux --output "~/Downloads/Appimages/BitWarden.AppImage"
 
+echo -e "Is this a Gnome Installation??"
+select yn in "Yes" "No"; do
+    case $yn in
+        "Yes") ./$gnome;;
+        "No") break;;
+    esac
+done
+
 ./$dev
 ./$comms
-./$gnome

@@ -7,6 +7,8 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 #VERS=$(gnome-shell  | cut -d " " -f 3)
 
+sudo apt isntall gnome-calculator gnome-logs gnome-system-monitor gnome-characters
+
 # Install Gnome Shell Extensions...(Thanks https://github.com/NicolasBernaerts/)
 
 echo -e "Attempting to install Gnome Extensions."
