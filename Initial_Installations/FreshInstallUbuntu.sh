@@ -30,10 +30,6 @@ sudo apt install -y git screenfetch neofetch unrar zsh gnome-tweak-tool chrome-g
 mkdir ~/Downloads/Appimages
 mkdir ~/Downloads/Debs
 
-# Install Bitwarden... (fix this)
-# echo -e "Downloading Bitwarden to ${GREEN}~/Downloads/AppImages/${NC}"
-# curl -L https://vault.bitwarden.com/download/\?app\=desktop\&platform\=linux --output "~/Downloads/Appimages/BitWarden.AppImage"
-
 echo -e "Is this a Gnome Installation??"
 select yn in "Yes" "No"; do
     case $yn in
