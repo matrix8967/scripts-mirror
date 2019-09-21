@@ -78,14 +78,6 @@ done
 
 # config
 MAX_TEMP=40
-# set column width
-COLUMNS=2
-# colors
-white="\e[39m"
-green="\e[1;32m"
-red="\e[1;31m"
-dim="\e[2m"
-undim="\e[0m"
 
 # disks to check
 disks=(sda sdb sdc)
@@ -129,13 +121,6 @@ out+="\n"
 printf "\nsmartd status:\n"
 printf "$out" | column -ts $',' | sed -e 's/^/  /'
 
-# set column width
-COLUMNS=3
-# colors
-green="\e[1;32m"
-red="\e[1;31m"
-undim="\e[0m"
-
 services=("fail2ban" "ufw" "lxd" "netdata" "zed" "smartd" "postfix")
 # sort services
 IFS=$'\n' services=($(sort <<<"${services[*]}"))
@@ -177,37 +162,6 @@ for jail in ${jails[@]}; do
     out+=$(printf "$jail, %+3s bans, %+3s unbans, %+3s active" $bans $unbans $diff)"\n"
 done
 
-# printf "\nfail2ban status (monthly):\n"
-# printf "$out" | column -ts $',' | sed -e 's/^/  /'
-
-# # fail2ban-client status to get all jails, takes about ~70ms
-# jails=($(fail2ban-client status | grep "Jail list:" | sed "s/ //g" | awk '{split($2,a,",");for(i in a) print a[i]}'))
-
-# out="jail,failed,total,banned,total\n"
-
-# for jail in ${jails[@]}; do
-#     # slow because fail2ban-client has to be called for every jail (~70ms per jail)
-#     status=$(fail2ban-client status ${jail})
-#     failed=$(echo "$status" | grep -ioP '(?<=Currently failed:\t)[[:digit:]]+')
-#     totalfailed=$(echo "$status" | grep -ioP '(?<=Total failed:\t)[[:digit:]]+')
-#     banned=$(echo "$status" | grep -ioP '(?<=Currently banned:\t)[[:digit:]]+')
-#     totalbanned=$(echo "$status" | grep -ioP '(?<=Total banned:\t)[[:digit:]]+')
-#     out+="$jail,$failed,$totalfailed,$banned,$totalbanned\n"
-# done
-
-# printf "\nfail2ban status:\n"
-# printf $out | column -ts $',' | sed -e 's/^/  /'
-
-
-# set column width
-COLUMNS=2
-# colors
-green="\e[1;32m"
-red="\e[1;31m"
-undim="\e[0m"
-
-#!/bin/bash
-
 # fail2ban-client status to get all jails, takes about ~70ms
 jails=($(fail2ban-client status | grep "Jail list:" | sed "s/ //g" | awk '{split($2,a,",");for(i in a) print a[i]}'))
 
@@ -225,10 +179,3 @@ done
 
 printf "\nfail2ban status:\n"
 printf $out | column -ts $',' | sed -e 's/^/  /'
-
-# set column width
-COLUMNS=2
-# colors
-green="\e[1;32m"
-red="\e[1;31m"
-undim="\e[0m"
