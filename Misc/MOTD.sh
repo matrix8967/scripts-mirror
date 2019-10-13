@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Copy to /etc/update-motd.d/99-motd and make sure .hushlogin is off and showmotd is showing in sshconfig.
+# Copy to /etc/update-motd.d/00-motd and make sure .hushlogin is off and showmotd is showing in sshconfig.
 # Modified from https://github.com/yboetz/motd
 
-/usr/bin/env figlet "$(hostname)"
+# /usr/bin/env figlet "$(hostname)"
 
 # get load averages
 IFS=" " read LOAD1 LOAD5 LOAD15 <<<$(cat /proc/loadavg | awk '{ print $1,$2,$3 }')
@@ -179,3 +179,24 @@ done
 
 printf "\nfail2ban status:\n"
 printf $out | column -ts $',' | sed -e 's/^/  /'
+
+mapfile -t containers < <(docker ps -a --format '{{.Names}}\t{{.Status}}' | awk '{ print $1,$2 }')
+
+out=""
+for i in "${!containers[@]}"; do
+    IFS=" " read name status <<< ${containers[i]}
+    # color green if service is active, else red
+    if [[ "${status}" == "Up" ]]; then
+        out+="${name}:,${green}${status,,}${undim},"
+    else
+        out+="${name}:,${red}${status,,}${undim},"
+    fi
+    # insert \n every $COLUMNS column
+    if [ $((($i+1) % $COLUMNS)) -eq 0 ]; then
+        out+="\n"
+    fi
+done
+out+="\n"
+
+printf "\ndocker status:\n"
+printf "$out" | column -ts $',' | sed -e 's/^/  /'
