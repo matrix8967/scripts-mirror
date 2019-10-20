@@ -25,3 +25,4 @@ arc-theme
 steam-devices
 python-pip
 guake
+kitty

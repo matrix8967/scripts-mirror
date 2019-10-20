@@ -1,0 +1,5 @@
+set constantshow
+set linenumbers
+set nonewlines
+set softwrap
+EOF
