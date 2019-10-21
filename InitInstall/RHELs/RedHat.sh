@@ -10,7 +10,6 @@ dev=Dev.sh
 comms=Comms.sh
 gnome=Gnome.sh
 dnf=$(cat DnfPacks.txt)
-flats=$(cat FlatPaks.txt)
 
 # Prime the Sudo rights
 sudo echo -e ${GREEN}"Sudo Primed!"${NC}
@@ -29,7 +28,7 @@ sudo dnf install $dnf
 
 echo -e ${GREEN}"Setting up FlatPaks..."${NC}
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
+sudo ./FlatPaks.sh
 
 echo -e "Is this a Gnome Installation?"
 select yn in "Yes" "No"; do

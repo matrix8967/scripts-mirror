@@ -6,6 +6,8 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+sudo dnf install gnome-tweaks
+
 echo -e "Attempting to install Gnome Extensions."
 
 # s/o https://github.com/NicolasBernaerts/ubuntu-scripts/tree/master/ubuntugnome

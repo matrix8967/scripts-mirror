@@ -26,4 +26,5 @@ python-pip
 guake
 kitty
 flatpak
+util-linux-user
 https://prerelease.keybase.io/keybase_amd64.rpm
