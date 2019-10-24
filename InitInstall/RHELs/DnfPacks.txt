@@ -27,4 +27,5 @@ guake
 kitty
 flatpak
 util-linux-user
+bat
 https://prerelease.keybase.io/keybase_amd64.rpm

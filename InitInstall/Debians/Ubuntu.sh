@@ -28,3 +28,8 @@ sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characte
 # Install packages from the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
 sudo apt install -y $apt
+
+# Install Flatpaks Repo...
+echo -e ${GREEN}"Installing Flatpaks..."${NC}
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+./FlatPaks.sh
