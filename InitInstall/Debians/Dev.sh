@@ -6,7 +6,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-# Install Zsh, OhMyZsh, PowerLevel9K Theme, and NerdFonts...
+# Install Zsh, OhMyZsh, PowerLevel10K Theme, and NerdFonts...
 echo -e "Installing ${GREEN}NerdFonts, OhMyZsh${NC} and ${GREEN}PowerLevel9K${NC} Theme..."
 mkdir /home/$USER/.fonts
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/AnonymousPro.zip -P /home/$USER/.fonts/
@@ -18,8 +18,10 @@ wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/UbuntuMono
 unzip ~/.fonts/'*.zip' -d /home/$USER/.fonts/
 fc-cache
 
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" -P /home/$USER/.fonts/
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+cp ../../Dotfiles/zshrc ~/.zshrc
+cp ../../DotFiles/p10k.zsh ~/.p10kzsh
 # git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/powerlevel10k
