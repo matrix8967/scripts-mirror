@@ -28,12 +28,10 @@ git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/power
 sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
+#Install Rust.
+echo -e "Installing ${GREEN}Rust. Compiling lsd and bat.${NC}..."
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-# Setup NanoRC
-cat <<EOF > ~/.nanorc
-set constantshow
-set linenumbers
-set nonewlines
-set softwrap
-EOF
+$HOME/.cargo/env
+cargo install lsd
+cargo install bat
