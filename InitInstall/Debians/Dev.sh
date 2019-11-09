@@ -20,12 +20,12 @@ fc-cache
 
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-cp ../../Dotfiles/zshrc ~/.zshrc
-cp ../../DotFiles/p10k.zsh ~/.p10kzsh
+cp ../../Dotfiles/Shell/zshrc ~/.zshrc
+cp ../../Dotfiles/Shell/p10k.zsh ~/.p10k.zsh
 # git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/powerlevel10k
-sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel9k\/powerlevel9k"/' ~/.zshrc
+sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
