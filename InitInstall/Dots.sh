@@ -9,23 +9,24 @@ NC='\033[0m' # No Color
 echo -e "Install custom Kitty.conf?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") cp ../Dotfiles/Kitty/* ~/.config/kitty/;;
+        "Yes") cp ../Dotfiles/Shell/Kitty/* ~/.config/kitty/;;
         "No") break;;
     esac
 done
 
-echo -e "Install custom Vim?"
-select yn in "Yes" "No"; do
-    case $yn in
-        "Yes") cp ../Dotfiles/Vim/* ~/;;
-        "No") break;;
-    esac
-done
+# There are better ways to automate this with Vundle...
+# echo -e "Install custom Vim?"
+# select yn in "Yes" "No"; do
+#     case $yn in
+#         "Yes") cp -r ../Dotfiles/Vim/* ~/;;
+#         "No") break;;
+#     esac
+# done
 
 echo -e "Install custom Konsole?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") cp ../Dotfiles/Konsole/* ~/.local/share/konsole/;;
+        "Yes") cp -r ../Dotfiles/Shell/Konsole/* ~/.local/share/konsole/;;
         "No") break;;
     esac
 done
@@ -41,7 +42,7 @@ done
 echo -e "Install custom zshrc?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") cp ../Dotfiles/zshrc ~/.zshrc;;
+        "Yes") cp ../Dotfiles/Shell/zshrc ~/.zshrc;;
         "No") break;;
     esac
 done
