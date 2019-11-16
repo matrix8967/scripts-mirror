@@ -27,6 +27,9 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
 Plugin 'dracula/vim', { 'name': 'dracula' }
 " Vim/Vundle Installer for Dracula Theme.
 
@@ -49,14 +52,10 @@ filetype plugin indent on    " required
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
 map <C-b> :NERDTreeToggle<CR>
 
 set termguicolors
-
 set wrap linebreak nolist
-
-
 set runtimepath+=~/.vim_runtime
 
 " source ~/.vim_runtime/vimrcs/basic.vim
@@ -76,3 +75,5 @@ let &t_ut=''
 syntax enable
 set background=dark
 " colorscheme solarized
+
+let g:airline_theme='deus'
