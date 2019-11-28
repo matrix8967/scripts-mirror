@@ -9,7 +9,7 @@ export TERM="xterm-256color"
 
 POWERLEVEL9K_MODE='nerdfont-complete'
 
-# If you come from bash you might have to change your $PATH.
+# If you come from bash you might have to change your $PATH.POWERLEVEL9K_MODE=nerdfont-complete
 
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -21,7 +21,7 @@ export ZSH="/home/matrix/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="powerlevel9k/powerlevel9k"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME=powerlevel10k/powerlevel10k
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -109,13 +109,13 @@ source $ZSH/oh-my-zsh.sh
 
 # =====Neofetch=====
 
-neofetch --ascii ~/.skull
+neofetch --ascii ~/.tux
 
-# =====ZSH Mods=====
+# =====OhMyZSH + Powerlevel9K Mods=====
 
 ## User with skull
 # user_with_skull() {
-#     echo -n "\ufb8a matrix"
+#     echo -n "\ufb8a $USER"
 # }
 # POWERLEVEL9K_CUSTOM_USER="user_with_skull"
 # POWERLEVEL9K_CUSTOM_USER_FOREGROUND="black"
@@ -159,14 +159,20 @@ POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
 # =====Misc. Env Variables=====
 
+# GoLang
+
 export GOPATH=/home/matrix/Git/Misc/Go/
 export PATH=$PATH:/usr/local/go/bin
+
+# Ruby
+
+export GEM_HOME="$HOME/.gems"
+export PATH="$HOME/.gems/bin:$PATH"
 
 # =====Aliases=====
 
 alias nano='vim'
 alias pls='sudo'
-
 alias ls='lsd'
 alias l='ls -l'
 alias la='ls -a'
@@ -186,8 +192,24 @@ function weather {
   curl -s "http://wttr.in/Little Rock" | head -n 27
 }
 
-function ping_outside {
+function amimullvad {
+	curl https://am.i.mullvad.net/connected
+}
+
+function dig_outside {
 dig +short myip.opendns.com @resolver1.opendns.com
+}
+
+function MXErgo {
+/home/matrix/Scripts/./MXErgo.sh
+}
+
+function ElecomDeftPro {
+/home/matrix/Scripts/./ElecomDeftPro.sh
+}
+
+function ElecomEX-GPro {
+/home/matrix/Scripts/./ElecomEX-GPro.sh
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
