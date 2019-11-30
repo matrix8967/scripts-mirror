@@ -14,7 +14,7 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/matrix/.oh-my-zsh"
+export ZSH="/home/$USER/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -201,15 +201,15 @@ dig +short myip.opendns.com @resolver1.opendns.com
 }
 
 function MXErgo {
-/home/matrix/Scripts/./MXErgo.sh
+/home/$USER/Scripts/./MXErgo.sh
 }
 
 function ElecomDeftPro {
-/home/matrix/Scripts/./ElecomDeftPro.sh
+/home/$USER/Scripts/./ElecomDeftPro.sh
 }
 
 function ElecomEX-GPro {
-/home/matrix/Scripts/./ElecomEX-GPro.sh
+/home/$USER/Scripts/./ElecomEX-GPro.sh
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
