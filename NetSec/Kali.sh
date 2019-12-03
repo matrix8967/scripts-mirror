@@ -7,9 +7,13 @@ NC='\033[0m' # No Color
 CryptPart='3'
 
 echo -e $RED"This script is going to wipe whatever drive you point it at."$NC
+read -n 1 -s
 echo -e $RED"It is your responsibility to make sure you understand the script."$NC
+read -n 1 -s
 echo -e $RED"I am not responsible for whatever eats shit from you using this script."$NC
+read -n 1 -s
 echo -e "Also for now, this needs to be run as root. Not a user with sudo priv. Actual root."
+read -n 1 -s
 echo -e
 read -p 'Paste the full path, including ISO Name: ' ISO
 echo -e
