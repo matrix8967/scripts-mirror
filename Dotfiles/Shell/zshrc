@@ -157,19 +157,19 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
-# =====Misc. Env Variables=====
+# =====Misc. Env Variables===== #
 
-# GoLang
+# =====GoLang===== #
 
 export GOPATH=/home/matrix/Git/Misc/Go/
 export PATH=$PATH:/usr/local/go/bin
 
-# Ruby
+# =====Ruby=====
 
 export GEM_HOME="$HOME/.gems"
 export PATH="$HOME/.gems/bin:$PATH"
 
-# =====Aliases=====
+# =====Aliases===== #
 
 alias nano='vim'
 alias pls='sudo'
@@ -179,14 +179,14 @@ alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 
-# =====Kitty Config=====
+# =====Kitty Config===== #
 
 autoload -Uz compinit
 compinit
 # Completion for kitty
 kitty + complete setup zsh | source /dev/stdin
 
-# =====Functions=====
+# =====Functions===== #
 
 function weather {
   curl -s "http://wttr.in/Little Rock" | head -n 27
@@ -201,15 +201,15 @@ dig +short myip.opendns.com @resolver1.opendns.com
 }
 
 function MXErgo {
-/home/$USER/Scripts/./MXErgo.sh
+~/Scripts/./MXErgo.sh
 }
 
 function ElecomDeftPro {
-/home/$USER/Scripts/./ElecomDeftPro.sh
+~/Scripts/./ElecomDeftPro.sh
 }
 
 function ElecomEX-GPro {
-/home/$USER/Scripts/./ElecomEX-GPro.sh
+~/Scripts/./ElecomEX-GPro.sh
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
