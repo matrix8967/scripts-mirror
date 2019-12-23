@@ -161,7 +161,7 @@ POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
 # =====GoLang===== #
 
-export GOPATH=/home/matrix/Git/Misc/Go/
+export GOPATH=/home/$USER/Git/Misc/Go/
 export PATH=$PATH:/usr/local/go/bin
 
 # =====Ruby=====
