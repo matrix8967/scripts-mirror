@@ -13,5 +13,3 @@ curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
 sudo apt install ./keybase_amd64.deb -y
 run_keybase
 
-# Update repos, install Signal, and Riot.
-sudo apt update && sudo apt install signal-desktop riot-web -y

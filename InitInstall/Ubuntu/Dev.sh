@@ -7,10 +7,12 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # Install Zsh, OhMyZsh, PowerLevel10K Theme, and NerdFonts...
-echo -e "Installing ${GREEN}NerdFonts, OhMyZsh${NC} and ${GREEN}PowerLevel9K${NC} Theme..."
+echo -e "Installing ${GREEN}NerdFonts, OhMyZsh${NC} and ${GREEN}PowerLevel10K${NC} Theme..."
 mkdir /home/$USER/.fonts
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/AnonymousPro.zip -P /home/$USER/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FiraMono.zip -P /home/$USER/.fonts/
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip -P /home/$USER/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Mononoki.zip -P /home/$USER/.fonts/
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/RobotoMono.zip -P /home/$USER/.fonts/
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Terminus.zip -P /home/$USER/.fonts/
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Ubuntu.zip -P /home/$USER/.fonts/
@@ -22,7 +24,6 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 
 cp ../../Dotfiles/Shell/zshrc ~/.zshrc
 cp ../../Dotfiles/Shell/p10k.zsh ~/.p10k.zsh
-# git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/powerlevel10k
 sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
@@ -32,6 +33,4 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 echo -e "Installing ${GREEN}Rust. Compiling lsd and bat.${NC}..."
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-$HOME/.cargo/env
-cargo install lsd
-cargo install bat
+source $HOME/.cargo/env
