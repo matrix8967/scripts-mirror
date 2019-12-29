@@ -9,3 +9,4 @@ NC='\033[0m' # No Color
 flatpak install flathub com.bitwarden.desktop -y
 flatpak install flathub org.signal.Signal -y
 flatpak install flathub im.riot.Riot -y
+flatpak install flathub org.libretro.RetroArch -y
