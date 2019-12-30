@@ -9,3 +9,7 @@ To Do:
 * Centralize Common Scripts (`Dev.sh` / `Flatpaks.sh` / `Dots.sh`).
 * Move this over to Ansible :)
 * Add Headless / Server Prompts so Desktop/Laptop junk isn't installed (Steam, etc.)
+* Add more misc. config files to the Dots directory/script. 
+	* RetroArch.conf
+	* Improve VIM/Vundle handling.
+* Overall I need to make the installer more grainular for varying hardware/situations, but also improve the general "Automation" of it via config mgmt.
