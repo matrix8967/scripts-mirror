@@ -1,0 +1,5 @@
+# Set the theme to "TwoDark"
+--theme="ansi-dark"
+
+--style="changes,header"
+# Removed "grid,numbers" ^

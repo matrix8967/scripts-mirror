@@ -13,3 +13,5 @@ To Do:
 	* RetroArch.conf
 	* Improve VIM/Vundle handling.
 * Overall I need to make the installer more grainular for varying hardware/situations, but also improve the general "Automation" of it via config mgmt.
+* Also a good idea to prompt for package types, and build the package list that way?
+* Need to add generalized Firefox Profile to start with all the Addons, etc.
