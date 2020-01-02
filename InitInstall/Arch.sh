@@ -31,7 +31,7 @@ done
 echo -e "Install Dev Tools?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") ./dev;;
+        "Yes") ./Dev.sh;;
         "No") break;;
     esac
 done

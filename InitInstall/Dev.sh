@@ -8,7 +8,7 @@ NC='\033[0m' # No Color
 
 # Install Zsh, OhMyZsh, PowerLevel10K Theme, and NerdFonts...
 echo -e "Installing ${GREEN}NerdFonts, OhMyZsh${NC} and ${GREEN}PowerLevel10K${NC} Theme..."
-mkdir /home/$USER/.fonts
+mkdir ~/.fonts
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/AnonymousPro.zip -P /home/$USER/.fonts/
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FiraMono.zip -P /home/$USER/.fonts/
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip -P /home/$USER/.fonts/

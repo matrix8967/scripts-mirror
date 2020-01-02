@@ -6,11 +6,6 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-dev=Dev.sh
-comms=Comms.sh
-gnome=Gnome.sh
-apt=AptPacks.txt
-dnf=DnfPacks.txt
 osver=$(lsb_release -i -s)
 
 if [ "$osver" == "Ubuntu" ];
@@ -19,10 +14,18 @@ then
   ./Ubuntu.sh
 fi
 
+
+
+if [ "$osver" == "ManjaroLinux" ];
+then
+  echo -e "Version is $osver."
+  ./Arch.sh
+fi
+
 echo -e "Do you want to install Dev Tools?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") ./$dev;;
+        "Yes") ./Dev.sh;;
         "No") break;;
     esac
 done
