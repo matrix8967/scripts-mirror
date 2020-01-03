@@ -21,9 +21,15 @@ source $ZSH/oh-my-zsh.sh
 
 # =====MOTD===== #
 
-~/.dotfiles/./MOTD.sh
+echo -e
+echo -e
+/usr/bin/env figlet -w 100 -c -k -f Slant\ Relief "$(hostname)" | lolcat
+echo -e
+echo -e
 
-# =====OhMyZSH + Powerlevel10K===== #
+# =====Python===== #
+
+export PATH=$PATH:~/.local/bin/
 
 # =====GoLang===== #
 
@@ -35,6 +41,13 @@ export PATH=$PATH:/usr/local/go/bin
 export GEM_HOME="$HOME/.gems"
 export PATH="$HOME/.gems/bin:$PATH"
 
+# =====Kitty Config===== #
+
+autoload -Uz compinit
+compinit
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
+
 # =====Aliases===== #
 
 alias nano='vim'
@@ -44,13 +57,6 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
-
-# =====Kitty Config===== #
-
-autoload -Uz compinit
-compinit
-# Completion for kitty
-kitty + complete setup zsh | source /dev/stdin
 
 # =====Functions===== #
 
@@ -77,6 +83,13 @@ function ElecomDeftPro {
 function ElecomEX-GPro {
 ~/Scripts/./ElecomEX-GPro.sh
 }
+
+# =====Blur for Kitty Term===== #
+
+if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|kitty$' ]]; then
+        for wid in $(xdotool search --pid $PPID); do
+            xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $wid; done
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
