@@ -29,28 +29,28 @@ sudo apt install -y $apt
 echo -e ${GREEN}"Installing Flatpaks..."${NC}
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-echo -e "Install Flatpaks?"
-select yn in "Yes" "No"; do
-    case $yn in
-        "Yes") Pkglists/./FlatPaks.sh;;
-        "No") break;;
-    esac
-done
+# echo -e "Install Flatpaks?"
+# select yn in "Yes" "No"; do
+#     case $yn in
+#         "Yes") Pkglists/./FlatPaks.sh;;
+#         "No") break;;
+#     esac
+# done
 
 echo -e "Install Dev Tools?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") Pkglists/./Dev.sh;;
+        "Yes") UtilInstalls/./Dev.sh;;
         "No") break;;
     esac
 done
 
-echo -e "Install Gnome Mods?"
-select yn in "Yes" "No"; do
-    case $yn in
-        "Yes") Pkglists/./$gnome;;
-        "No") break;;
-    esac
-done
+# echo -e "Install Gnome Mods?"
+# select yn in "Yes" "No"; do
+#     case $yn in
+#         "Yes") Pkglists/./$gnome;;
+#         "No") break;;
+#     esac
+# done
 
 #echo -e "Install DotFiles?"
