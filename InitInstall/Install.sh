@@ -11,10 +11,10 @@ osver=$(lsb_release -i -s)
 if [ "$osver" == "Ubuntu" ];
 then
   echo -e "Version is $osver."
-  ./Ubuntu.sh
+  OSInstalls/./Ubuntu.sh
 fi
 
-
+#####
 
 if [ "$osver" == "ManjaroLinux" ];
 then
@@ -29,6 +29,8 @@ select yn in "Yes" "No"; do
         "No") break;;
     esac
 done
+
+#####
 
 # Install Flatpaks Repo...
 echo -e ${GREEN}"Installing Flatpaks..."${NC}

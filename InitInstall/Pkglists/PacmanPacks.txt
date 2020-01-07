@@ -48,3 +48,15 @@ xorg-xinput
 tlp
 tlp-rdw
 tlpui
+figlet-fonts
+lolcat
+papirus-icon-theme
+mlocate
+pamac pamac-cli
+powertop
+gnome-disk-utility
+cpupower
+task
+most
+xdotool
+piper

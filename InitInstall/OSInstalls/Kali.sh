@@ -6,22 +6,15 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-dnf=$(cat DnfFedoraPacks.txt)
-
-# Prime the Sudo rights
-sudo echo -e ${GREEN}"Sudo Primed!"${NC}
+apt=$(cat ../Pkglists/KaliAptPacks.txt)
 
 # Get updated...
 echo -e ${GREEN}"Getting Updated..."${NC}
-sudo dnf update
+sudo apt update && sudo apt upgrade -y
 
-echo -e ${GREEN}"Installing RPM Fusion Repos..."${NC}
-sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-echo -e ${GREEN}"Installing Kitty from COPR Repos..."${NC}
-sudo dnf copr enable atim/kitty-terminal -y
-
-sudo dnf install $dnf
+# Install packages from the default repos...
+echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
+sudo apt install -y $apt
 
 # Install Flatpaks Repo...
 echo -e ${GREEN}"Installing Flatpaks..."${NC}
@@ -35,7 +28,15 @@ select yn in "Yes" "No"; do
     esac
 done
 
-echo -e "Is this a Gnome Installation?"
+echo -e "Install Dev Tools? (Nerd Fonts, P10K, OhMyZSH.)"
+select yn in "Yes" "No"; do
+    case $yn in
+        "Yes") ./Dev.sh;;
+        "No") break;;
+    esac
+done
+
+echo -e "Install Gnome Mods? (Risky...)"
 select yn in "Yes" "No"; do
     case $yn in
         "Yes") ./Gnome.sh;;

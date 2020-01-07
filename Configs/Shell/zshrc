@@ -57,7 +57,7 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
-
+alias icat="kitty +kitten icat"
 # =====Functions===== #
 
 function weather {
@@ -82,6 +82,10 @@ function ElecomDeftPro {
 
 function ElecomEX-GPro {
 ~/Scripts/./ElecomEX-GPro.sh
+}
+
+function Audio {
+	kitty --session ~/.config/kitty/Audio.conf --detach
 }
 
 # =====Blur for Kitty Term===== #

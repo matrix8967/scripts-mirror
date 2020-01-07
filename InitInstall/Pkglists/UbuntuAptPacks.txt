@@ -69,7 +69,8 @@ tcpdump
 mc
 wireshark
 pdfimages
-network-manager-openvpn 
+network-manager-openvpn
 network-manager-openvpn-gnome
 mplayer
 most
+imagemagick
