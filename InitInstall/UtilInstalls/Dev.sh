@@ -22,8 +22,8 @@ fc-cache
 
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-cp ../Configs/Shell/zshrc ~/.zshrc
-cp ../Configs/Shell/p10k.zsh ~/.p10k.zsh
+cp ../../Configs/Shell/zshrc ~/.zshrc
+cp ../../Configs/Shell/p10k.zsh ~/.p10k.zsh
 
 git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/powerlevel10k
 sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
