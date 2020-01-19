@@ -7,6 +7,8 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 osver=$(lsb_release -i -s)
+dev=$(UtilInstalls/./Dev.sh)
+flatpaks=$(Pkglists/./FlatPaks.sh)
 
 if [ "$osver" == "Ubuntu" ];
 then
@@ -25,7 +27,7 @@ fi
 echo -e "Do you want to install Dev Tools?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") ./Dev.sh;;
+        "Yes") $dev;;
         "No") break;;
     esac
 done
@@ -39,7 +41,9 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 echo -e "Install Flatpaks?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") ./FlatPaks.sh;;
+        "Yes") $flatpaks;;
         "No") break;;
     esac
 done
+
+echo -e ${GREEN}"Done!"${NC}

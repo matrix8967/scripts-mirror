@@ -4,7 +4,6 @@ nmap
 curl
 ipcalc
 ncdu
-ipcalc
 pwgen
 htop
 wavemon
@@ -13,17 +12,9 @@ tmux
 fail2ban
 tldr
 s-tui
-screenfetch
 neofetch
 zsh
 fonts-powerline
-steam
-vlc
-tilix
-gparted
-arc-theme
-steam-devices
-guake
 kitty
 flatpak
 ruby-full
@@ -52,7 +43,6 @@ chafa
 asciinema
 net-tools
 powertop
-nitrokey-app
 lolcat
 youtube-dl
 neovim
@@ -60,8 +50,6 @@ ncdu
 tcpdump
 mc
 wireshark
-network-manager-openvpn
-network-manager-openvpn-gnome
 mplayer
 most
 imagemagick
