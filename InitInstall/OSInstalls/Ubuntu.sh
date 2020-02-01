@@ -7,6 +7,9 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 apt=$(cat Pkglists/UbuntuAptPacks.txt)
+headless=$(cat Pkglists/UbuntuAptHeadless.txt)
+server=$(sudo apt install $headless -y)
+desktop=$(sudo apt install $apt -y)
 
 # Get updated...
 echo -e ${GREEN}"Getting Updated..."${NC}
@@ -16,41 +19,16 @@ sudo apt update && sudo apt upgrade -y
 echo -e "Removing default ${RED}snaps${NC}, that should have been ${GREEN}packages${NC}..."
 sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characters
 
-# Remove MOTD that phones home.
+# Remove MOTD Ads... >:[
 echo -e "Removing Default ${RED}MOTD that phones home.${NC}"
 sudo systemctl disable motd-news.timer
 sudo rm /etc/update-motd.d/*
 
 # Install packages from the default repos...
-echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
-sudo apt install -y $apt
-
-# Install Flatpaks Repo...
-echo -e ${GREEN}"Installing Flatpaks..."${NC}
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-# echo -e "Install Flatpaks?"
-# select yn in "Yes" "No"; do
-#     case $yn in
-#         "Yes") Pkglists/./FlatPaks.sh;;
-#         "No") break;;
-#     esac
-# done
-
-echo -e "Install Dev Tools?"
+echo -e ${GREEN}"Is this a headless server?"${NC}
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") UtilInstalls/./Dev.sh;;
-        "No") break;;
+        "Yes") $server;;
+        "No") $desktop;;
     esac
 done
-
-# echo -e "Install Gnome Mods?"
-# select yn in "Yes" "No"; do
-#     case $yn in
-#         "Yes") Pkglists/./$gnome;;
-#         "No") break;;
-#     esac
-# done
-
-#echo -e "Install DotFiles?"
