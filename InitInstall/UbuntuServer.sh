@@ -6,10 +6,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-apt=$(cat Pkglists/UbuntuAptPacks.txt)
-headless=$(cat Pkglists/UbuntuAptHeadless.txt)
-server=$(sudo apt install $headless -y)
-desktop=$(sudo apt install $apt -y)
+apt=$(cat Pkglists/UbuntuAptHeadless.txt)
 
 # Get updated...
 echo -e ${GREEN}"Getting Updated..."${NC}
@@ -25,10 +22,5 @@ sudo systemctl disable motd-news.timer
 sudo rm /etc/update-motd.d/*
 
 # Install packages from the default repos...
-echo -e ${GREEN}"Is this a headless server?"${NC}
-select yn in "Yes" "No"; do
-    case $yn in
-        "Yes") $server;;
-        "No") $desktop;;
-    esac
-done
+echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
+sudo apt install -y $apt

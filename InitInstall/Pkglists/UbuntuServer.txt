@@ -49,7 +49,6 @@ neovim
 ncdu
 tcpdump
 mc
-wireshark
 mplayer
 most
 imagemagick

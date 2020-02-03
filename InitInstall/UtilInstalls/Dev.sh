@@ -22,15 +22,9 @@ fc-cache
 
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-cp ../Configs/Shell/zshrc ~/.zshrc
-cp ../Configs/Shell/p10k.zsh ~/.p10k.zsh
+cp ../../Configs/Shell/zshrc ~/.zshrc
+cp ../../Configs/Shell/p10k.zsh ~/.p10k.zsh
 
 git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/powerlevel10k
-sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
+# sed -i -e 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc[]
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-
-#Install Rust.
-echo -e "Installing ${GREEN}Rust. Compiling lsd and bat.${NC}..."
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-source $HOME/.cargo/env

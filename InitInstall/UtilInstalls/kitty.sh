@@ -8,5 +8,5 @@ NC='\033[0m' # No Color
 
 mkdir -p ~/.config/kitty/themes
 
-cp kitty.conf ~/.config/kitty/kitty.conf
-cp -r themes/ ~/.config/kitty/
+cp ../../Configs/Shell/Kitty/kitty.conf ~/.config/kitty/kitty.conf
+cp -r ../../Configs/Shell/Kitty/themes/ ~/.config/kitty/

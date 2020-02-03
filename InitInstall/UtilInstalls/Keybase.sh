@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -12,4 +12,3 @@ echo -e "Installing keybase.io"
 curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
 sudo apt install ./keybase_amd64.deb -y
 run_keybase
-

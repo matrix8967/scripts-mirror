@@ -6,32 +6,40 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-pac=$(cat ../Pkglists/PacmanPacks.txt)
+apt=$(cat Pkglists/Kali.txt)
 
 # Get updated...
 echo -e ${GREEN}"Getting Updated..."${NC}
-sudo pacman -Syu -y
+sudo apt update && sudo apt upgrade -y
 
 # Install packages from the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
-sudo pacman -S $pac -y
+sudo apt install -y $apt
 
 # Install Flatpaks Repo...
 echo -e ${GREEN}"Installing Flatpaks..."${NC}
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-echo -e "Install FlatPaks?"
+echo -e "Install Flatpaks?"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") ./FlatPaks.sh;;
+        "Yes") Pkglists/./FlatPaks.sh;;
         "No") break;;
     esac
 done
 
-echo -e "Install Dev Tools?"
+echo -e "Install Dev Tools? (Nerd Fonts, P10K, OhMyZSH.)"
 select yn in "Yes" "No"; do
     case $yn in
-        "Yes") ./Dev.sh;;
+        "Yes") UtilInstalls/./Dev.sh;;
+        "No") break;;
+    esac
+done
+
+echo -e "Install Gnome Mods? (Risky...)"
+select yn in "Yes" "No"; do
+    case $yn in
+        "Yes") UtilInstalls/./Gnome.sh;;
         "No") break;;
     esac
 done
