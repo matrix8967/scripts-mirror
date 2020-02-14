@@ -35,7 +35,6 @@ neovim
 nfs-common
 speedtest-cli
 tree
-vis
 ncmpcpp
 mpc
 figlet

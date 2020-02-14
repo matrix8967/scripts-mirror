@@ -44,7 +44,6 @@ neovim
 nfs-common
 speedtest-cli
 tree
-vis
 ncmpcpp
 mpc
 figlet
@@ -65,3 +64,7 @@ network-manager-openvpn-gnome
 mplayer
 most
 imagemagick
+cargo
+lsd
+rustc
+golang
