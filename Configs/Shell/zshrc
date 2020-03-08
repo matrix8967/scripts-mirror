@@ -21,11 +21,11 @@ source $ZSH/oh-my-zsh.sh
 
 # =====MOTD===== #
 
-echo -e
-echo -e
-/usr/bin/env figlet -w 100 -c -k -f Slant\ Relief "$(hostname)" | lolcat
-echo -e
-echo -e
+# echo -e
+# echo -e
+# /usr/bin/env figlet -w 100 -c -k -f Slant\ Relief "$(hostname)" | lolcat
+# echo -e
+# echo -e
 
 
 # =====GoLang===== #
@@ -63,6 +63,7 @@ alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 alias icat="kitty +kitten icat"
+
 # =====Functions===== #
 
 function weather {

@@ -65,6 +65,5 @@ mplayer
 most
 imagemagick
 cargo
-lsd
 rustc
 golang

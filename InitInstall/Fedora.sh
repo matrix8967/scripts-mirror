@@ -26,19 +26,3 @@ sudo dnf install $dnf
 # Install Flatpaks Repo...
 echo -e ${GREEN}"Installing Flatpaks..."${NC}
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-echo -e "Install Flatpaks?"
-select yn in "Yes" "No"; do
-    case $yn in
-        "Yes") ./FlatPaks.sh;;
-        "No") break;;
-    esac
-done
-
-echo -e "Is this a Gnome Installation?"
-select yn in "Yes" "No"; do
-    case $yn in
-        "Yes") ./Gnome.sh;;
-        "No") break;;
-    esac
-done

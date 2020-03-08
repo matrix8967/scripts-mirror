@@ -16,15 +16,12 @@ neofetch
 zsh
 fonts-powerline
 kitty
-flatpak
-ruby-full
 build-essential
 zlib1g-dev
 tmux-plugin-manager
 exfat-fuse
 exfat-utils
 taskwarrior
-bat
 openvpn
 dialog
 python3-pip

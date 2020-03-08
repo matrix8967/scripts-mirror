@@ -1,0 +1,121 @@
+wtf:
+  colors:
+    background: "transparent"
+    border:
+      focusable: "lightgreen"
+      focused: "goldenrod"
+      normal: "darkgreen"
+    checked: "gray"
+    highlight:
+      fore: "black"
+      back: "green"
+    labels: "lightgreen::b"
+    rows:
+      even: "green"
+      odd: "lightgreen"
+    subheading: "lightgreen::b"
+    text: "green"
+    title: "lightgreen"
+  grid:
+    columns: [32, 32, 32, 32, 90]
+    rows: [10, 10, 10, 4, 4, 90]
+  refreshInterval: 1
+  mods:
+    hackernews:
+      title: Hackernews
+      focusable: true
+      enabled: true
+      numberOfStories: 20
+      position:
+        top: 0
+        left: 0
+        height: 1
+        width: 2
+        storyType: top
+        refreshInterval: 900
+    prettyweather:
+      enabled: true
+      city: "Little Rock"
+      position:
+        top: 1
+        left: 0
+        height: 1
+        width: 1
+      refreshInterval: 300
+      unit: "u"
+      view: 0
+      language: "en"
+    power:
+      enabled: true
+      position:
+        top: 0
+        left: 3
+        height: 1
+        width: 2
+      refreshInterval: 15
+      title: "⚡️
+    ipinfo:
+      colors:
+        name: "lightblue"
+        value: "white"
+      enabled: true
+      position:
+        top: 1
+        left: 3
+        height: 1
+        width: 2
+      refreshInterval: 150
+    todo:
+      checkedIcon: "X"
+      colors:
+        checked: gray
+      highlight:
+        fore: "black"
+      back: "orange"
+      enabled: true
+      filename: "todo.yml"
+      position:
+        top: 1
+        left: 1
+        height: 1
+        width: 2
+      refreshInterval: 3600
+    security:
+      enabled: true
+      position:
+        top: 2
+        left: 0
+        height: 1
+        width: 1
+      refreshInterval: 3600
+    textfile:
+      enabled: false
+      filePath: "~/path/to/file.txt"
+      format: true
+      formatStyle: dracula
+      position:
+        top: 2
+        left: 1
+        height: 3
+        width: 1
+      refreshInterval: 30
+      wrapText: false
+    resourceusage:
+      cpuCombined: false
+      enabled: true
+      position:
+        top: 0
+        left: 2
+        height: 1
+        width: 1
+      refreshInterval: 1
+    cmdrunner:
+      args: ["-al", "~/"]
+      cmd: "ls"
+      enabled: false
+      position:
+        top: 2
+        left: 1
+        height: 4
+        width: 4
+      refreshInterval: 30

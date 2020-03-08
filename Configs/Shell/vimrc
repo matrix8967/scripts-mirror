@@ -33,6 +33,9 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dracula/vim', { 'name': 'dracula' }
 " Vim/Vundle Installer for Dracula Theme.
 
+Plugin 'calviken/vim-gdscript3'
+" Vim/Vundle Installer for GDScript Syntax Highlighting.
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -68,7 +71,7 @@ source ~/.vim_runtime/my_configs.vim
 catch
 endtry
 
-" Kitty Terminal Stuff 
+" Kitty Terminal Stuff
 let &t_ut=''
 
 " Colors
