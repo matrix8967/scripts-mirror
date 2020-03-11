@@ -6,7 +6,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 CryptPart='3'
 
-echo -e $RED"This script is going to wipe whatever drive you point it at."$NC
+echo -e $RED"This script is going to wipe whatever drive you point it at. (Moosh buttons to continue.)"$NC
 read -n 1 -s
 echo -e $RED"It is your responsibility to make sure you understand the script."$NC
 read -n 1 -s
