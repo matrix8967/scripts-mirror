@@ -18,15 +18,9 @@ plugins=(git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
-
 # =====MOTD===== #
 
-# echo -e
-# echo -e
-# /usr/bin/env figlet -w 100 -c -k -f Slant\ Relief "$(hostname)" | lolcat
-# echo -e
-# echo -e
-
+# cat .ASCII/dontpanic.txt |lolcat && figlet -w 100 -l -k -f Bloody "Don't Panic!" | lolcat
 
 # =====GoLang===== #
 
@@ -88,10 +82,6 @@ function ElecomDeftPro {
 
 function ElecomEX-GPro {
 ~/Scripts/./ElecomEX-GPro.sh
-}
-
-function Audio {
-	kitty --session ~/.config/kitty/Audio.conf --detach
 }
 
 # =====Blur for Kitty Term===== #
