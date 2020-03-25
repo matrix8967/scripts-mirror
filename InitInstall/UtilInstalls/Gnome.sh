@@ -1,31 +1,27 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
-
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-sudo dnf install gnome-tweaks
+mkdir ~/.themes
+mkdir ~/.icons
 
-echo -e "Attempting to install Gnome Extensions."
+# Grab Gnome Themes.
+echo -e "Downloading Themes."
+wget -O ~/.themes/Ant-Dracula.zip https://github.com/EliverLara/Ant-Dracula/archive/master.zip
+wget -O ~/.themes/Sweet.zip https://github.com/EliverLara/Sweet/archive/master.zip
 
-# s/o https://github.com/NicolasBernaerts/ubuntu-scripts/tree/master/ubuntugnome
+# Grab Icon Sets.
+echo -e "Downloading Icons."
+wget -O ~/.icons/Candy-Icons.zip https://github.com/EliverLara/candy-icons/archive/master.zip
 
-sudo wget -O /usr/local/bin/gnomeshell-extension-manage "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage"
+# Grab Cursors.
+echo -e "Downloading Cursors."
+git clone https://github.com/vinceliuice/Qogir-icon-theme.git ~/.icons/Qogir-Cursors
+git clone https://github.com/KaizIqbal/Bibata_Cursor.git ~/.icons/Bibata-Cursors
+git clone https://github.com/keeferrourke/capitaine-cursors.git ~/.icons/Captaine-Cursors
 
-sudo chmod +x /usr/local/bin/gnomeshell-extension-manage
-
-gnomeshell-extension-manage --install --extension-id 1228 --user
-
-gnomeshell-extension-manage --install --extension-id 307 --user
-
-gnomeshell-extension-manage --install --extension-id 800 --user
-
-gnomeshell-extension-manage --install --extension-id 19 --user
-
-gnomeshell-extension-manage --install --extension-id 841 --user
-
-gnomeshell-extension-manage --install --extension-id 826 --user
-
-gnome-shell --replace &
+# Extract Zip Files.
+unzip ~/.themes/'*.zip' -d ~/.themes/
+unzip ~/.icons/'*.zip' -d ~/.icons/
