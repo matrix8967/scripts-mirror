@@ -52,7 +52,8 @@ figlet-fonts
 lolcat
 papirus-icon-theme
 mlocate
-pamac pamac-cli
+pamac
+pamac-cli
 powertop
 gnome-disk-utility
 cpupower

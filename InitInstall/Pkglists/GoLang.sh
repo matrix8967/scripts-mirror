@@ -10,4 +10,3 @@ go get github.com/cjbassi/gotop
 go get github.com/charmbracelet/glow
 
 sudo cp $GOPATH/bin/* /usr/bin/
-
