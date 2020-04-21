@@ -9,12 +9,16 @@ export TERM="xterm-256color"
 
 POWERLEVEL9K_MODE='nerdfont-complete'
 
+# =====SSH-Agent===== #
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities
+
 # Path to your oh-my-zsh installation.
 export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME=powerlevel10k/powerlevel10k
 
-plugins=(git zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting tmux taskwarrior systemd ssh-agent rsync python pylint pyenv pip oc nmap minikube microk8s git-extras docker cp cargo ansible adb)
 
 source $ZSH/oh-my-zsh.sh
 
