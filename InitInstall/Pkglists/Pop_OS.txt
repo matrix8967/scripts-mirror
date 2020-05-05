@@ -89,3 +89,4 @@ pkg-config
 build-essential
 automake
 tmux-plugin-manager
+httpie

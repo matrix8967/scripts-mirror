@@ -25,3 +25,4 @@ ruby-full
 build-essential
 zlib1g-dev
 kali-linux-large
+httpie

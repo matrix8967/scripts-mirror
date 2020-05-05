@@ -8,5 +8,6 @@ NC='\033[0m' # No Color
 
 go get github.com/cjbassi/gotop
 go get github.com/charmbracelet/glow
+go get -u github.com/jingweno/ccat
 
 sudo cp $GOPATH/bin/* /usr/bin/

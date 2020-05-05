@@ -92,3 +92,4 @@ bridge-utils virt-manager
 qemu
 vmm
 pkg-config
+httpie

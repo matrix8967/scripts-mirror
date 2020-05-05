@@ -48,3 +48,4 @@ mc
 mplayer
 most
 imagemagick
+httpie
