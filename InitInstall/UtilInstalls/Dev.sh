@@ -9,14 +9,18 @@ NC='\033[0m' # No Color
 # Install Zsh, OhMyZsh, PowerLevel10K Theme, and NerdFonts...
 echo -e "Installing ${GREEN}NerdFonts, OhMyZsh${NC} and ${GREEN}PowerLevel10K${NC} Theme..."
 mkdir ~/.fonts
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/AnonymousPro.zip -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FiraMono.zip -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Mononoki.zip -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/RobotoMono.zip -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Terminus.zip -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Ubuntu.zip -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/UbuntuMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/AnonymousPro.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/BigBlueTerminal.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/DroidSansMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Mononoki.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/RobotoMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Terminus.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Ubuntu.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip -P ~/.fonts/
 unzip ~/.fonts/'*.zip' -d ~/.fonts/
 fc-cache
 
@@ -28,8 +32,11 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 cp ../../Configs/Shell/zshrc ~/.zshrc
 cp ../../Configs/Shell/p10k.zsh ~/.p10k.zsh
 
-# Install Vundle.
+# Install Tmux
+cp ../../Configs/Shell/tmux.conf ~/.tmux.conf
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# Install Vundle.
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cp ../../Configs/Shell/vimrc ~/.vimrc
 vim +PluginInstall +qall
