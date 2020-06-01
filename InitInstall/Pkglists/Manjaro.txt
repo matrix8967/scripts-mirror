@@ -1,12 +1,9 @@
-git
 iftop
 glances
 curl
 ipcalc
 ncdu
-ipcalc
 pwgen
-htop
 wavemon
 vim
 tmux
@@ -15,15 +12,10 @@ tldr
 s-tui
 screenfetch
 neofetch
-zsh
-steam
-vlc
 tilix
 gparted
-steam-devices
 guake
 kitty
-flatpak
 task
 bat
 lsd
@@ -48,7 +40,6 @@ xorg-xinput
 tlp
 tlp-rdw
 tlpui
-figlet-fonts
 lolcat
 papirus-icon-theme
 mlocate
@@ -62,3 +53,10 @@ most
 xdotool
 piper
 httpie
+rust
+libclang-dev
+wireshark-cli
+wireshark-qt
+speedtest-cli
+nfsidmap
+nfs-utils task
