@@ -1,6 +1,5 @@
 iftop
 glances
-curl
 ipcalc
 ncdu
 pwgen
@@ -10,7 +9,6 @@ tmux
 fail2ban
 tldr
 s-tui
-screenfetch
 neofetch
 tilix
 gparted
@@ -37,26 +35,18 @@ arc-gtk-theme
 arc-icon-theme
 unzip
 xorg-xinput
-tlp
-tlp-rdw
 tlpui
 lolcat
 papirus-icon-theme
 mlocate
-pamac
-pamac-cli
-powertop
 gnome-disk-utility
-cpupower
 task
 most
 xdotool
 piper
 httpie
 rust
-libclang-dev
 wireshark-cli
 wireshark-qt
 speedtest-cli
-nfsidmap
-nfs-utils task
+task
