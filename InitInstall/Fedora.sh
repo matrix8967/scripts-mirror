@@ -6,7 +6,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-dnf=$(cat ../Pkglists/DnfFedoraPacks.txt)
+dnf=$(cat Pkglists/Fedora.txt)
 
 # Prime the Sudo rights
 sudo echo -e ${GREEN}"Sudo Primed!"${NC}
@@ -17,9 +17,6 @@ sudo dnf update
 
 echo -e ${GREEN}"Installing RPM Fusion Repos..."${NC}
 sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-echo -e ${GREEN}"Installing Kitty from COPR Repos..."${NC}
-sudo dnf copr enable atim/kitty-terminal -y
 
 sudo dnf install $dnf
 

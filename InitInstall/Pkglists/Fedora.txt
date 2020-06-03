@@ -63,3 +63,5 @@ mono-complete
 figlet
 lolcat
 openvpn
+xinput
+fira-code-fonts

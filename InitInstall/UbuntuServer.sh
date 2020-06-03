@@ -12,14 +12,12 @@ apt=$(cat Pkglists/UbuntuServer.txt)
 echo -e ${GREEN}"Getting Updated..."${NC}
 sudo apt update && sudo apt upgrade -y
 
-# Remove default snaps that should be apps instead...
-echo -e "Removing default ${RED}snaps${NC}, that should have been ${GREEN}packages${NC}..."
-sudo snap remove gnome-calculator gnome-logs gnome-system-monitor gnome-characters
-
 # Remove MOTD Ads... >:[
 echo -e "Removing Default ${RED}MOTD that phones home.${NC}"
 sudo systemctl disable motd-news.timer
 sudo rm /etc/update-motd.d/*
+sudo cp ../Misc/MOTD.sh /etc/update-motd.d/
+sudo chmod +x /etc/update-motd.d/MOTD.sh
 
 # Install packages from the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
