@@ -10,4 +10,4 @@ NC='\033[0m' # No Color
 ./Dev.sh
 ./Games.sh
 ./Media.sh
-./Productivty.sh
+./Productivity.sh

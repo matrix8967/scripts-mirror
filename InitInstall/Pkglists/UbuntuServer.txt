@@ -49,3 +49,5 @@ mplayer
 most
 imagemagick
 httpie
+golang
+rustc
