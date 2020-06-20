@@ -65,3 +65,8 @@ lolcat
 openvpn
 xinput
 fira-code-fonts
+cava
+nmap
+cmus
+gnome-tweaks
+adb

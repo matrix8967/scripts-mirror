@@ -23,3 +23,12 @@ sudo dnf install $dnf
 # Install Flatpaks Repo...
 echo -e ${GREEN}"Installing Flatpaks..."${NC}
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+# Radeon 5700XT Driver -- xorg-x11-drv-amdgpu
+echo "Radeon 5700XT Driver for Xorg?"
+select yn in "Yes" "No"; do
+    case $yn in
+        "Yes") sudo dnf install xorg-x11-drv-amdgpu -y ;;
+        "No") exit;;
+    esac
+done

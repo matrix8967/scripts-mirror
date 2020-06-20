@@ -60,7 +60,8 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
-alias icat="kitty +kitten icat"
+alias icat='kitty +kitten icat'
+alias dm='dmesg -HTL'
 
 # =====Functions===== #
 
