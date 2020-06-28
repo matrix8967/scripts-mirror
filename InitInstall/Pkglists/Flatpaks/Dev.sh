@@ -8,4 +8,4 @@ NC='\033[0m' # No Color
 
 # io.botfather.Botfather
 
-flatpak install flathub -y com.bitwarden.desktop com.axosoft.GitKraken io.atom.Atom com.github.micahflee.torbrowser-launcher
+flatpak install flathub -y com.bitwarden.desktop com.axosoft.GitKraken io.atom.Atom

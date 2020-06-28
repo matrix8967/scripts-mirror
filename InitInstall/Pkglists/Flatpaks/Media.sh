@@ -8,4 +8,4 @@ NC='\033[0m' # No Color
 
 # com.github.babluboy.bookworm
 
-flatpak install flathub -y com.uploadedlobster.peek com.spotify.Client org.kde.kdenlive tv.kodi.Kodi com.github.z.Cumulonimbus org.musicbrainz.Picard
+flatpak install flathub -y com.uploadedlobster.peek com.spotify.Client org.kde.kdenlive tv.kodi.Kodi
