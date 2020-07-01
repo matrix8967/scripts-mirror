@@ -13,7 +13,8 @@ echo -e ${GREEN}"Getting Updated..."${NC}
 sudo apt update && sudo apt upgrade -y
 
 # Remove MOTD Ads... >:[
-echo -e "Removing Default ${RED}Replace MOTD.${NC}"
+echo -e "Removing Default ${RED}MOTD that phones home.${NC}"
+sudo systemctl disable motd-news.timer
 sudo rm /etc/update-motd.d/*
 sudo cp ../Misc/MOTD.sh /etc/update-motd.d/10-motd
 sudo chmod +x /etc/update-motd.d/10-motd
