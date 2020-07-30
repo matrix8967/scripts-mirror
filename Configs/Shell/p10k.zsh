@@ -39,6 +39,7 @@
       # =========================[ Line #1 ]=========================
       os_icon                 # os identifier
       dir                     # current directory
+      context
       vcs                     # git status
       # =========================[ Line #2 ]=========================
       newline
@@ -79,7 +80,7 @@
       # azure                 # azure account name (https://docs.microsoft.com/en-us/cli/azure)
       # gcloud                # google cloud cli acccount and project (https://cloud.google.com/)
       # google_app_cred       # google application credentials (https://cloud.google.com/docs/authentication/production)
-      context                 # user@hostname
+      # context                 # user@hostname
       nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
       ranger                  # ranger shell (https://github.com/ranger/ranger)
       nnn                     # nnn shell (https://github.com/jarun/nnn)

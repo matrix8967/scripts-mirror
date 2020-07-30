@@ -24,7 +24,7 @@ source $ZSH/oh-my-zsh.sh
 
 # =====MOTD===== #
 
-# cat .ASCII/dontpanic.txt |lolcat && figlet -w 100 -l -k -f Bloody "Don't Panic!" | lolcat
+cat .ASCII/dontpanic.txt |lolcat && figlet -w 100 -l -k -f Bloody "Don't Panic!" | lolcat
 
 # =====GoLang===== #
 
@@ -37,8 +37,8 @@ export PATH=$PATH:~/.local/bin/
 
 # =====Ruby===== #
 
-export GEM_HOME="$HOME/.gems"
-export PATH="$HOME/.gems/bin:$PATH"
+export GEM_HOME=$HOME/.gems
+export PATH=$HOME/.gems/bin:$PATH
 
 # =====Rust===== #
 
@@ -87,6 +87,10 @@ function ElecomDeftPro {
 
 function ElecomEX-GPro {
 ~/Scripts/./ElecomEX-GPro.sh
+}
+
+function pvpn {
+	sudo protonvpn c -f
 }
 
 # =====Blur for Kitty Term===== #
