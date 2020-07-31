@@ -24,7 +24,7 @@ source $ZSH/oh-my-zsh.sh
 
 # =====MOTD===== #
 
-cat .ASCII/dontpanic.txt |lolcat && figlet -w 100 -l -k -f Bloody "Don't Panic!" | lolcat
+# cat .ASCII/dontpanic.txt |lolcat && figlet -w 100 -l -k -f Bloody "Don't Panic!" | lolcat
 
 # =====GoLang===== #
 
@@ -66,7 +66,7 @@ alias dm='dmesg -HTL'
 # =====Functions===== #
 
 function weather {
-  curl -s "http://wttr.in/Little Rock" | head -n 27
+	curl -s "http://wttr.in/Little Rock" | head -n 27
 }
 
 function amimullvad {
@@ -74,19 +74,19 @@ function amimullvad {
 }
 
 function dig_outside {
-dig +short myip.opendns.com @resolver1.opendns.com
+	dig +short myip.opendns.com @resolver1.opendns.com
 }
 
 function MXErgo {
-~/Scripts/./MXErgo.sh
+	~/Scripts/./MXErgo.sh
 }
 
 function ElecomDeftPro {
-~/Scripts/./ElecomDeftPro.sh
+	~/Scripts/./ElecomDeftPro.sh
 }
 
 function ElecomEX-GPro {
-~/Scripts/./ElecomEX-GPro.sh
+	~/Scripts/./ElecomEX-GPro.sh
 }
 
 function pvpn {
