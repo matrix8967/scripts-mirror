@@ -10,8 +10,8 @@ export TERM="xterm-256color"
 POWERLEVEL9K_MODE='nerdfont-complete'
 
 # =====SSH-Agent===== #
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities
+# zstyle :omz:plugins:ssh-agent agent-forwarding on
+# zstyle :omz:plugins:ssh-agent identities
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/$USER/.oh-my-zsh"
@@ -46,22 +46,22 @@ export PATH=$PATH:~/.cargo/bin/
 
 # =====Kitty Config===== #
 
-autoload -Uz compinit
-compinit
+# autoload -Uz compinit
+# compinit
 # Completion for kitty
-kitty + complete setup zsh | source /dev/stdin
+# kitty + complete setup zsh | source /dev/stdin
 
 # =====Aliases===== #
 
 alias nano='vim'
 alias pls='sudo'
-alias ls='lsd'
 alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 alias icat='kitty +kitten icat'
 alias dm='dmesg -HTL'
+# alias ls='lsd'
 
 # =====Functions===== #
 

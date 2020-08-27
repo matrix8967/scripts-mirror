@@ -19,3 +19,6 @@ sudo pacman -S $pac -y
 # Install Flatpaks Repo...
 echo -e ${GREEN}"Installing Flatpaks..."${NC}
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+# Clone Docklike Repo for XFCE Installs...
+git clone https://github.com/nsz32/docklike-plugin ~/Git/Misc/docklike-plugin
