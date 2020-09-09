@@ -12,20 +12,26 @@ mkdir /home/$USER/.themes
 mkdir /home/$USER/.icons
 
 # Grab Gnome Themes.
-echo -e "Downloading Themes."
-wget -O /home/$USER/.themes/Ant-Dracula.zip https://github.com/EliverLara/Ant-Dracula/archive/master.zip
-wget -O /home/$USER/.themes/Sweet.zip https://github.com/EliverLara/Sweet/archive/master.zip
+# echo -e "Downloading Themes."
+#wget -O /home/$USER/.themes/Ant-Dracula.zip https://github.com/EliverLara/Ant-Dracula/archive/master.zip
+#wget -O /home/$USER/.themes/Sweet.zip https://github.com/EliverLara/Sweet/archive/master.zip
 
 # Grab Icon Sets.
-echo -e "Downloading Icons."
-wget -O /home/$USER/.icons/Candy-Icons.zip https://github.com/EliverLara/candy-icons/archive/master.zip
+# echo -e "Downloading Icons."
+#wget -O /home/$USER/.icons/Candy-Icons.zip https://github.com/EliverLara/candy-icons/archive/master.zip
 
-# Grab Cursors.
-echo -e "Downloading Cursors."
-git clone https://github.com/vinceliuice/Qogir-icon-theme.git /home/$USER/.icons/Qogir-Cursors
-git clone https://github.com/KaizIqbal/Bibata_Cursor.git /home/$USER/.icons/Bibata-Cursors
-git clone https://github.com/keeferrourke/capitaine-cursors.git /home/$USER/.icons/Captaine-Cursors
+# Download Eye Candy.
+
+git clone https://github.com/dracula/gtk.git ~/.themes/Dracula
+git clone https://github.com/EliverLara/Juno.git ~/.themes/Juno
+git clone https://github.com/EliverLara/Kripton.git ~/.themes/Kripton
+git clone https://github.com/EliverLara/Sweet.git ~/.themes/Sweet
+git clone https://github.com/EliverLara/Ant.git ~/.themes/Ant
+git clone https://github.com/EliverLara/candy-icons.git ~/.icons/Candy-Icons
+git clone https://github.com/vinceliuice/Qogir-icon-theme.git ~/.icons/Qogir-Cursors
+git clone https://github.com/KaizIqbal/Bibata_Cursor.git ~/.icons/Bibata-Cursors
+git clone https://github.com/keeferrourke/capitaine-cursors.git ~/.icons/Captaine-Cursors
 
 # Extract Zip Files.
-unzip /home/$USER/.themes/'*.zip' -d /home/$USER/.themes/
-unzip /home/$USER/.icons/'*.zip' -d /home/$USER/.icons/
+#unzip /home/$USER/.themes/'*.zip' -d /home/$USER/.themes/
+#unzip /home/$USER/.icons/'*.zip' -d /home/$USER/.icons/

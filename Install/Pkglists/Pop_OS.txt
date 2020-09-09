@@ -83,8 +83,6 @@ git-core
 cmake
 glogg
 locate
-libssl
-libssl-dev
 pkg-config
 build-essential
 automake
