@@ -11,19 +11,10 @@ sudo apt install -y gnome-shell-extension-no-annoyance gnome-shell-extension-rem
 mkdir /home/$USER/.themes
 mkdir /home/$USER/.icons
 
-# Grab Gnome Themes.
-# echo -e "Downloading Themes."
-#wget -O /home/$USER/.themes/Ant-Dracula.zip https://github.com/EliverLara/Ant-Dracula/archive/master.zip
-#wget -O /home/$USER/.themes/Sweet.zip https://github.com/EliverLara/Sweet/archive/master.zip
-
-# Grab Icon Sets.
-# echo -e "Downloading Icons."
-#wget -O /home/$USER/.icons/Candy-Icons.zip https://github.com/EliverLara/candy-icons/archive/master.zip
-
 # Download Eye Candy.
 
 git clone https://github.com/dracula/gtk.git ~/.themes/Dracula
-git clone https://github.com/EliverLara/Juno.git ~/.themes/Juno
+git clone https://github.com/EliverLara/Juno.git --branch ocean --single-branch ~/.themes/Juno
 git clone https://github.com/EliverLara/Kripton.git ~/.themes/Kripton
 git clone https://github.com/EliverLara/Sweet.git ~/.themes/Sweet
 git clone https://github.com/EliverLara/Ant.git ~/.themes/Ant
@@ -32,6 +23,6 @@ git clone https://github.com/vinceliuice/Qogir-icon-theme.git ~/.icons/Qogir-Cur
 git clone https://github.com/KaizIqbal/Bibata_Cursor.git ~/.icons/Bibata-Cursors
 git clone https://github.com/keeferrourke/capitaine-cursors.git ~/.icons/Captaine-Cursors
 
-# Extract Zip Files.
-#unzip /home/$USER/.themes/'*.zip' -d /home/$USER/.themes/
-#unzip /home/$USER/.icons/'*.zip' -d /home/$USER/.icons/
+# Open the browser to install Gnome Extensions because Gnome sucks.
+
+firefox -new-tab -url https://extensions.gnome.org/extension/1228/arc-menu/ -new-tab -url https://extensions.gnome.org/extension/779/clipboard-indicator/ -new-tab -url https://extensions.gnome.org/extension/307/dash-to-dock/ -new-tab -url https://extensions.gnome.org/extension/545/hide-top-bar/ -new-tab -url https://extensions.gnome.org/extension/3357/material-shell/ -new-tab -url https://extensions.gnome.org/extension/800/remove-dropdown-arrows/ -new-tab -url https://extensions.gnome.org/extension/120/system-monitor/ -new-tab -url https://extensions.gnome.org/extension/1031/topicons/ -new-tab -url https://extensions.gnome.org/extension/19/user-themes/
