@@ -70,7 +70,6 @@ golang
 tty-clock
 cmus
 w3m
-w3m-imm
 apt-transport-https
 fonts-mononoki
 fonts-cantarell
@@ -90,6 +89,5 @@ libvirt-daemon
 libvirt-daemon-system
 bridge-utils virt-manager
 qemu
-vmm
 pkg-config
 httpie
