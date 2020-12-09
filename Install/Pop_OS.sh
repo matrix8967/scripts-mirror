@@ -17,8 +17,9 @@ echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC
 sudo apt install -y $apt
 
 # Install Flatpaks Repo...
-echo -e ${GREEN}"Installing Flatpaks..."${NC}
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+# echo -e ${GREEN}"Installing Flatpaks..."${NC}
+# flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 # Install Gnome Extensions and UI.
 echo -e ${GREEN}"Installing Gnome Modifications..."${NC}
+Toolsets/./Gnome.sh
