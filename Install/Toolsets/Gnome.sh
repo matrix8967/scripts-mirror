@@ -18,10 +18,10 @@ git clone https://github.com/EliverLara/Juno.git --branch ocean --single-branch 
 git clone https://github.com/EliverLara/Kripton.git ~/.themes/Kripton
 git clone https://github.com/EliverLara/Sweet.git ~/.themes/Sweet
 git clone https://github.com/EliverLara/Ant.git ~/.themes/Ant
-git clone https://github.com/EliverLara/candy-icons.git ~/.icons/Candy-Icons
-git clone https://github.com/vinceliuice/Qogir-icon-theme.git ~/.icons/Qogir-Cursors
-git clone https://github.com/KaizIqbal/Bibata_Cursor.git ~/.icons/Bibata-Cursors
-git clone https://github.com/keeferrourke/capitaine-cursors.git ~/.icons/Captaine-Cursors
+# git clone https://github.com/EliverLara/candy-icons.git ~/.icons/Candy-Icons
+# git clone https://github.com/vinceliuice/Qogir-icon-theme.git ~/.icons/Qogir-Cursors
+# git clone https://github.com/KaizIqbal/Bibata_Cursor.git ~/.icons/Bibata-Cursors
+# git clone https://github.com/keeferrourke/capitaine-cursors.git ~/.icons/Captaine-Cursors
 
 # Open the browser to install Gnome Extensions because Gnome sucks.
 

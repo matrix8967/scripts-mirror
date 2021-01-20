@@ -9,5 +9,6 @@ NC='\033[0m' # No Color
 go get -u github.com/xxxserxxx/gotop/cmd/gotop
 go get github.com/charmbracelet/glow
 go get -u github.com/jingweno/ccat
+go get github.com/jesseduffield/lazydocker
 
 sudo cp $GOPATH/bin/* /usr/bin/

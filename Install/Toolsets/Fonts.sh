@@ -19,4 +19,6 @@ wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Mononoki.z
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/RobotoMono.zip -P ~/.fonts/
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip -P ~/.fonts/
 unzip ~/.fonts/'*.zip' -d ~/.fonts/
+wget -O ~/.fonts/fira.tar.gz https://github.com/mozilla/Fira/archive/4.202.tar.gz
+tar xf ~/.fonts/fira.tar.gz --wildcards "*.ttf" --directory=~/.fonts
 fc-cache
