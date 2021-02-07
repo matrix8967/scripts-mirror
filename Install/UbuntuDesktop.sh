@@ -21,6 +21,9 @@ echo -e "Removing Default ${RED}MOTD that phones home.${NC}"
 sudo systemctl disable motd-news.timer
 sudo rm /etc/update-motd.d/*
 
+# Remove more analytics:
+sudo apt remove -y popularity-contest
+
 # Install packages from the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
 sudo apt install -y $apt

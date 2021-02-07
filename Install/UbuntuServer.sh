@@ -19,6 +19,9 @@ sudo rm /etc/update-motd.d/*
 sudo cp ../Misc/MOTD.sh /etc/update-motd.d/10-motd
 sudo chmod +x /etc/update-motd.d/10-motd
 
+# Remove more analytics:
+sudo apt remove -y popularity-contest
+
 # Install packages from the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
 sudo apt install -y $apt
