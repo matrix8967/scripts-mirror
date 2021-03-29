@@ -80,3 +80,4 @@ set background=dark
 " colorscheme solarized
 
 let g:airline_theme='deus'
+let g:powerline_pycmd = "py3"

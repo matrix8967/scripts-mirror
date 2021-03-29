@@ -7,13 +7,15 @@ read -s -n 1
 
 # Install Brew
 
-xcode-select --install
+# xcode-select --install
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+brew analytics off
+
 # Install Brew Packages
 
-brew install neofetch git tmux wget lsd ytop tldr ddgr imagemagick most mplayer mc ncdu lolcat figlet mpc ncmpcpp tree pwgen ipcalc nmap curl golang httpie tcpdump ncdu asciinema tree speedtest-cli fail2ban ipcalc pwgen htop iftop cargo rust glow bat wireguard-tools
+brew install neofetch git tmux wget lsd tldr ddgr imagemagick most mplayer mc ncdu lolcat figlet mpc ncmpcpp tree pwgen ipcalc nmap curl golang httpie tcpdump ncdu asciinema tree speedtest-cli fail2ban ipcalc pwgen htop iftop rust glow bat wireguard-tools
 
 brew tap clementtsang/bottom
 
@@ -29,6 +31,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 # Copy dotfiles for MacOS:
 
 cp ../Configs/Shell/zshrc ~/.zshrc
+cp ../Configs/Shell/p10k.zsh ~/.p10k.zsh
 
 cp ../Configs/Shell/tmux.conf ~/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
