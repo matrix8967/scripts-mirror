@@ -10,8 +10,8 @@ export TERM="xterm-256color"
 POWERLEVEL9K_MODE='nerdfont-complete'
 
 # =====SSH-Agent===== #
-# zstyle :omz:plugins:ssh-agent agent-forwarding on
-# zstyle :omz:plugins:ssh-agent identities
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities
 
 # Path to your oh-my-zsh installation.
 export ZSH="/data/data/com.termux/files/home/.oh-my-zsh"
@@ -64,10 +64,6 @@ alias dm='dmesg -HTL'
 # alias ls='lsd'
 
 # =====Functions===== #
-
-function weather {
-        curl -s "http://wttr.in/Little Rock" | head -n 27
-}
 
 function amimullvad {
         curl https://am.i.mullvad.net/connected
