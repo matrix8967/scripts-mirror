@@ -2,7 +2,6 @@ asciinema
 bat
 build-essential
 cava
-cava-static
 clang
 cmake
 cmake-curses-gui
@@ -41,17 +40,11 @@ net-tools
 nmap
 pwgen
 qemu-common
-qemu-system-aarch64
 qemu-system-aarch64-headless
-qemu-system-arm
 qemu-system-arm-headless
-qemu-system-i386
 qemu-system-i386-headless
-qemu-system-riscv32
 qemu-system-riscv32-headless
-qemu-system-riscv64
 qemu-system-riscv64-headless
-qemu-system-x86_64
 qemu-system-x86_64-headless
 qemu-user-aarch64
 qemu-user-arm
