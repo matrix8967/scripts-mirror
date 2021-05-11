@@ -6,7 +6,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-cargo install lsd bat bottom bandwhich
+cargo install lsd bat bottom bandwhich mdbook
 
 # Bandwhich requires `root` to probe NICs and capture packets:
 
