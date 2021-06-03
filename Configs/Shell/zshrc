@@ -87,6 +87,8 @@ alias rsync='rsync -azvhP -r --info=progress2'
 alias rsyncssh='rsync -e ssh'
 alias pubkey='cat ~/.ssh/id_rsa.pub'
 alias ipa='ip -color -brief -human addr'
+alias http='http --check-status --pretty=all --verbose'
+alias netstat_def='sudo netstat -tlnp'
 
 # =====Functions===== #
 
@@ -124,6 +126,10 @@ function keyrm {
 
 function printline {
 	awk '{print $0; system("sleep .3");}' "$1"
+}
+
+function psaux {
+	sudo ps awxf -eo pid,user,%cpu,%mem,args
 }
 
 # =====Blur for Kitty Term===== #
