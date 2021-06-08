@@ -17,7 +17,7 @@ sudo cp $GOPATH/bin/* /usr/bin/
 
 git -C /home/$USER/Git/Misc/ clone https://github.com/charmbracelet/glow.git
 
-echo -e "I suck at GoLang, just *GO*...build it yourself..."
+echo -e ${GREEN}"I suck at GoLang, just *GO*...build it yourself..."
 echo -e "cd /home/$USER/Git/Misc/glow/"
 echo -e "go build"
-echo -e "sudo cp glow /usr/bin/"
+echo -e "sudo cp glow /usr/bin/"${NC}
