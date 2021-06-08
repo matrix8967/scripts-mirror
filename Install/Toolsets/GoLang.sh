@@ -15,4 +15,9 @@ go get -u github.com/sachaos/tcpterm
 
 sudo cp $GOPATH/bin/* /usr/bin/
 
-git clone https://github.com/charmbracelet/glow.git ~/Git/Misc/
+git -C /home/$USER/Git/Misc/ clone https://github.com/charmbracelet/glow.git
+
+echo -e "I suck at GoLang, just *GO*...build it yourself..."
+echo -e "cd /home/$USER/Git/Misc/glow/"
+echo -e "go build"
+echo -e "sudo cp glow /usr/bin/"
