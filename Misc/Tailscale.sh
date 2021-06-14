@@ -15,7 +15,7 @@ trap 'msg "\x1B[31mNo Worky."' ERR
 source /etc/os-release
 
 
-msg "Checking OS Testing."
+msg "Checking OS & Installing Tailscale"
 if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
 
     curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add -
@@ -36,7 +36,6 @@ elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
     sudo tailscale up
     
 elif [[ "${ID}" =~ "arch" ]] || [[ "${ID_LIKE}" =~ "arch" ]]; then
-    echo -e "This is Arch-y."
     
     sudo pacman -S tailscale
     echo -e "Use sudo systemctl enable --now tailscaled to enable the tailscale service."
