@@ -38,7 +38,7 @@ elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
 elif [[ "${ID}" =~ "arch" ]] || [[ "${ID_LIKE}" =~ "arch" ]]; then
     echo -e "This is Arch-y."
     
-    pacman -S tailscale
+    sudo pacman -S tailscale
     echo -e "Use sudo systemctl enable --now tailscaled to enable the tailscale service."
     echo -e "Auth with sudo tailscale up"
     sudo systemctl start tailscaled
