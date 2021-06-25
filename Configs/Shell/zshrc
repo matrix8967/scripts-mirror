@@ -44,6 +44,10 @@ export PATH=$HOME/.gems/bin:$PATH
 
 export PATH=$PATH:~/.cargo/bin/
 
+# =====Editor===== #
+
+export EDITOR="/usr/bin/vim"
+
 # =====Kitty Config===== #
 
 autoload -Uz compinit
@@ -67,9 +71,7 @@ setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-
-
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=999'
 
 # =====Aliases===== #
 
@@ -84,11 +86,12 @@ alias dm='sudo dmesg -HTL'
 alias ls='lsd'
 #alias bat='batcat'
 alias rsync='rsync -azvhP -r --info=progress2'
-alias rsyncssh='rsync -e ssh'
+#alias rsyncssh='rsync -e ssh'
 alias pubkey='cat ~/.ssh/id_rsa.pub'
 alias ipa='ip -color -brief -human addr'
 alias http='http --check-status --pretty=all --verbose'
 alias netstat_def='sudo netstat -tlnp'
+alias cp='rsync -azvhP'
 
 # =====Functions===== #
 
@@ -97,39 +100,44 @@ function pvpn {
 }
 
 function amimullvad {
-	curl https://am.i.mullvad.net/connected
+        curl https://am.i.mullvad.net/connected
 }
 
 function dig_outside {
-	dig +short myip.opendns.com @resolver1.opendns.com
+        dig +short myip.opendns.com @resolver1.opendns.com
 }
 
 function MXErgo {
-	~/Scripts/./MXErgo.sh
+        ~/Scripts/./MXErgo.sh
 }
 
 function ElecomDeftPro {
-	~/Scripts/./ElecomDeftPro.sh
+        ~/Scripts/./ElecomDeftPro.sh
 }
 
 function ElecomEX-GPro {
-	~/Scripts/./ElecomEX-GPro.sh
+        ~/Scripts/./ElecomEX-GPro.sh
 }
 
 function hs {
-	history | grep "$1"
+        history | grep "$1"
 }
 
 function keyrm {
-	ssh-keygen -f "/home/$USER/.ssh/known_hosts" -R "$1"
+        ssh-keygen -f "/home/$USER/.ssh/known_hosts" -R "$1"
 }
 
 function printline {
-	awk '{print $0; system("sleep .3");}' "$1"
+        awk '{print $0; system("sleep .3");}' "$1"
 }
 
 function psaux {
-	sudo ps awxf -eo pid,user,%cpu,%mem,args
+        sudo ps awxf -eo pid,user,%cpu,%mem,args
+}
+
+function Quotes {
+        echo -e "a=7; echo \$a; echo \"\$a\"; echo '\$a'; echo \"'\$a'\"; echo '\"\$a\"'"
+        a=7; echo $a; echo "$a"; echo '$a'; echo "'$a'"; echo '"$a"'
 }
 
 # =====Blur for Kitty Term===== #

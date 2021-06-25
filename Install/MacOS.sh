@@ -7,7 +7,7 @@ read -s -n 1
 
 # Install Brew
 
-# xcode-select --install
+xcode-select --install
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -15,7 +15,149 @@ brew analytics off
 
 # Install Brew Packages
 
-brew install neofetch git tmux wget lsd tldr ddgr imagemagick most mplayer mc ncdu lolcat figlet mpc ncmpcpp tree pwgen ipcalc nmap curl golang httpie tcpdump ncdu asciinema tree speedtest-cli fail2ban ipcalc pwgen htop iftop rust glow bat wireguard-tools
+brew install \
+ansible \
+aom \
+asciinema \
+autoconf \
+bandwhich \
+bash \
+bat \
+bdw-gc \
+bmon \
+boost \
+bottom \
+brotli \
+c-ares \
+confuse \
+curl \
+ddgr \
+docbook \
+docbook-xsl \
+fail2ban \
+fftw \
+figlet \
+fontconfig \
+freetype \
+gcc \
+gdbm \
+gettext \
+ghostscript \
+giflib \
+git \
+glib \
+glow \
+gmp \
+gnu-getopt \
+gnupg \
+gnutls \
+go \
+grepcidr \
+guile \
+htop \
+httpie \
+hwloc \
+icu4c \
+ifstat \
+iftop \
+ilmbase \
+imagemagick \
+imath \
+imlib2 \
+ipcalc \
+isl \
+jbig2dec \
+jemalloc \
+jpeg \
+libassuan \
+libcaca \
+libde265 \
+libev \
+libevent \
+libffi \
+libgcrypt \
+libgpg-error \
+libheif \
+libidn \
+libidn2 \
+libksba \
+liblqr \
+libmetalink \
+libmpc \
+libmpdclient \
+libomp \
+libpcap \
+libpng \
+libpthread-stubs \
+libssh2 \
+libtasn1 \
+libtiff \
+libtool \
+libunistring \
+libusb \
+libx11 \
+libxau \
+libxcb \
+libxdmcp \
+libxext \
+libyaml \
+libzip \
+little-cms2 \
+lolcat \
+lsd \
+m4 \
+midnight-commander \
+most \
+mpc \
+mpdecimal \
+mpfr \
+mplayer \
+ncdu \
+ncmpcpp \
+ncurses \
+neofetch \
+nethogs \
+nettle \
+nghttp2 \
+nmap \
+npth \
+open-mpi \
+openexr \
+openjpeg \
+openldap \
+openssl@1.1 \
+p11-kit \
+pcre \
+pcre2 \
+pinentry \
+pkg-config \
+pwgen \
+python@3.9 \
+qrencode \
+readline \
+rtmpdump \
+rust \
+s-lang \
+screenresolution \
+shared-mime-info \
+speedtest-cli \
+sqlite \
+taglib \
+tcpdump \
+tldr \
+tmux \
+tree \
+unbound \
+utf8proc \
+webp \
+wget \
+wireguard-go \
+wireguard-tools \
+x265 \
+xmlto \
+xorgproto \
+xz \
+zstd \
 
 brew tap clementtsang/bottom
 
