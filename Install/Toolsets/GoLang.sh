@@ -11,8 +11,8 @@ export GO111MODULES=auto
 go get github.com/charmbracelet/glow
 go get -u github.com/jingweno/ccat
 go get github.com/jesseduffield/lazydocker
-go get -u github.com/vultr/vultr-cli
 go get -u github.com/sachaos/tcpterm
+go get -u github.com/vultr/govultr/v2
 
 sudo cp $GOPATH/bin/* /usr/bin/
 
