@@ -14,7 +14,6 @@ trap 'msg "\x1B[31mNo Worky."' ERR
 
 source /etc/os-release
 
-
 msg "Checking OS & Installing Tailscale"
 if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
 
@@ -25,18 +24,18 @@ if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
     echo -e "Auth with sudo tailscale up"
     sudo systemctl start tailscaled
     sudo tailscale up
-    
+
 elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
-    
+
     sudo dnf config-manager --add-repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     sudo dnf install tailscale
     echo -e "Use sudo systemctl enable --now tailscaled to enable the tailscale service."
     echo -e "Auth with sudo tailscale up"
     sudo systemctl start tailscaled
     sudo tailscale up
-    
+
 elif [[ "${ID}" =~ "arch" ]] || [[ "${ID_LIKE}" =~ "arch" ]]; then
-    
+
     sudo pacman -S tailscale
     echo -e "Use sudo systemctl enable --now tailscaled to enable the tailscale service."
     echo -e "Auth with sudo tailscale up"
@@ -49,4 +48,3 @@ else
   exit 1
 fi
 echo "¯\_(ツ)_/¯ Guess it works?" >&2
-
