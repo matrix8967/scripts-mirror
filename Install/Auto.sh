@@ -80,7 +80,7 @@ if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
     httpie \
     screen \
     minicom \
-    
+
 elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
     sudo dnf install \
     git \
@@ -198,7 +198,7 @@ elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
     python3-setuptools \
     python3-libs \
     pipx \
-    
+
 elif [[ "${ID}" =~ "arch" ]] || [[ "${ID_LIKE}" =~ "arch" ]]; then
     sudo pacman -S \
     iftop \
@@ -313,3 +313,8 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cp ../Configs/Shell/vimrc ~/.vimrc
 vim +PluginInstall +qall
+
+# Misc 🧹
+
+mv ../.zshrc.pre-oh-my-zsh ../.zshrc
+sudo cp -r ../.vim* /root/

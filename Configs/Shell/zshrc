@@ -57,9 +57,9 @@ kitty + complete setup zsh | source /dev/stdin
 
 # =====Bat/Man===== #
 
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-#man 2 select
-MANROFFOPT="-c"
+# export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# man 2 select
+# MANROFFOPT="-c"
 
 # =====Docker===== #
 
