@@ -13,14 +13,14 @@ git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/power
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
-cp ../../Configs/Shell/zshrc ~/.zshrc
-cp ../../Configs/Shell/p10k.zsh ~/.p10k.zsh
+cp ../Configs/Shell/zshrc ~/.zshrc
+cp ../Configs/Shell/p10k.zsh ~/.p10k.zsh
 
 # Install Tmux
-cp ../../Configs/Shell/tmux.conf ~/.tmux.conf
+cp ../Configs/Shell/tmux.conf ~/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Install Vundle.
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-cp ../../Configs/Shell/vimrc ~/.vimrc
+cp ../Configs/Shell/vimrc ~/.vimrc
 vim +PluginInstall +qall
