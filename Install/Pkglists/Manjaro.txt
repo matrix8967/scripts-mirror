@@ -28,8 +28,6 @@ chafa
 awesome-terminal-fonts
 powerline-fonts
 powerline-vim
-arc-gtk-theme
-arc-icon-theme
 unzip
 xorg-xinput
 lolcat
