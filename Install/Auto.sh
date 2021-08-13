@@ -231,4 +231,4 @@ vim +PluginInstall +qall
 # Misc 🧹
 
 mv ../.zshrc.pre-oh-my-zsh ../.zshrc
-sudo cp -r ../.vim* /root/
+sudo cp -r /home/$USER/.vim* /root/

@@ -76,8 +76,6 @@ dnsmasq
 vde2
 bridge-utils
 openbsd-netcat
-ebtables
-iptables
 libguestfs
 python-pip
 python-wheel
