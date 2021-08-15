@@ -132,12 +132,10 @@ gedit-plugins
 cmus
 ffmpeg
 flac
-cmus-bundler
 ethtool
 tcpdump
 vnstat
 keepassxc
 bmon
 nethogs
-ntop
 nmon
