@@ -227,8 +227,4 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cp ../Configs/Shell/vimrc ~/.vimrc
 vim +PluginInstall +qall
-
-# Misc 🧹
-
-mv $USER/.zshrc.pre-oh-my-zsh $USER/.zshrc
 sudo cp -r /home/$USER/.vim* /root/
