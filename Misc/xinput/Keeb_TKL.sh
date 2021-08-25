@@ -3,7 +3,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'    # No Color
 
-# Universal/Keychron:
+# Apple Inc. Magic Keyboard
 
 cat <<EOF > /etc/modprobe.d/hid_apple.conf
 options hid_apple fnmode=2
