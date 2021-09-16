@@ -4,6 +4,8 @@ set -eE
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
+
+DEBIAN=$(cat Pkglists/Debian.txt)
 MANJARO=$(cat Pkglists/Manjaro.txt)
 FEDORA=$(cat Pkglists/Fedora.txt)
 
@@ -18,79 +20,17 @@ source /etc/os-release
 
 msg "Installing Packages..."
 if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
-    sudo apt-get install \
-    git \
-    iftop \
-    nmap \
-    curl \
-    ipcalc \
-    ncdu \
-    pwgen \
-    htop \
-    wavemon \
-    vim \
-    tmux \
-    fail2ban \
-    tldr \
-    s-tui \
-    neofetch \
-    zsh \
-    fonts-powerline \
-    kitty \
-    ruby-full \
-    build-essential \
-    zlib1g-dev \
-    tmux-plugin-manager \
-    exfat-fuse \
-    exfat-utils \
-    taskwarrior \
-    openvpn \
-    dialog \
-    python3-pip \
-    python3-setuptools \
-    libclang-dev \
-    cifs-utils \
-    neovim \
-    nfs-common \
-    speedtest-cli \
-    tree \
-    ncmpcpp \
-    mpc \
-    figlet \
-    chafa \
-    asciinema \
-    lolcat \
-    neovim \
-    ncdu \
-    tcpdump \
-    mc \
-    mplayer \
-    most \
-    imagemagick \
-    cargo \
-    rustc \
-    golang \
-    tty-clock \
-    cmus \
-    w3m \
-    apt-transport-https \
-    ddgr \
-    powertop \
-    virtualenv \
-    pkg-config \
-    httpie \
-    screen \
-    minicom \
+	sudo apt-get install $DEBIAN
 
 elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
-    sudo dnf install $FEDORA
+	sudo dnf install $FEDORA
 
 elif [[ "${ID}" =~ "arch" ]] || [[ "${ID_LIKE}" =~ "arch" ]]; then
-  sudo pacman -S $MANJARO
+	sudo pacman -S $MANJARO
 
 else
-  msg "Unknown system ID: ${ID}"
-  exit 1
+	msg "Unknown system ID: ${ID}"
+	exit 1
 fi
 echo "¯\_(ツ)_/¯ Guess it works?" >&2
 
@@ -101,6 +41,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/powerlevel10k
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone git clone https://github.com/redxtech/zsh-kitty ~/.oh-my-zsh/custom/plugins/zsh-kitty
 
 cp ../Configs/Shell/zshrc ~/.zshrc
 cp ../Configs/Shell/p10k.zsh ~/.p10k.zsh
