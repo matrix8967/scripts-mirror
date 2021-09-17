@@ -225,7 +225,6 @@ vim
 wget
 wireguard-tools
 x11-repo
-xorg-xauth
 xvidcore
 xxhash
 xz-utils
