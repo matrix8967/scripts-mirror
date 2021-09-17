@@ -10,8 +10,11 @@ pkg=$(cat Pkglists/Termux.txt)
 
 # Get updated...
 echo -e ${GREEN}"Getting Updated..."${NC}
-sudo pkg update -y
+pkg update -y
 
 # Install packages from the default repos...
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
-sudo pkg install -y $pkg
+pkg install -y $pkg
+
+cp ../Configs/Shell/Android_p10k.zsh ~/
+cp ../Configs/Shell/Android_zshrc ~/

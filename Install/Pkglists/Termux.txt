@@ -21,7 +21,6 @@ dialog
 diffutils
 dnsutils
 dos2unix
-dosbox
 dpkg
 ed
 ffmpeg
@@ -142,7 +141,6 @@ libxdmcp
 libxext
 libxft
 libxml2
-libxmu
 libxrandr
 libxrender
 libxt
@@ -196,7 +194,6 @@ qemu-user-arm
 qemu-user-i386
 qemu-user-riscv32
 qemu-user-riscv64
-qemu-user-x86_64
 qemu-utils
 readline
 resolv-conf
@@ -204,8 +201,6 @@ rsync
 rust
 rustc-dev
 science-repo
-sdl-net
-sdl
 sed
 socat
 speexdsp
