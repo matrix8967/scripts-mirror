@@ -17,7 +17,6 @@ trap 'msg "\x1B[31mNo Worky."' ERR
 
 source /etc/os-release
 
-
 msg "Installing Packages..."
 if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
 	sudo apt-get install $DEBIAN

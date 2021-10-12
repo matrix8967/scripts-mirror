@@ -16,5 +16,7 @@ pkg update -y
 echo -e ${GREEN}"Installing packages that are found in the default repos..."${NC}
 pkg install -y $pkg
 
-cp ../Configs/Shell/Android_p10k.zsh ~/
-cp ../Configs/Shell/Android_zshrc ~/
+cp ../Configs/Shell/Android_p10k.zsh ~/.p10k.zsh
+cp ../Configs/Shell/Android_zshrc ~/.zshrc
+
+touch /data/data/com.termux/files/home/.Xauthority
