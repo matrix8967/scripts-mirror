@@ -33,7 +33,7 @@ export PATH=$PATH:/usr/local/go/bin
 
 # =====Python===== #
 
-export PATH=$PATH:~/.local/bin/
+export PATH=$PATH:/Users/matrix/Library/Python/3.8/bin/
 
 # =====Ruby===== #
 
@@ -65,6 +65,9 @@ MANROFFOPT="-c"
 
 export PATH=/usr/bin:$PATH
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
+
+# =====MacOS-Dev===== #
+fpath=(~/.zsh $fpath)
 
 # =====Zsh Opts===== #
 
@@ -147,6 +150,47 @@ function psaux {
 function Quotes {
 	echo -e "a=7; echo \$a; echo \"\$a\"; echo '\$a'; echo \"'\$a'\"; echo '\"\$a\"'"
 	a=7; echo $a; echo "$a"; echo '$a'; echo "'$a'"; echo '"$a"'
+}
+
+function cpu_temp()
+{
+  # Init result
+  local result=0.00
+  # The first line of this file is x1000.
+  # Read the first line from the file.
+  line=$(head -n 1 /sys/class/thermal/thermal_zone0/temp)
+  # Test if the string is an integer as expected with a regex.
+  if [[ $line =~ ^-?[0-9]+$ ]]
+  then
+    # Convert temp to Celcius & store as string.
+    result=$(awk "BEGIN {printf \"%.2f\n\", $line/1000}")
+  fi
+  # The gud gud. Or maybe bad bad?
+  echo -e "Current CPU Temp is: $result°C"
+}
+
+function Gitlab_Pull {
+	for dir in ~/Git/Gitlab/*/; do
+		git -C $dir pull
+	done
+}
+
+function Github_Pull {
+	for dir in ~/Git/Github/*/; do
+		git -C $dir pull
+	done
+}
+
+function strip_IPs {
+	sed -E -r 's/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/$IP_ADDRESSES/g' $1
+}
+
+function software_updates {
+    sudo softwareupdate -ia
+}
+
+function wifi_signal_strength {
+    while i=1; do echo -ne 'Wifi signal strength:' $(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep CtlRSSI | awk {'print $2'}) '\r'; sleep 0.5; done
 }
 
 # =====Blur for Kitty Term===== #
