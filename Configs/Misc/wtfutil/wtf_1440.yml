@@ -1,0 +1,150 @@
+wtf:
+  colors:
+    background: transparent
+    border:
+      focusable: lightgreen
+      focused: goldenrod
+      normal: darkgreen
+    checked: gray
+    highlight:
+      fore: black
+      back: green
+    labels: lightgreen::b
+    rows:
+      even: green
+      odd: lightgreen
+    subheading: lightgreen::b
+    text: green
+    title: lightgreen
+  grid:
+    columns: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    rows: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  refreshInterval: 1
+  mods:
+    module0:
+      title: Hackernews
+      type: hackernews
+      enabled: true
+      position:
+        top: 0
+        left: 0
+        width: 81
+        height: 22
+      focusable: true
+      numberOfStories: 20
+    module1:
+      title: prettyweather
+      type: prettyweather
+      enabled: true
+      position:
+        top: 22
+        left: 0
+        width: 48
+        height: 18
+      city: Little Rock
+      refreshInterval: 300
+      unit: u
+      view: 0
+      language: en
+    module2:
+      title: ⚡️
+      type: power
+      enabled: true
+      position:
+        top: 40
+        left: 0
+        width: 44
+        height: 17
+      refreshInterval: 15
+    module3:
+      title: IP
+      type: ipinfo
+      enabled: true
+      position:
+        top: 22
+        left: 123
+        width: 45
+        height: 18
+      colors:
+        name: lightblue
+        value: white
+      refreshInterval: 150
+    module4:
+      title: todo
+      type: todo
+      enabled: true
+      position:
+        top: 0
+        left: 149
+        width: 64
+        height: 22
+      checkedIcon: X
+      colors:
+        checked: gray
+      highlight:
+        fore: black
+      back: orange
+      filename: todo.yml
+      refreshInterval: 3600
+    module5:
+      title: security
+      type: security
+      enabled: true
+      position:
+        top: 22
+        left: 168
+        width: 45
+        height: 18
+      refreshInterval: 3600
+    module6:
+      title: textfile
+      type: textfile
+      enabled: true
+      position:
+        top: 22
+        left: 48
+        width: 75
+        height: 18
+      filePath: $FILEPATH
+      format: true
+      formatStyle: dracula
+      refreshInterval: 30
+      wrapText: true
+    module7:
+      title: resourceusage
+      type: resourceusage
+      enabled: true
+      position:
+        top: 40
+        left: 44
+        width: 74
+        height: 17
+      cpuCombined: false
+      refreshInterval: 1
+    module8:
+      title: cmdrunner
+      type: cmdrunner
+      enabled: true
+      position:
+        top: 0
+        left: 81
+        width: 68
+        height: 22
+      args: [-h]
+      cmd: df
+      refreshInterval: 30
+    module9:
+      title: pihole
+      type: pihole
+      enabled: true
+      position:
+        top: 40
+        left: 118
+        width: 94
+        height: 17
+      apiUrl: $PIHOLE-URL
+      refreshInterval: 60
+      showSummary: true
+      showTopItems: 5
+      showTopClients: 5
+      token: $PIHOLE-API-KEY

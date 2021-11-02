@@ -1,0 +1,106 @@
+wtf:
+  colors:
+    background: transparent
+    border:
+      focusable: lightgreen
+      focused: goldenrod
+      normal: darkgreen
+    checked: gray
+    highlight:
+      fore: black
+      back: green
+    labels: lightgreen::b
+    rows:
+      even: green
+      odd: lightgreen
+    subheading: lightgreen::b
+    text: green
+    title: lightgreen
+  grid:
+    columns: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    rows: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  refreshInterval: 1
+  mods:
+    module0:
+      title: IP
+      type: ipinfo
+      enabled: true
+      position:
+        top: 15
+        left: 0
+        width: 50
+        height: 15
+      colors:
+        name: lightblue
+        value: white
+      refreshInterval: 150
+    module1:
+      title: security
+      type: security
+      enabled: true
+      position:
+        top: 0
+        left: 50
+        width: 51
+        height: 15
+      refreshInterval: 3600
+    module2:
+      title: resourceusage
+      type: resourceusage
+      enabled: true
+      position:
+        top: 15
+        left: 50
+        width: 51
+        height: 15
+      cpuCombined: false
+      refreshInterval: 1
+    module3:
+      title: HTop
+      type: cmdrunner
+      enabled: true
+      position:
+        top: 30
+        left: 0
+        width: 101
+        height: 16
+      args: [-t]
+      cmd: htop
+      refreshInterval: 30
+    module4:
+      title: pihole
+      type: pihole
+      enabled: true
+      position:
+        top: 0
+        left: 0
+        width: 50
+        height: 15
+      apiUrl: $PIHOLE_URL
+      refreshInterval: 60
+      showSummary: true
+      showTopItems: 5
+      showTopClients: 5
+      token: $PIHOLE-API-KEY
+    module5:
+      title: btm
+      type: cmdrunner
+      enabled: true
+      position:
+        top: 0
+        left: 101
+        width: 59
+        height: 30
+      cmd: btm
+    module6:
+      title: cmdrunner
+      type: cmdrunner
+      enabled: true
+      position:
+        top: 30
+        left: 101
+        width: 59
+        height: 16
+      args: [-h]
+      cmd: df
+      refreshInterval: 30
