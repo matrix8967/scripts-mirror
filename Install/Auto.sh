@@ -31,7 +31,17 @@ else
 	msg "Unknown system ID: ${ID}"
 	exit 1
 fi
-echo "¯\_(ツ)_/¯ Guess it works?" >&2
+# echo "¯\_(ツ)_/¯ Guess it works?" >&2
+
+
+echo -n "( •_•)"
+sleep .75
+echo -n -e "\r( •_•)>⌐■-■"
+sleep .75
+echo -n -e "\r               "
+echo  -e "\r(⌐■_■)"
+sleep .5
+echo -e "\( ﾟヮﾟ)/ it werked." >&2
 
 # Install Dev Tools
 
