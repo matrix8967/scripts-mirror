@@ -8,11 +8,12 @@ NC='\033[0m' # No Color
 
 export GO111MODULES=auto
 
-go get github.com/charmbracelet/glow
-go get -u github.com/jingweno/ccat
-go get github.com/jesseduffield/lazydocker
-go get -u github.com/sachaos/tcpterm
-go get -u github.com/vultr/govultr/v2
+go install github.com/charmbracelet/glow@latest
+# go get -u github.com/jingweno/ccat
+go install github.com/jesseduffield/lazydocker@latest
+go install github.com/sachaos/tcpterm@latest
+# go get -u github.com/vultr/govultr/v2
+go install github.com/gonetx/httpit@latest
 
 sudo cp $GOPATH/bin/* /usr/bin/
 

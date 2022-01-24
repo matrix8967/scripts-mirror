@@ -14,4 +14,4 @@ function typer
 }
 
 # ===== Adjust decimal for speed. ===== #
-typer "$(cat Your_File_Name_here.txt)" 0.0001
+typer "$(cat BMO.txt)" 0.0001
