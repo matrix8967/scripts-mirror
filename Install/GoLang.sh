@@ -14,6 +14,8 @@ go install github.com/jesseduffield/lazydocker@latest
 go install github.com/sachaos/tcpterm@latest
 # go get -u github.com/vultr/govultr/v2
 go install github.com/gonetx/httpit@latest
+go install github.com/jesseduffield/lazygit@latest
+go install github.com/jmhobbs/terminal-parrot@latest
 
 sudo cp $GOPATH/bin/* /usr/bin/
 

@@ -24,6 +24,10 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'hashivim/vim-terraform'
 Plugin 'cespare/vim-toml'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'gyim/vim-boxdraw'
+Plugin 'isobit/vim-caddyfile'
+Plugin 'mhartington/oceanic-next'
+Plugin 'blindFS/vim-taskwarrior'
 
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
@@ -50,8 +54,16 @@ endtry
 let &t_ut=''
 
 " Colors
-syntax enable
+" syntax enable
 " let g:dracula_colorterm = 0
 " colorscheme dracula
 
-let g:airline_theme='deus'
+" DraculaPro
+packadd! dracula_pro
+syntax enable
+let g:dracula_colorterm = 0
+colorscheme dracula_pro
+
+" let g:airline_theme='deus'
+let g:airline_theme='oceanicnext'
+
