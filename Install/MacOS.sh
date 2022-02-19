@@ -69,6 +69,7 @@ isl \
 jbig2dec \
 jemalloc \
 jpeg \
+kitty \
 libassuan \
 libcaca \
 libde265 \
