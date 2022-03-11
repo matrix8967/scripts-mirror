@@ -47,7 +47,6 @@ kitty
 libappindicator-gtk3
 libguestfs
 libnotify
-libreoffice
 libvirt
 linux-steam-integration
 lm_sensors
