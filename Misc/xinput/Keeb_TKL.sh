@@ -4,8 +4,8 @@ GREEN='\033[0;32m'
 NC='\033[0m'    # No Color
 
 #####
-# xinput list
-# Apple Inc. Magic Keyboard
+## xinput list
+## Apple Inc. Magic Keyboard
 #####
 
 #####

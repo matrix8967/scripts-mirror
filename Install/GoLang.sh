@@ -16,6 +16,9 @@ go install github.com/sachaos/tcpterm@latest
 go install github.com/gonetx/httpit@latest
 go install github.com/jesseduffield/lazygit@latest
 go install github.com/jmhobbs/terminal-parrot@latest
+# go get github.com/cointop-sh/cointop
+go install github.com/cointop-sh/cointop@latest
+
 
 sudo cp $GOPATH/bin/* /usr/bin/
 

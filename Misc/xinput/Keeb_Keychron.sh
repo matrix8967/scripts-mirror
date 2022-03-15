@@ -8,13 +8,12 @@ NC='\033[0m'    # No Color
 #####
 
 #####
-## xinput
-## AppleTKL
+## lsusb
+## ID 05ac:024f Apple, Inc. Aluminium Keyboard (ANSI)
 #####
 
 #####
-## lsusb
-## ID 05ac:024f Apple, Inc. Aluminium Keyboard (ANSI)
+## Test if this can share the same code/config as the default Apple TK
 #####
 
 cat <<EOF > /etc/modprobe.d/hid_apple.conf
