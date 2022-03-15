@@ -11,9 +11,9 @@ NC='\033[0m' # No Color
 sudo dpkg-reconfigure locales
 sudo dpkg-reconfigure keyboard-configuration
 sudo dpkg-reconfigure tzdata
-mkdir -p /home/pi/Git/Gitlab
+mkdir -p /home/pi/Git/Gitlab/scrolls/
 sudo apt update && sudo apt install git -y
-git clone https://gitlab.com/matrix8967/scripts.git /home/pi/Git/Gitlab/
+git clone https://gitlab.com/matrix8967/scripts.git /home/pi/Git/Gitlab/scrolls
 sudo cat <<EOF > /etc/wpa_supplicant/wpa_supplicant.conf
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
