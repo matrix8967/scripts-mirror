@@ -13,10 +13,14 @@ NC='\033[0m'    # No Color
 #####
 
 #####
-## Test if this can share the same code/config as the default Apple TK
+## Test if this can share the same code/config as the default Apple TK.
+## Config File will be located at /usr/lib/modprobe.d/hid_apple.conf
+## if installed via Package Manager.
 #####
 
-cat <<EOF > /etc/modprobe.d/hid_apple.conf
+# cat <<EOF > /etc/modprobe.d/hid_apple.conf
+cat <<EOF > /usr/lib/modprobe.d/hid_apple.conf
 options hid_apple fnmode=2
+options hid_apple swap_opt_cmd=1
 EOF
 sudo modprobe -r hid_apple; sudo modprobe hid_apple
