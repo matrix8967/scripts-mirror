@@ -5,14 +5,16 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-sudo snap remove bare
-sudo snap remove core20
-sudo snap remove firefox
-sudo snap remove gnome-3-38-2004
-sudo snap remove gtk-common-themes
-sudo snap remove snap-store
-sudo snap remove snapd
-sudo snap remove snapd-desktop-integration
+sudo snap remove --purge firefox
+sudo snap remove --purge snap-store
+sudo snap remove --purge snapd-desktop-integration
+sudo snap remove --purge gtk-common-themes
+sudo snap remove --purge gnome-3-38-2004
+sudo snap remove --purge core20
+sudo snap remove --purge bare
+sudo snap remove --purge snapd
+sudo apt remove -y --purge snapd
+sudo apt-mark hold snapd # avoid install snapd again
 sudo apt autoremove --purge snapd
 
 sudo rm -rf /var/cache/snapd/
