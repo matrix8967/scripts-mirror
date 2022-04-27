@@ -9,6 +9,7 @@ NC='\033[0m' # No Color
 export GO111MODULES=auto
 
 go install github.com/charmbracelet/glow@latest
+go install github.com/maaslalani/draw@latest
 # go get -u github.com/jingweno/ccat
 go install github.com/jesseduffield/lazydocker@latest
 go install github.com/sachaos/tcpterm@latest
