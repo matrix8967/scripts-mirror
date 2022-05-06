@@ -59,3 +59,4 @@ pkg-config
 httpie
 screen
 minicom
+bat

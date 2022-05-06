@@ -10,3 +10,5 @@ pip3 install --user waybackpack
 pip3 install --user pmbootstrap
 pip3 install --user bpytop
 pip3 install --user paramiko
+pip3 install --user argcomplete
+
