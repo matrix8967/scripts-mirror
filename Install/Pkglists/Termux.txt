@@ -206,6 +206,7 @@ speexdsp
 sshpass
 steghide
 tar
+taskwarrior
 termux-am
 termux-auth
 termux-exec
