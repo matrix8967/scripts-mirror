@@ -1,0 +1,719 @@
+From: jorn_Notwerk_mcs_com (Jorn Barger)
+Date: Sun Oct 31 09:43:40 CST 1993
+
+[This needs updating... sorry.]
+
+ASCIItech
+by Jorn Barger
+
+Purpose: to promote more creative use of the ASCII character set on Internet,
+especially for _page layout_ and _animation_, and the development and
+distribution of tools to facilitate this.
+
+Justification: Ascii art will continue to be the appropriate, populist
+technology for graphics on Internet, for some years to come... so we might as
+well get good at it!  (There's still lots of untapped potential...)
+
+There's such a range of newsreading environments, that few of the ideas
+offered here will work the same for everyone. If we want to do this right,
+we need to get a sense of where these differences are most serious.
+(White-on-black displays vs b-on-w, for one...)
+
+Contents of FAQ:
+- Samples of page-layout and animation
+- The ASCII character set: problems and potential
+- The line-draw character palette
+- Line-draw ascii fonts
+- Esthetics: texture, gesture
+- Greyscale character palettes
+- ASCII anti-aliasing
+- An 'asciify' algorithm for anti-aliasing pbm bitmaps, with sample
+
+This last topic may have the most *practical* utility-- it should allow
+archives of GIFs and JPEGs to offer compact catalogs of thumbnails *in the
+form of simple text files*.
+
+Thruout the faq, I'll be raising questions about things I don't know, that
+I'd like to be able to answer in future updates.  Feedback is *very*
+welcome.
+
+Here's some samples of ascii page-layout:
+^L
+
+              1 9 9 3
+
+The central             |"|
+bargraph shows >>>>>>>> |m| <    =---------
+the total               |m| 1                  This rightmost bargraph,
+number of      |"|      |m| <    .             turned sideways, shows
+newsgroups,    | | <    |m| 2    .             the *distribution* of daily
+log 10         | | 9    |m| <    .             volume for all newsgroups.
+(groups_total) | | <    |m| 3    ]             (msgs_per_group)
+(~5000)        | | <    |m| <    ]
+               |m| 6    | | 4    ]]            Here, most newsgroups are
+        >>>>>  |m| <    | | <    ]]            still way under 100 msgs
+This leftmost  |m| <    | | 5    ]]]]          per day.  One group in ten
+bargraph is    |m| 3    | | <    ]]]]]]]       tops this level.
+a logarithmic  |m| <    | | 6    =---------
+display of     |m| <    |_|      0  100  200
+total Usenet   |m| 0            msgs/day/group
+readership,    |_|
+(subs_total)           5000 groups
+(~1,000,000)  1 million readers
+
+^L
+
+ 1 9 8 8                    1 9 9 3                 1 9 9 8: the nightmare?
+(wild guesses)
+       |"|                       |"|                       |"|
+       |m| <  =---------         |m| <  =---------         |m| < =---------
+       |m| 1                     |m| 1                     |m| 1 ]
+ |"|   |m| <               |"|   |m| <  .            |"|   |m| < ]]
+ | | < |m| 2               | | < |m| 2  .            | | < |m| 2 ]]
+ | | 9 |m| <  .            | | 9 |m| <  .            | | 9 |m| < ]]
+ | | < | | 3  .            | | < |m| 3  ]            |m| < |m| 3 ]]
+ | | < | | <  .            | | < |m| <  ]            |m| < |m| < ]]]
+ | | 6 | | 4  ]            |m| 6 | | 4  ]]           |m| 6 |m| 4 ]]]]
+ | | < | | <  ]            |m| < | | <  ]]           |m| < |m| < ]]]]]]
+ |m| < | | 5  ]]           |m| < | | 5  ]]]]         |m| < | | 5 ]]]]]]]]
+ |m| 3 | | <  ]]]]         |m| 3 | | <  ]]]]]]]      |m| 3 | | < ]]]]]]]]]
+ |m| < | | 6  =---------   |m| < | | 6  =---------   |m| < | | 6 =---------
+ |m| < |_|    0  100  200  |m| < |_|    0  100  200  |m| < |_|   0  100  200
+ |m| 0      msgs/day/group |m| 0                     |m| 0
+ |_|                       |_|                       |_|
+       500 groups               5000 groups                50,000 groups???
+100,000 readers           1 million readers         100 million readers
+
+^L
+Current editors/ word processors assume that you want your text elements to
+hug the left margin, effectively a 'sideways gravity' that must be carefully
+counteracted.  It's easy to screw up (which the warlorders call 'tabdamage').
+If your wp offers typeover-mode, that's likely to work better than insert-
+mode, for preventing tabdamage.
+
+Here's a primitive animation (that also illustrates the use of lineweight to
+simulate depth).  The protagonist is just a circle with a heavy ascii
+lineweight, abstractly representing a character named Joy Hoy:
+
+            _+m"m+_
+           Jp     qh
+           O       O
+           Yb     dY
+            "Y5m2Y"
+
+The faster your modem, the nicer this works:
+
+^L
+==========================================================================
+                       .
+                       ::
+                       :: .. :
+                  .  .::::.: ::
+               -  :. :':::::.::::           /-\_/-\_/-\_/-\_/-\_/-\_/-\_/
+              |   :':'::.::::::.:         - .   ,       .      .     .
+              |  \- - :''::':':::  ... _/  |  .  .   <^o^o^^o^>   .     .
+              |   ]   \- -::'::'::.::/     |  .    <^o^^o^^o^^o^>     ,
+              |       : ..\:::':'::/       | . .  <^^^^^^^^^^^^^^> .
+              |   ]   : .. _ -=_           |    ,  H.:. /.../..:H   .   .
+              |   ]   : ./       \         | . . . I://.//./ /::I      ,
+              |   ]   :/           \       | .     H:.: /.//...:H ..
+              |   ]  / /           \ \     |    :. I.:/.//.//..:I  .:   .
+  _+m"m+_     |   ]/  /               \    | .  ,  H:../// /./::H  . ..
+ Jp     qh    |  /                  \   \  | ., .  I./:/../// .:I  ,  . ,
+ O       O ___|/     /               \    \|____;__H:. ////:/./:H_________
+ Yb     dY
+  "Y5m2Y"           /
+__________________  /                                           __________
+    _______"_____                        =======_=======_===_===__________
+==========================================================================
+^L
+==========================================================================
+                       .
+                       ::
+                       :: .. :
+                  .  .::::.: ::
+               -  :. :':::::.::::           /-\_/-\_/-\_/-\_/-\_/-\_/-\_/
+              |   :':'::.::::::.:         - .   ,       .      .     .
+              |  \- - :''::':':::  ... _/  |  .  .   <^o^o^^o^>   .     .
+              |   ]   \- -::'::'::.::/     |  .    <^o^^o^^o^^o^>     ,
+              |       : ..\:::':'::/       | . .  <^^^^^^^^^^^^^^> .
+              |   ]   : .. _ -=_           |    ,  H.:.//... ..:H   .   .
+              |   ]   : ./       \         | . . . I://.//. //::I      ,
+              |   ]   :/           \       | .     H:.://.//...:H ..
+                  ]  / /           \ \     |    :. I.:/./ .//..:I  .:   .
+           _+m"m+_ /  /               \    | .  ,  H:../////./::H  . ..
+          Jp     qh        J888888888888h  | ., .  I./:/../ //.:I  ,  . ,
+   ______ O       O  /    88 \\\  \ \ \ 88 |____;__H:.// //:/./:H_________
+          Yb     dY      88 \\\\\\ \\\ \ 88
+           "Y5m2Y"  /    8 \\\\\\\\\\ \\  8
+ _________________  /   J888888888888888888h                   __________
+    ______"______      8OO8XX [YBNNDY] XX8OO8 ==_======_====_===__________
+==========================================================================
+^L
+==========================================================================
+                       .
+                       ::
+                       :: .. :
+                  .  .::::.: ::
+               -  :. :':::::.::::           /-\_/-\_/-\_/-\_/-\_/-\_/-\_/
+              |   :':'::.::::::.:         - .   ,       .      .     .
+              |  \- - :''::':':::  ... _/  |  .  .   <^o^o^^o^>   .     .
+              |   ]   \- -::'::'::.::/     |  .    <^o^^o^^o^^o^>     ,
+              |       : ..\:::':'::/       | . .  <^^^^^^^^^^^^^^> .
+              |   ]   : .. _ -=_           |    ,  H.:.//.../..:H   .   .
+              |   ]   : ./       \         | . . . I: /.//.// ::I      ,
+              |   ]   :/      [==] \       | .     H:.://.//...:H ..
+              |   ]  / /     [d==b]\ \     |    :. I.:/.//.//..:I  .:   .
+              |   ]/  /       "  "    \    | .  ,  H:.. ////./::H  . ..
+              |  /       _+m"m+_    \   \  | ., .  I./:/..////.:I  ,  . ,
+    __________|/     /  Jp     qh    \    \|____;__H:./ ///:/./:H_________
+                        O       O
+                    /   Yb     dY
+ _________________  /    "Y5m2Y"                                __________
+    _______"_____                        =======_=====_=====_===__________
+==========================================================================
+^L
+==========================================================================
+                       .
+                       ::
+                       :: .. :
+                  .  .::::.: ::
+               -  :. :':::::.::::           /-\_/-\_/-\_/-\_/-\_/-\_/-\_/
+              |   :':'::.::::::.:         - .   ,       .      .     .
+              |  \- - :''::':':::  ... _/  |  .  .   <^o^o^^o^>   .    .
+              |   ]   \- -::'::'::.::/     |  .    <^o^^o^^o^^o^>     ,
+              |       : ..\:::':'::/       | . .  <^^^^^^^^^^^^^^> .
+              |   ]   : .. _ -=_           |    ,  H.:.//.../..:H   .   .
+              |   ]   : ./    w  \         | . . . I://. /.///::I      ,
+              |   ]   :/           \       | .     H:.://.//...:H ..
+              |   ]  / /           \ \     |    :. I.:/.//./ ..:I  .:  .
+              |   ]/  /               \    ' .  ,  H:../ ///./::H  . ..
+              |  /                  \   _+m"m+_ .  I./:/..////.:I  ,  . ,
+    __________|/     /                 Jp     qh __H:./// /:/./:H_________
+                                       O       O
+                    /                  Yb     dY
+ _________________  /                   "Y5m2Y"                 __________
+    _______"_____                         ___===_====_======_===__________
+==========================================================================
+^L
+==========================================================================
+                       .
+                       ::
+                       :: .. :
+                  .  .::::.: ::
+               -  :. :':::::.::::           /-\_/-\_/-\_/-\_/-\_/-\_/-\_/
+              |   :':'::.::::::.:         - .   ,       .      .     .
+              |  \- - :''::':':::  ... _/  |  .  .   <^o^o^^o^>   .     .
+              |   ]   \- -::'::'::.::/     |  .    <^o^^o^^o^^o^>     ,
+              |       : ..\:::':'::/       | . .  <^^^^^^^^^^^^^^> .
+              |   ]   : .. _ -=_           |    ,  H.:.//.../..:H   .   .
+              |   ]   : ./       \         | . . . I:/ .//.// ::I      ,
+              |   ]   :/           \       | .     H:.://.//...:H ..
+              |   ]  / /           \ \     |    :. I.:/.//.//.. !  .:   .
+              |   ]/  /               \    | .  ,  H:..///  _+m"m+_ . .
+              |  /                  \   \  | ., .  I./:/.. Jp     qh  . ,
+    __________|/     /               \    \|____;__H:./ // O       O  ____
+                                                           Yb     dY
+                    /                                       "Y5m2Y"
+ _________________  /                                           __________
+    _______"_____                        =======_===_=======_===__________
+==========================================================================
+^L
+The ASCII character set
+
+The American Standard Code for Information Interchange supplies a character-
+assignment for each number from zero to 127 (7F in hexadecimal).  As I
+understand it, Internet protocols are optimized for this seven-bit range--
+if you're trying to ftp an eight-bit-wide file, you have to specially request
+'binary' transmission.  (So the opposite of binary, here, is *ASCII*.)
+
+Only the numbers from 32 to 126 (20 to 7E hex) are defined as *printable*
+characters (the others are defined as control codes):
+
+    0 1 2 3 4 5 6 7 8 9 A B C D E F
+  =--------------------------------
+2 |   ! " # $ % & ' ( ) * + , - . /  <- <- <- 20 hex is the
+3 | 0 1 2 3 4 5 6 7 8 9 : ; < = > ?           blankspace
+4 | @ A B C D E F G H I J K L M N O
+5 | P Q R S T U V W X Y Z [ \ ] ^ _
+6 | ` a b c d e f g h i j k l m n o     7F is non-printing
+7 | p q r s t u v w x y z { | } ~   <-  in the US ("rubout")
+
+Unfortunately, this narrow standard ignored the needs of many other cultures:
+the British 'pound' sign, letters with accents in French and Scandinavian
+^L
+alphabets, etc., which led them to introduce slight modifications to the
+standard, making the following symbols (at least) non-universal:
+
+   {^ `       { curly brace 1     ^ caret        ` backquote
+    #| }      # hatch/hash mark   | pipe         } curly brace 2
+     ~\            ~ tilde        \ backslash
+    ]$[@      [square brackets]   $ dollarsign   @ at-sign
+
+[The test-graphic is vaguely a woman with a rose in her teeth, on my
+screen anyway...]
+
+Furthermore, even within the US, different typefaces assign significantly
+different shapes to some characters, for example:
+
+"|" (C7)  is sometimes drawn as a continuous line, sometimes broken in the
+middle.
+                              ...@...     ...@...   (So this becomes a
+"^" (5E) may be anything from ..@.@..  to ..@.@..   'Pinocchio' smiley:
+                              .......     .@...@.        { ;^)
+Similarly with "<" and ">".   .......     @.....@       (...doesn't it?))
+^L
+Depending on your character set, any of these may be the blackest black: @#%*
+(I'm often seeing people choosing "#", which on my screen looks totally
+blotchy.)
+
+Any of these may display at different heights: ~^*-=+
+
+Lettershapes may have serifs or not, and ascenders and descenders may be
+straight or curved. (Proportionally-spaced fonts, as opposed to monospaced,
+are of course *hopeless*.  On the Mac, I favor Monaco 9, for its simplicity.
+Courier is another normally-monospaced family.)
+
+Even monospaced fonts may display with different aspect ratios (v:h), at least
+within GUIs, which can turn circles into ellipses and squares into rectangles.
+Different newsreaders may space the lines differently, too, with the same
+outcome. (What was the IBM-monochrome aspect-ratio?)
+
+For Internet transmission, you can assume the display is 80 characters wide,
+although if you trim this a bit it will allow images to be e-quoted without
+wrap-around. (If you use all 80, can the CR cause wraparound in some pagers?)
+
+Normal screen height is 24 or 25 lines, but when you're laying out a page you
+should assume you'll use a control-L before and after each screenful of text,
+to maintain the alignment, and this turns out to limit the height to 22 lines.
+
+Line-draw vs. greyscale character palettes
+
+Most ascii art so far has leaned almost entirely on less than twenty of the
+available characters-- what might be called the 'line-draw' character palette:
+
+           / \ | - _ =
+           . : ' ` " ~
+           < > ( ) [ ]
+
+Here's a cute example of the potential of this palette, a pastiche that re-
+combines an incredibly cool self-portrait by Jonggu Moon and a state-of-the-
+art dragon (off rec.games.mud, I think, but I got it 2ndhand and missed the
+credit).  Notice, though, how the lines are mostly the same weight, creating a
+flatness:
+
+^L
+                                      _   __,----'~~~~~~~~~`-----.__
+                                   .  .    `//====-_             ___,-' `
+                   -.            \_|// .   /||\\  `~~~~`---.___./
+             ______-==.       _-~o~  \/    |||  \\           _,'`
+       __,--'   ,=='||\=_    ;_--~/_-'|-   |`\   \\        ,'
+    _-'        '    |  \\`.   '-'~7  /-   /  ||   `\.     /
+  .'    //// ||     |   \\ \_    /  /-   /   ||      \   /
+ / ____  O-O--=     |     \\.`-_/  /|- _/   ,||       \ /
+,-'     ( ^ _/\_ --_ \     `==-/  `| \'--===-'       _/`
+        /\~-\/  \   `-|      /|    )-'\~'      _,--~'
+       /|`/ _ \_ \    '-~~\_/ |    |   `\_   ,~             /\
+      / | : U_/  /         /  \     \__   \/~               `\__
+      \(__:__ \_/      _,-' _/'\ ,-'~____-'`-/                 ``===\
+        =@=====       ((->/'    \|||' `.     ~`-/ ,                _||
+       |       |                 \_     ~\      `^---|__i__i__\--~'_/
+      /   |   |                 __-^-_    `)  \-.______________,-~'
+     /   /|   |                //,-'~~`__--^-  |-------~~~~~'
+     |  | |  |                        //,--~~`-\
+     |__| |__|
+     /#_)  |#\
+
+^L
+Tools for pasting clip-art *with appropriate 'hidden-line removal'* do not
+exist, so one must settle, for now, for a word processor with rectangular
+cut and paste. (Nisus on the Mac, MS Word in recent upgrades?)
+
+The animation sample at the beginning of this FAQ uses mostly linedraw, but
+also a bit of greyscale in the foreground (darker lineweight) and in the
+far-background (lighter weight).  *Greyscale ascii art normally assumes you're
+displaying dark letters on a light background*.  This won't be true for many
+pc-monochrome monitors.
+
+(Here's a page, again.  Notice also how a degree of 'random noise' adds to the
+sense of realism, like avoiding using too-straight lines or too-symmetrical
+shapes.)
+
+^L
+==========================================================================
+                       .
+                       ::
+                       :: .. :
+                  .  .::::.: ::
+               -  :. :':::::.::::           /-\_/-\_/-\_/-\_/-\_/-\_/-\_/
+              |   :':'::.::::::.:         - .   ,       .      .     .
+              |  \- - :''::':':::  ... _/  |  .  .   <^o^o^^o^>   .     .
+              |   ]   \- -::'::'::.::/     |  .    <^o^^o^^o^^o^>     ,
+              |       : ..\:::':'::/       | . .  <^^^^^^^^^^^^^^> .
+              |   ]   : .. _ -=_           |    ,  H.:.//... ..:H   .   .
+              |   ]   : ./       \         | . . . I://.//. //::I      ,
+              |   ]   :/           \       | .     H:.://.//...:H ..
+                  ]  / /           \ \     |    :. I.:/./ .//..:I  .:   .
+           _+m"m+_ /  /               \    | .  ,  H:../////./::H  . ..
+          Jp     qh        J888888888888h  | ., .  I./:/../ //.:I  ,  . ,
+   ______ O       O  /    88 \\\  \ \ \ 88 |____;__H:.// //:/./:H_________
+          Yb     dY      88 \\\\\\ \\\ \ 88
+           "Y5m2Y"  /    8 \\\\\\\\\\ \\  8
+ _________________  /   J888888888888888888h                    __________
+    ______"______      8OO8XX [YBNNDY] XX8OO8 ==_======_====_===__________
+==========================================================================
+^L
+ASCII fonts (linedraw)
+
+Here's some ascii fonts that use only the linedraw palette.  (I'd like to
+collect full alphabets for these.)  Notice that they all use the underscore
+for the topline of the letters, so an almost-full line of blank must be left
+above them:
+ ___  _           _  _             _       _____
+|   || |_  ___  _| ||_| ___  __  _| |_    /  ___\  ___  __ ___   ___
+| | ||  .\/ ._\/.  || |/ ._\|  \|_   _|   | / __  / _ \ | /   \ / _ \
+|___||___/\___/\___||_|\___/|_|_| |_|     | \_\ \ | __/ |  /\ | | __/
+                                          \_____/ \___/ |_| |_| \___/
+ _  __  __      __  _     __   ___  __  __  ___  _  _
+| |/ / / _|    / _|| |   /  \ | __|/ _|/ _|| __|| \| |
+|   ( ( (_    ( (_ | |_ | __ || __|\_ \\_ \| __||    |
+|_|\_\ \__| [] \__||___||_||_||___||__/|__/|___||_|\_|
+  ___  __ __  ___  ____   ___    ____ _____  ___  _____  ___  ____
+ /   \|  |  |/   \|    \ /   \  / ___|  ___|/   \|_   _|/   \|    |
+| =+= | =+= | =+= | =+= | =+= | \__ \|  ___| +=+ | | | | +=+ | +=+
+ \___/|__|__|__|__|__|\_\__|__| |___/|_____|__|__| |_| |__|__|____|
+^L
+                             /\
+  ___/\___      ___   __  __(__) __  _______
+_/  __/\  \/\  /   \ |  |/  ___\/  \/   ___/
+\___ \_/     \/ _/\ \| _/  /|  |    \  / ____
+_/  | \   \/  \ \_/  / \_  \|  |  |  \ \/  _/
+\  ___/\__||   \____/|  |\__/__|__|   \_   |
+ \/        |____/    |__|         |____/|__| /\
+                                    ___     (__)_____________  ___________
+                                    \  \/\  |  |____  \____  \/   \_____  \
+                                   _/     \ |  | _|/  / _|/  / _/\ \__|/  /
+                                   \   \/  \|  | \_   \_\_   \_\_/  /\_   \_
+                                    \__||   |__|  |\___/ |\___/____/  |\___/
+                                        |____/ |__|   |__|         |__|
+Here's an especially readable box font (in tumbling-dice mode):
+       __     ____         __   ____         __   __
+      /\ \   /  \_\       / /\ /  \ \       / |\ / /\
+     /  \_\ / /\ |_|     / / /| /\ \ \     /  ||/ / /
+    / /\ | |\ \/ /_/_   / / / \ \/  \ \   /   |/ / /
+   /  \/ |_| \  __ \_\ /_/ /   \  /\ \_\ / /|   / /
+  / /\ ./_/   \ \ \/_/_\_\/     \ \ \/_// / |  / /
+  \ \/ |_|     \ \_\ /_/\        \ \_\ /_/ /|_/ /
+   \__/_/       \/_/ \_\/         \/_/ \_\/ \_\/
+^L
+And an impressively tiny one:
+  ________    ________
+ / /_  __/\  /\ \__  _\
+/___/_/_/\/  \ \___\_\_\
+\___\_\_\/    \/___/_/_/
+
+Warlorders call most ascii fonts "BUAFs", for butt-ugly ascii font. (buaG
+substitutes G-for-graphic.)  I'm on the lookout for fonts that might pass for
+butt-beautiful, and I'll settle for butt-bearable... :^)  Here's my new
+favorite (anybody know Jules?):
+
+     _|  _|  _|  _|     _|_|_   _|_|_
+     _|  _|  _|  _|     _| |/   \|_
+ _|  _|  _|  _|  _|     _|/         \|
+ \|_|_/  \|_|_/  _|_|_| \|_|_|  \|_|_/
+
+For page-layout, the linedraw palette is useful for making boxes and frames,
+which adds to a screen's 'page-appeal' in the same way a picture-frame
+sharpens the look of a wall-poster.
+^L
+Texture and gesture
+
+I experienced a personal ascii-art epiphany last winter, on seeing a few
+signatures where people used this: _/ as a tile, which provides an amazing
+sense of *texture*:
+
+            _/
+         _/  _/
+      _/  _/  _/
+
+
+Another (flatter) sort of
+       texture:                    The same, randomized:
+
+    *::*::*::*::*::*::*::*        ::*:::::***:::::::::::
+    *::*::*::*::*::*::*::*        :::::::**::::::*::::*:
+    *::*::*::*::*::*::*::*        :*::*:*::*::::*::::*::
+    *::*::*::*::*::*::*::*        :::*::::::*::*:*::::::
+    *::*::*::*::*::*::*::*        ::*:*::::*:*::::::::::
+    *::*::*::*::*::*::*::*        ::::::*:*::::*::::::::
+    *::*::*::*::*::*::*::*        *::::::::**:::::::::**
+    *::*::*::*::*::*::*::*        ::::*::::::*:::::*::::
+^L
+If your wp's macro-language includes a random-number function, you can
+generate textures by writing a 'Spatter' macro that fills a rectangle with
+the letters of any string, randomly scattered.
+
+^L
+                      _/ _/
+                      _/  _/
+                   _/      _/
+                  _/        _/
+                _/          _/            _/ _/
+             _/         _/ _/           _/      _/
+                       _/               _/       _/
+                      _/              _/_/       _/     _/
+                      _/                         _/     _/
+As far as I know,      _/                        _/    _/
+the first appli-             _/  _/ _/ _/     _/ _/   _/
+cation to allow            _/ _/        _/ _/_/_/    _/
+the use of a mouse      _/            _/             _/
+to draw ascii         _/            _/_/ _/        _/
+*gesturally* will    _/              _/     _/   _/_/
+be Matt Mora's       _/              _/      _/  _/
+AsciiPaint (for Mac), _/            _/
+now in beta. (Watch    _/
+for announcements.)    _/_/
+It made this easy:         _/ _/ _/
+
+^L
+ASCII greyscale
+
+ASCII art has its roots in the technology of *mosaics*.  Most mosaics use
+small elements with a single, solid colorshade.  By this standard, ASCII
+offers 95 shades of grey!  (When I was small, a design firm in my town built a
+hi-tech mosaic mural for the Wright Brothers museum in Dayton, Ohio, a wall-
+sized version of that classic b&w photo of their first flight, built out of
+inch-square tiles in about eight shades of grey-- only instead of solid greys,
+they used (fractally) tiny black-and-white 'icons', which represented other
+scenes from the Wrights' career, covering a scale from very light to very
+dark...)
+
+Here's an approximate, partial greyscale ascii palette (still assuming white
+background):
+
+      .'`,^:";~
+     -_+<>i!lI?
+     /\|()1{}[]   (I'm looking for feedback about where this doesn't work,
+     rcvunxzjft   for non-Mac-Monaco displays.)
+     LCJUYXZO0Q
+     oahkbdpqwm
+     *WMB8&%$#@
+^L
+(If an eighth bit were available to toggle the background color between black
+and white... would this help a lot?)
+
+Of course, more than eight shades of grey is probably overkill, not least
+because the lettershapes contribute so much distracting 'noise' that fewer is
+probably better.
+^L
+@@@@@@@@@@@@@@@@@@@@J.............@@@@@@JJJJJJ@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@J..................@@JJJJ@@@@JJ@@@@
+@@@@@@..@@@@@@@@@@@@@JJJ............@@@@@@@@@@@@@@JJ@@@@
+@@@@@@J.JJJJ@@@J@@@@@@@@J.........@@.JJJ..@@@@JJJ.JJJJ@@  The more you squint,
+@@@@..JJ....@@JJ@@@@@@@@J.........@@.J..JJ@@@@@@J...JJ@@  the better this
+@@@@JJ....J.J.....J.@@@@............JJJ.JJ..........JJ@@  looks!  Notice that
+@@@@JJ....J.J.....J.@@@@.............JJJ............JJ@@  it uses only three
+@@JJJJ..J..........J@@@@................JJJJ........JJ@@  greys (or a 'black',
+@@JJJJ..J..........J@@@@...................J........JJ@@  a white, and one
+@@JJJ..............J@@@@J...........................JJ@@  grey).
+@@JJJ.............JJ@@@@J...........................JJ@@
+@@JJJJ.........J.J@@@@J............................JJJ@@  [This example is
+@@JJJJJ.......J.JJ@@@@J............................JJJ@@  far from being
+@@JJJJJ.......J.@@JJ@@....J.........................@@@@  optimized, even
+@@JJJJJ.......JJ@@JJ@@..JJJ.........................@@@@  at this low res...]
+@@JJJJJ.........JJ@@...............................J@@@@
+@@JJJJJJ...J.JJJJJ@@..............................JJ@@@@  (Aren't the J's
+@@@@@JJJJJJJ@@JJJJ@@@JJJ@@@JJJ...................J@@@@@@  annoying?)
+@@@@@@JJJJJJ@@@@@@@@@@@@@@@@@@@@@@@JJJJJ.J......JJ@@@@@@
+@@@@@@@@JJJJJJJJ.J@@@@@@@@@@@JJJ................@@@@@@@@
+@@@@@@@@JJJJJJJJJ.JJ@@@@@@@@J.................@@@@@@@@@@
+@@@@@@@@@@JJJJ.J.JJ.........................@@@@@@@@@@@@
+^L
+               ....................J@@@@@@@@@@@@@......JJJJJJ..........
+               .....................J@@@@@@@@@@@@@@@@@@..JJJJ....JJ....
+               ......@@.............JJJ@@@@@@@@@@@@..............JJ....
+Here's the     ......J@JJJJ...J........J@@@@@@@@@..@JJJ@@....JJJ@JJJJ..
+same image     ....@@JJ@@@@..JJ........J@@@@@@@@@..@J@@JJ......J@@@JJ..
+in negative,   ....JJ@@@@J@J@@@@@J@....@@@@@@@@@@@@JJJ@JJ@@@@@@@@@@JJ..
+for pc-monos:  ....JJ@@@@J@J@@@@@J@....@@@@@@@@@@@@@JJJ@@@@@@@@@@@@JJ..
+               ..JJJJ@@J@@@@@@@@@@J....@@@@@@@@@@@@@@@@JJJJ@@@@@@@@JJ..
+(The whites    ..JJJJ@@J@@@@@@@@@@J....@@@@@@@@@@@@@@@@@@@J@@@@@@@@JJ..
+just aren't    ..JJJ@@@@@@@@@@@@@@J....J@@@@@@@@@@@@@@@@@@@@@@@@@@@JJ..
+very white!)   ..JJJ@@@@@@@@@@@@@JJ....J@@@@@@@@@@@@@@@@@@@@@@@@@@@JJ..
+               ..JJJJ@@@@@@@@@J@J....J@@@@@@@@@@@@@@@@@@@@@@@@@@@@JJJ..
+               ..JJJJJ@@@@@@@J@JJ....J@@@@@@@@@@@@@@@@@@@@@@@@@@@@JJJ..
+               ..JJJJJ@@@@@@@J@..JJ..@@@@J@@@@@@@@@@@@@@@@@@@@@@@@@....
+               ..JJJJJ@@@@@@@JJ..JJ..@@JJJ@@@@@@@@@@@@@@@@@@@@@@@@@....
+               ..JJJJJ@@@@@@@@@JJ..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@J....
+               ..JJJJJJ@@@J@JJJJJ..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@JJ....
+               .....JJJJJJJ..JJJJ...JJJ...JJJ@@@@@@@@@@@@@@@@@@@J......
+               ......JJJJJJ.......................JJJJJ@J@@@@@@JJ......
+               ........JJJJJJJJ@J...........JJJ@@@@@@@@@@@@@@@@........
+               ........JJJJJJJJJ@JJ........J@@@@@@@@@@@@@@@@@..........
+               ..........JJJJ@J@JJ@@@@@@@@@@@@@@@@@@@@@@@@@............
+^L
+ASCII anti-aliasing
+
+The oddities of the ascii lettershapes, though, need not be purely noise.  One
+can also view ascii as a palette whose elements combine both linedraw and
+greyscale effects.  This might be thought of as anti-aliased greyscale, and
+ought to allow at least doubled resolution, both horizontally and vertically.
+(I wonder how this works on other screens?):
+
+^L
+(((&(&(&(&(&(((&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@((((((((((((((((((((((((((@
+((&(((&((&(&((@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&((((((((((((((((((((((((@
+(&(&((&(&&((@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&(((((((((((((((((((((@
+((&(&(@&@&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&((((((((((((((((((@
+&(((&&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@((((((((((((((((((@
+(&(&(@@@&&@@@@@@@@@@@@@@@@@@@@@@5::""=@@@@@@@@@@@@@@@@@@@@&(((((((((((((((((@
+((&(&&@@@@@@@@@@@@@@@@@@@@@@@@:::::::m88CCC8@@@@@@@@@@@@@@@@@&((((((((((((((@
+(&(&@@@@@@@@@@@@@@@@@@@#88@@88b_::::::mm@9998C8@@@@@@@@@@@@@@@@(((((((((((((@
+((@&@@@@@@@@@@@@@@@@@@#L""#58@@@)::..8<"_@@9>"C@@@@@@@@@@@@@@@@@@&((((((((((@
+(@@@@@@@@@@@@@@@@@@@@@3::))::)@@:::  :Yh":::::C@@@@@@@@@@@@@@@@@@@@@m((((((((
+@@@@@@@@@@@@@@@@@@@@@33:)::::(@@:::.   :"?::::C@@@@@@@@@@@@@@@@@@(@((K(((((((
+@@@@@@@@@@@@@@@@@@@@@3)::::::d@@|::.    ..::::C@@@@@@@@@@@@@@@@@@(@((@((((((@
+@@@@@@@@@@@@@@@@@@@@@3J)::::/J@@|::..   ..:::(C@@@@@@@@@@@@@@@@@@@((@@&(((((@
+@@@@@@@@@@@@@@@@@@@@@3J)::::6@C8:=)..   .:::::@@@@@@@@@@@@@@@@@@@@@@@@@&((((@
+@@@@@@@@@@@@@@@@@@@@@33J):;;cO8::::.... :::::_@@@@@@@@@@@@@@@@@@@@@@@@@&((((@
+@@@@@@@@@@@@@@@@@@@@@@833O8mm@@m888mme_=;:::_@@@@@@@@@@@@@@@@@@@@@@@@@@&@(((@
+@@@@@@@@@@@@@@@@@@@@@@88OOOO:@@@88P":::::::w@@@@@@@@@@@@@@@@@@@@@(@@@@@@(@((@
+@@@@@@@@@@@@@@@@@@@@@@@88OOJJ):::::::::::_@@@@@@@@@@@@@@@@@@@@@@@(@@@@@@(&((@
+@@@@@@@@@@@@@@@@@@@@@@&&88888):::::__wm@@@@@@@@@@@@@@@@@@@@@@@@@@@(@@@@@@@((@
+@@@@@@@@@@@@@@@@@@@@@@&&88888 @@@@@&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@(@@@@@@&((@
+@@@@@@@@@@@@@@@@@@@@@&8@888883 888888@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&@
+@@@@@@@@@@@@@@@@@@@&@&8&8888833 88888&@@&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&@@
+^L
+|@@@@@@@^^~~~~~~~~~~~~~~~~~~~~^^@@@@@@@@|
+|@@@@@@^     ~^  @  @@ @ @ @ I  ~^@@@@@@|
+|@@@@@            ~ ~~ ~I          @@@@@|   Here's a superb white-on-black
+|@@@@'                  '  _,w@<    @@@@|   anti-aliased image I just got
+|@@@@     @@@@@@@@w___,w@@@@@@@@  @  @@@|   in the mail.
+|@@@@     @@@@@@@@@@@@@@@@@@@@@@  I  @@@|
+|@@@@     @@@@@@@@@@@@@@@@@@@@*@[ i  @@@|
+|@@@@     @@@@@@@@@@@@@@@@@@@@[][ | ]@@@|
+|@@@@     ~_,,_ ~@@@@@@@~ ____~ @    @@@|
+|@@@@    _~ ,  ,  `@@@~  _  _`@ ]L  J@@@|
+|@@@@  , @@w@ww+   @@@ww``,,@w@ ][  @@@@|
+|@@@@,  @@@@www@@@ @@@@@@@ww@@@@@[  @@@@|
+|@@@@@_|| @@@@@@P' @@P@@@@@@@@@@@[|c@@@@|
+|@@@@@@w| '@@P~  P]@@@-~, ~Y@@^'],@@@@@@|
+|@@@@@@@[   _        _J@@Tk     ]]@@@@@@|
+|@@@@@@@@,@ @@, c,,,,,,,y ,w@@[ ,@@@@@@@|
+|@@@@@@@@@ i @w   ====--_@@@@@  @@@@@@@@|
+|@@@@@@@@@@`,P~ _ ~^^^^Y@@@@@  @@@@@@@@@|
+|@@@@^^=^@@^   ^' ,ww,w@@@@@ _@@@@@@@@@@|
+|@@@_xJ~ ~   ,    @@@@@@@P~_@@@@@@@@@@@@|
+|@@   @,   ,@@@,_____   _,J@@@@@@@@@@@@@|
+|@@L  `' ,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+^L
+Here's a playful anti-aliased ascii font (3*3):
+
+    !  i-, ,=_ :\  = - --= ,-, i i !   i ! / i   \  /
+   i=: :=\ :   | ) |-  |-  | _ :_: :   | =:  :   !""!
+   j t |_) Y_- :=' o-= o   Y-) ! ! i \-Y i \ =-- +  +
+
+  = : ,-, i-  ,-, :-, ,-> ==- i i i i !  ! \ / i i <-=
+  |\| [ ) :_) [ ) i_; "-,  |  | | \ / :/\:  =  ':'  /
+  : + "=" |   "=t ! \ o_)  !  "="  +  !  ! j t  !  o-=
+
+An anti-aliasing character palette should include these 'diagonals': JhjtY
+
+
+A new anti-aliasing algorithm!
+
+Happily, as I was working on this faq, I ran across Rob Harley
+(robert_vlsi_cs_caltech_edu), who had some handy code for converting b&w
+bitmaps according to a mapping like this:
+^L
+  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..
+  ..  ..  ..  ..  .@  .@  .@  .@  @.  @.  @.  @.  @@  @@  @@  @@
+  ..  .@  @.  @@  ..  .@  @.  @@  ..  .@  @.  @@  ..  .@  @.  @@
+      ,   .   _   -   i   v   g   -   c   i   s   =   e   z   m
+
+  .@  .@  .@  .@  .@  .@  .@  .@  .@  .@  .@  .@  .@  .@  .@  .@
+  ..  ..  ..  ..  .@  .@  .@  .@  @.  @.  @.  @.  @@  @@  @@  @@
+  ..  .@  @.  @@  ..  .@  @.  @@  ..  .@  @.  @@  ..  .@  @.  @@
+  '   !   /   2   !   ]   /   d   /   (   /   K   Y   4   Z   W
+
+  @.  @.  @.  @.  @.  @.  @.  @.  @.  @.  @.  @.  @.  @.  @.  @.
+  ..  ..  ..  ..  .@  .@  .@  .@  @.  @.  @.  @.  @@  @@  @@  @@
+  ..  .@  @.  @@  ..  .@  @.  @@  ..  .@  @.  @@  ..  .@  @.  @@
+  `   \   |   L   \   \   )   G   !   t   [   b   +   N   D   W
+
+  @@  @@  @@  @@  @@  @@  @@  @@  @@  @@  @@  @@  @@  @@  @@  @@
+  ..  ..  ..  ..  .@  .@  .@  .@  @.  @.  @.  @.  @@  @@  @@  @@
+  ..  .@  @.  @@  ..  .@  @.  @@  ..  .@  @.  @@  ..  .@  @.  @@
+  ~   T   7   X   V   Y   Z   8   f   5   P   K   *   M   A   @
+^L
+The most important factor in these assignments is not the letter shape alone,
+but the overall pixel density.  On my Mac, these rows form an approximate
+greyscale, from 2 pixels per char, to six:
+
+2 _ivc=!/|\~
+3 gjez2]/(YL\)t[+T7Vf
+4 mdK4ZGbNDXY5P*
+5 W8KMA
+6 @           <-- remember, this choice varies widely: @#%&*
+
+Theoretically, these substitutions could turn 22*80 ascii resolution into
+66*160.  See rec.misc for the sourcecode and further details.  Here's the
+output:
+
+i`it)v|[[[[(//s+)`(-\\/JJgbdd@@@@@@@dmKK(c!(/-[2=/cct/!-v\!_L\)|
+]-!/(!-)\L\)v|c5(!,!Ldd@@@@@@@@@@@@@@@@@@@dK/]!c\\\v|i\/cT\v((c-
+]!`/v\//(-|t\VvcL!m@@@@@M@@@@@@@@@@@@@@@@@@@@bLt\\|)c/2-vv)/it\.
+--/-,\,\v\,|)/v/m@@@@@@K@@@@@@@@@@@@@@@@@@@@@@@bK!v!-( )-!.[/cT
+//.\--'--|-/c(e@@@@@@@DD@@@@@@@@@@@@@@@@@@@@@@@@@@s\\\\-||/v!c\.
+-,-|\`||\-\/id@@@@@@@@N@@@@@@@@@@@@@@@@@@@@@@@@@@@@b.),`-,-/c-`i
+!,\!-!-!'!-!d@@@@@@@P[+~**AAA@@@@@@@@@@@@@@@@@@@@@@@b/./`c-/.\7-
+--'.-- -/,id@@@*P!`          \'Z8@@@@@@@@@@@@@@@@@@@@@i.\\'.\.c
+',`,`\'-,-J@@5`-           -- `-iYA@@@@@@@@@@b@@@@@@@@@_\-|-\c-
+'. -.,`/.G@@K- `               - )7KM@@@@@@@@@@@@@@@@@@@c-----/
+- `-  --i@@Ai                    -!ZZ@@@@@@@@@@@@@@@@@@@b! \`|-`
+ `-,'- G@@@[,                    '.D8K@@@@@@@@@@@@@@@@@@@[/-,-/.
+-` .-/v@@@A)                      -)ZdMd@@@@@@@@@@@@@@@@@@\' _\
+- ` ,iVJ@@@!                     '-!(K5K@@@@@@@@@@@@@@@@@@[(/s[.
+  - i\G@@@Z-                    ' ! -i55ZZ@@@@@@@@@@@@@@@@@)(4)`
+ , -|b@@@@!\                     '  ` |-tYG@@@@@@@@@@@@@@@@XNYZ-
+   tt@@@@A-,                        '  `)(d@@@@@@@@@@@@@@@@D)8A[
+   )8@@@@@\                         ,-'-/Kd@@@@@@@@@@@@@@@@@KD@[
+  ]]Z@@@@d|-              ,ii.c,, -.icLZKK@@@@@@8@K@@@@@@@@@(@8[
+  KN8@@@@@( .i!vGG_      J4Kb8ZKb@bbK@d@88@@@@@@@b@@@@@@@@@@dK@-
+ )/8K@@@K@b@dP~~~T4(    Jd@@7`___s@M@@@@MM8d@@@d@@@@@@@@@@@@LM8[
+\!48@K@@@@8@@d*@@@bVi   bAKLY~~@@@@@@*ff/\NM8@@@@@@@@@@@@@@@db@[
+,\\Kb@@@d@.~t` !*~!`.  -MA)    '~'.).` `,'K@@@@@@@@@@@@@@@@@AKb[
+,`8M@@@@@@ -`,,gvZ``    A//-  ..c\+\`    i]d@@@@@@M@@@@@@@@@@@8[
+i\@8@K@@@D              \!'             !iZ8@@@8A@@@@@8d@b@@@8M[
+e8d5@@@@@@             '!-             '-)8@@@@@@@@@@@@@@@@@@M8i
+8dZ8@M@@@@-             v  ,          ,\tK@@@@@@@@@@@@A@@@@@@Z2|
+@b@AK@@@b@[              //           cctbA@@@AK@@d@@d@@@K@@@bmi
+@@8@M@8@@@P-            -=/.         /iD8d@@@@@@@@@@@@@@A@@@d@@[
+@8@@@MA@@@@\-      .   _)g2i        -((dKK@@@@@d@@@@d@@K@@@@@@K[
+@@@bAK@@K@@)i     'c,,Kb@@bK       )X)Kb@M@@d@@@Mb@@A@d@@@@@@8@[
+@K@b@@@@A@AA/i-     ~M@@@@Mc    .,\c=)D8d@@b@@@d@@@@@@@@@@8d@@A[
+@@@@Mb@@@@@@('c\`     PPK((,i]v|-\-v)8XNAdMK@@@@@@@b@@MK@A@@@@@[
+@@8@@MK@d@A@L!--c)s_, ,(ZsbLb@\`- .-N]/KM@@@@@@@d@@@A@@@@@@@@d@[
+@@Kb@@@K@b@@@/-  !''~~Vff*N5f -` -,\))KK@@@@@@@MK@@d@@@M8d@b@@@[
+@b@@@KAK@@@@@@2--    ,,_JJ/i)/- |/v)NK@8d@@@@@@@@@@8@@@@@@@@M@K[
+@@8d@K@@@b@@@@@d!,   'VV\)\\)\7(-)4Jb@8@A@@@K@d@@@@@@@8@@@@@@@@[
+M@@@@8@@K@Kb@@@d@v.       `-\\/v)88b@M@A@K@@M@@@A@@M@8@@A@d@8@M[
+Zb@d@M@K@@@@@@@@@@m       -)!/stbb@b@@A@b@@@@@Kb@@@@@@@b@@@K@@@[
+K@@d@@@@@d@M@8@@@@@Ks   ,-/vJD@@8d@K@@@@@@8@@@@@@@@@@MK@@@b@@M@[
+tN@b@@d@d@M@@@@@@@@@@LL4JKd@A@@d@@K@@@@MK@@@@8@@@@@@@@@@@b@@@@@[
+)NM@8b@@A@@@A@@@@@@@@@@@@@@A@@A@@8@@K@d@@@@M@@K@@K@A@@@8@@M@@@@[
+(tMM@@@d@@M8@@@@A@@@@A@@@A@@@@@@@@@A@@@@8b@@8d@@@@@@@@@@@@@@@@M[
+tNZ@@K@@@d@@@@A@@@@@8@@@/4N@@8@b@@d@@M@8@MK@M8@K@@@@@@d@@@@@@@@[
+M/KA8@@@MA@@@M@@@@@@@@@@[|t*Z@N@@@@8@@M8ZAZZ@M@@@A@d@@@@@K@@@d@[
+bYJ4M@@@@@@A@@@@@@@@@@@@D.\'(YKKZD@8dK@5A84YZ@dM@@@@@@@@@@@@d@@[
+K5dM8@8d@d@@@@@@@@8@@@@@@..-!/))ZK5AK4)AY(/XY/Z@@@A@@@d@@@M@@@@[
+Y8dNA@@AK@@d@@@b@@@@@@@@@L,-,\!]]\X(5)Z/7c\\t5/K@@@@@@@@b@@@@@@[
+8M8@@@A@@@A@@8@@@@@@@@@KDLt! !,-|t'(-\\!,\/,\!ZJG@@@d@Md@@@G@@@[
+
+=----------=-    ,!.    --=----=----=----=----=----=----=----=----=----=----=
+Jorn Barger      j't    Anon-ftp to genesis.mcs.com in mcsnet.users/jorn for:
+  <:^)^:<    K=-=:: -=->   Finnegans Wake, artificial intelligence, Ascii-TV,
+ .::.:.::..   "=i.: [-'   fractal-thicket indexing, semantic-topology theory,
+jorn_mcs_com   /;:":.\     DecentWrite, MiniTech, nant/nart, flame theory &c!
+=----------=  ;}'   '(,  -=----=----=----=----=----=----=----=----=----=----=
+End of article 343 (of 366) -- what next? [npq]
