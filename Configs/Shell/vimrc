@@ -79,9 +79,9 @@ syntax enable
 "colorscheme vim-material
 
 " Oceanic
-let g:material_style='oceanic'
-set background=dark
-colorscheme vim-material
+" let g:material_style='oceanic'
+" set background=dark
+" colorscheme vim-material
 
 " Light
 "set background=light
@@ -89,9 +89,9 @@ colorscheme vim-material
 
 " Dracula:
 
-" syntax enable
-" let g:dracula_colorterm = 0
-" colorscheme dracula
+syntax enable
+let g:dracula_colorterm = 0
+colorscheme dracula
 
 " DraculaPro:
 
@@ -102,5 +102,5 @@ colorscheme vim-material
 
 " Powerline Colors:
 
-" let g:airline_theme='deus'
-let g:airline_theme='material'
+let g:airline_theme='deus'
+" let g:airline_theme='material'

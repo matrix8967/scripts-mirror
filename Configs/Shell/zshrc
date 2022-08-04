@@ -221,7 +221,6 @@ function ADB_Text {
 
 }
 
-
 # =====Blur for Kitty Term===== #
 
 # if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|kitty$' ]]; then
