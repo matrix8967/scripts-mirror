@@ -19,6 +19,11 @@ go install github.com/jesseduffield/lazygit@latest
 go install github.com/jmhobbs/terminal-parrot@latest
 # go get github.com/cointop-sh/cointop
 go install github.com/cointop-sh/cointop@latest
+go install github.com/charmbracelet/gum@latest
+go install github.com/maaslalani/gambit@latest
+go install github.com/maaslalani/cue@latest
+go install github.com/c-grimshaw/gosniff@latest
+go install github.com/maaslalani/slides@latest
 
 
 sudo cp $GOPATH/bin/* /usr/bin/
