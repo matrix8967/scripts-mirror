@@ -13,7 +13,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dracula/vim', { 'name': 'dracula' }
-Plugin 'calviken/vim-gdscript3'
+" Plugin 'calviken/vim-gdscript3'
 Plugin 'preservim/nerdtree'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'rust-lang/rust.vim'
@@ -89,9 +89,9 @@ syntax enable
 
 " Dracula:
 
-syntax enable
-let g:dracula_colorterm = 0
-colorscheme dracula
+" syntax enable
+" let g:dracula_colorterm = 0
+" colorscheme dracula
 
 " DraculaPro:
 
