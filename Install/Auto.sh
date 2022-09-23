@@ -10,7 +10,7 @@ MANJARO=$(cat Pkglists/Manjaro.txt)
 FEDORA=$(cat Pkglists/Fedora.txt)
 
 function msg {
-  echo -e "\x1B[1m$*\x1B[0m" >&2
+	echo -e "\x1B[1m$*\x1B[0m" >&2
 }
 
 trap 'msg "\x1B[31mNo Worky."' ERR
@@ -51,6 +51,7 @@ git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/power
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 git clone https://github.com/redxtech/zsh-kitty ~/.oh-my-zsh/custom/plugins/zsh-kitty
+git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ~/.oh-my-zsh/custom/plugins/autoupdate
 
 cp ../Configs/Shell/zshrc ~/.zshrc
 cp ../Configs/Shell/p10k.zsh ~/.p10k.zsh
