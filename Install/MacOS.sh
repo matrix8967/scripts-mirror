@@ -11,11 +11,21 @@ xcode-select --install
 
 sudo xcodebuild -license
 
+# Setup Homebrew:
+
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Set Homebrew Environment Variables:
+
+echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /Users/$USERNAME/.zprofile
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$USERNAME/.zprofile
+eval "$(opt/homebrew/bin/brew shellenv)"
+
+# Disable Homebrew Analytics:
 
 brew analytics off
 
-# Install Brew Packages
+# Install Homebrew Packages
 
 brew install \
 ansible \
