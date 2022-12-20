@@ -4,6 +4,7 @@ set -eE
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
+sudo pro config set apt_news=false
 sudo snap remove --purge lxd
 sudo snap remove --purge snap-store
 sudo snap remove --purge core20

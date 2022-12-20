@@ -22,9 +22,8 @@ msg "Installing Packages..."
 if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
 	sudo apt-get install $DEBIAN
 
-
 elif [[ "${ID}" =~ "rhel" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
-	sudo dnf install $RHEL && sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms && sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && sudo dnf install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm
+	sudo dnf install $RHEL && ../Misc/RHEL_RPM_Fusion_Setup.sh
 
 elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
         sudo dnf install $FEDORA
@@ -37,7 +36,6 @@ else
 	exit 1
 fi
 # echo "¯\_(ツ)_/¯ Guess it works?" >&2
-
 
 echo -n "( •_•)"
 sleep .75
