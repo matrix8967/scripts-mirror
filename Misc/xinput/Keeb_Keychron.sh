@@ -18,8 +18,8 @@ NC='\033[0m'    # No Color
 ## if installed via Package Manager.
 #####
 
-# cat <<EOF > /etc/modprobe.d/hid_apple.conf
-cat <<EOF > /usr/lib/modprobe.d/hid_apple.conf
+# cat <<EOF > /usr/lib/modprobe.d/hid_apple.conf
+cat <<EOF > /etc/modprobe.d/hid_apple.conf
 options hid_apple fnmode=2
 options hid_apple swap_fn_leftctrl=0
 options hid_apple swap_opt_cmd=0
