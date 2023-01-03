@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m'    # No Color
+
+#####
+## Xinput to find Built In Macbook Trackpad/Keyboard
+#####
+
+# xinput | grep -m 1 "Apple Inc. Apple Internal " | cut -d "=" -f 2 | cut -d "[" -f 1
 
 cat <<EOF > /etc/modprobe.d/hid-magicmouse.conf
 options hid-magicmouse \
