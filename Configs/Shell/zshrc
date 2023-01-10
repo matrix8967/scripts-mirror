@@ -221,6 +221,14 @@ function ADB_Text {
 
 }
 
+function rpi_bl_off {
+	sudo chown -R $USER:$USER /sys/devices/platform/rpi_backlight/backlight/rpi_backlight/bl_power && echo 1 > /sys/devices/platform/rpi_backlight/backlight/rpi_backlight/bl_power
+}
+
+function rpi_bl_on {
+        sudo chown -R $USER:$USER /sys/devices/platform/rpi_backlight/backlight/rpi_backlight/bl_power && echo 0 > /sys/devices/platform/rpi_backlight/backlight/rpi_backlight/bl_power
+}
+
 # =====Blur for Kitty Term===== #
 
 # if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|kitty$' ]]; then
