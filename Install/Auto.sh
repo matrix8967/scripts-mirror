@@ -23,7 +23,7 @@ if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
 	sudo apt-get install $DEBIAN
 
 elif [[ "${ID}" =~ "rhel" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
-	sudo dnf install $RHEL && ../Misc/RHEL_RPM_Fusion_Setup.sh
+	../Misc/RHEL_RPM_Fusion_Setup.sh && sudo dnf install $RHEL
 
 elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
         sudo dnf install $FEDORA

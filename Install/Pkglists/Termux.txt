@@ -48,7 +48,7 @@ gst-plugins-base
 gstreamer
 gzip
 harfbuzz
-htop-legacy
+htop
 imagemagick
 inetutils
 ipcalc

@@ -68,6 +68,7 @@ export PATH=/usr/bin:$PATH
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
 # =====PostmarketOS===== #
+
 autoload bashcompinit
 bashcompinit
 eval "$(register-python-argcomplete pmbootstrap)"
