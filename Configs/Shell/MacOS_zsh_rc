@@ -53,7 +53,7 @@ export EDITOR="/usr/bin/vim"
 autoload -Uz compinit
 compinit
 # Completion for kitty
-kitty + complete setup zsh | source /dev/stdin
+# kitty + complete setup zsh | source /dev/stdin
 
 # =====Bat/Man===== #
 
@@ -67,6 +67,7 @@ export PATH=/usr/bin:$PATH
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
 # =====MacOS-Dev===== #
+
 fpath=(~/.zsh $fpath)
 
 # =====Zsh Opts===== #
