@@ -23,10 +23,10 @@ if [[ "${ID}" =~ "debian" ]] || [[ "${ID_LIKE}" =~ "debian" ]]; then
 	sudo apt-get install $DEBIAN
 
 elif [[ "${ID}" =~ "rhel" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
-	../Misc/RHEL_RPM_Fusion_Setup.sh && sudo dnf install $RHEL
+	sudo dnf install $RHEL
 
 elif [[ "${ID}" =~ "fedora" ]] || [[ "${ID_LIKE}" =~ "fedora" ]]; then
-        sudo dnf install $FEDORA
+	sudo dnf install $FEDORA
 
 elif [[ "${ID}" =~ "arch" ]] || [[ "${ID_LIKE}" =~ "arch" ]]; then
 	sudo pacman -S $MANJARO
@@ -35,7 +35,6 @@ else
 	msg "Unknown system ID: ${ID}"
 	exit 1
 fi
-# echo "¯\_(ツ)_/¯ Guess it works?" >&2
 
 echo -n "( •_•)"
 sleep .75
@@ -56,14 +55,16 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 git clone https://github.com/redxtech/zsh-kitty ~/.oh-my-zsh/custom/plugins/zsh-kitty
 git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ~/.oh-my-zsh/custom/plugins/autoupdate
 
-cp ../Configs/Shell/zshrc ~/.zshrc
-cp ../Configs/Shell/p10k.zsh ~/.p10k.zsh
+cp ../Configs/Shell/Zsh/zshrc ~/.zshrc
+cp ../Configs/Shell/P10k/p10k.zsh ~/.p10k.zsh
 
 # Install Tmux
+
 cp ../Configs/Shell/tmux.conf ~/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Install Vundle.
+
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cp ../Configs/Shell/vimrc ~/.vimrc
 vim +PluginInstall +qall
