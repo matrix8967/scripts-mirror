@@ -29,8 +29,12 @@ Package: snapd
 Pin: release a=*
 Pin-Priority: -10
 EOF
+
+sudo mv /etc/apt/apt.conf.d/20apt-esm-hook.conf /etc/apt/apt.conf.d/20apt-esm-hook.conf.disabled
+
 # Install Firefox via deb repo:
 # sudo add-apt-repository ppa:mozillateam/ppa
 # echo '\nPackage: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001\n' | sudo tee /etc/apt/preferences.d/mozilla-firefox
 # echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' | sudo tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox
 # sudo apt install firefox
+

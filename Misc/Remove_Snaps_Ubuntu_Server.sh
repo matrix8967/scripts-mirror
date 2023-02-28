@@ -24,3 +24,5 @@ Package: snapd
 Pin: release a=*
 Pin-Priority: -10
 EOF
+
+sudo mv /etc/apt/apt.conf.d/20apt-esm-hook.conf /etc/apt/apt.conf.d/20apt-esm-hook.conf.disabled
