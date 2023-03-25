@@ -31,6 +31,8 @@ Plugin 'mhartington/oceanic-next'
 Plugin 'hzchirs/vim-material'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'PhilRunninger/nerdtree-visual-selection'
+Plugin 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plugin 'ghifarit53/tokyonight-vim'
 
 let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
@@ -64,6 +66,14 @@ endtry
 let &t_ut=''
 
 syntax enable
+
+" Tokyo Night:
+
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
+let g:tokyonight_transparent_background = 1
+
+colorscheme tokyonight
 
 " Material:
 
@@ -102,5 +112,6 @@ syntax enable
 
 " Powerline Colors:
 
-let g:airline_theme='deus'
+" let g:airline_theme='deus'
 " let g:airline_theme='material'
+let g:airline_theme = "tokyonight"
