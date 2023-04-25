@@ -24,6 +24,7 @@ go install github.com/maaslalani/gambit@latest
 go install github.com/maaslalani/cue@latest
 go install github.com/c-grimshaw/gosniff@latest
 go install github.com/maaslalani/slides@latest
+go install github.com/fabio42/ssl-checker@latest
 
 
 sudo cp $GOPATH/bin/* /usr/bin/
