@@ -41,6 +41,7 @@ boost \
 bottom \
 brotli \
 c-ares \
+ccat \
 confuse \
 curl \
 ddgr \
@@ -49,6 +50,7 @@ docbook-xsl \
 fail2ban \
 fftw \
 figlet \
+filezilla \
 fontconfig \
 freetype \
 gcc \
@@ -156,25 +158,37 @@ shared-mime-info \
 speedtest-cli \
 sqlite \
 taglib \
+tailscale \
 tcpdump \
 tldr \
 tmux \
 tree \
 unbound \
 utf8proc \
+warp
 webp \
 wget \
 wireguard-go \
 wireguard-tools \
 x265 \
+xcodebuild \
 xmlto \
 xorgproto \
 xz \
-zstd \
+zstd
 
 brew tap clementtsang/bottom
-
 brew install bottom
+
+brew install --cask xquartz
+brew install xquartz \
+quartz \
+X11 \
+xorg \
+xcalc \
+x11 \
+xauth \
+xquartz
 
 # Install ohmyzsh
 
@@ -184,6 +198,7 @@ git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/power
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 git clone https://github.com/redxtech/zsh-kitty ~/.oh-my-zsh/custom/plugins/zsh-kitty
+git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins ~/.oh-my-zsh/custom/plugins/autoupdate
 
 cp ../Configs/Shell/MacOS_zsh_rc ~/.zshrc
 cp ../Configs/Shell/p10k.zsh ~/.p10k.zsh
