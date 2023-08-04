@@ -18,7 +18,7 @@ export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME=powerlevel10k/powerlevel10k
 
-plugins=(zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s minikube nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler autoupdate ansible adb)
+plugins=(zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s minikube nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible adb)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -73,6 +73,10 @@ autoload bashcompinit
 bashcompinit
 eval "$(register-python-argcomplete pmbootstrap)"
 
+# =====1PasswordCLI===== #
+
+eval "$(op completion zsh)"; compdef _op op
+
 # =====Zsh Opts===== #
 
 # enable completion features
@@ -116,8 +120,20 @@ alias lsssh='ps aux | egrep "sshd: [a-zA-Z]+@"'
 
 # =====Functions===== #
 
-function pvpn {
-	sudo protonvpn c -f
+function pvpn-connect {
+	protonvpn-cli connect --fastest
+}
+
+function pvpn-status {
+	protonvpn-cli status
+}
+
+function pvpn-view {
+	nmcli connection show --active
+}
+
+function pvpn-reset-ks {
+	nmcli connection delete pvpn-ipv6leak-protection && nmcli connection delete pvpn-killswitch
 }
 
 function amimullvad {
@@ -171,8 +187,7 @@ function Quotes {
 	a=7; echo $a; echo "$a"; echo '$a'; echo "'$a'"; echo '"$a"'
 }
 
-function cpu_temp()
-{
+function cpu_temp() {
 	# Init result
 	local result=0.00
 	# The first line of this file is x1000.
@@ -233,7 +248,12 @@ function rpi_bl_off {
 }
 
 function rpi_bl_on {
-        sudo chown -R $USER:$USER /sys/devices/platform/rpi_backlight/backlight/rpi_backlight/bl_power && echo 0 > /sys/devices/platform/rpi_backlight/backlight/rpi_backlight/bl_power
+	sudo chown -R $USER:$USER /sys/devices/platform/rpi_backlight/backlight/rpi_backlight/bl_power && echo 0 > /sys/devices/platform/rpi_backlight/backlight/rpi_backlight/bl_power
+}
+
+function git_log {
+	git log --graph --abbrev-commit --no-decorate --date=format:'%Y-%m-%d %H:%M:%S'\'' --format=format:'\''%C(8)%>|(16)%h %C(7)%ad %C(8)%&lt;(16,trunc)%an %C(auto)%d %>|(1)%s'\'' --all'
+
 }
 
 # =====Blur for Kitty Term===== #
