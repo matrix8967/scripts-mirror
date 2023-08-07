@@ -75,7 +75,11 @@ eval "$(register-python-argcomplete pmbootstrap)"
 
 # =====1PasswordCLI===== #
 
-eval "$(op completion zsh)"; compdef _op op
+# eval "$(op completion zsh)"; compdef _op op
+
+# =====Ansible===== #
+
+export ANSIBLE_NOCOWS=1
 
 # =====Zsh Opts===== #
 
