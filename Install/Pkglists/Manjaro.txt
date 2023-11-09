@@ -105,7 +105,6 @@ python-wheel
 qemu
 radeontop
 ruby
-rust
 scrcpy
 scummvm
 scummvm-tools

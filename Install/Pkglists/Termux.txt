@@ -198,8 +198,6 @@ qemu-utils
 readline
 resolv-conf
 rsync
-rust
-rustc-dev
 science-repo
 sed
 speexdsp

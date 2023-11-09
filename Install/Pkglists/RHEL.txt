@@ -53,8 +53,6 @@ openvpn
 xinput
 nmap
 gnome-tweaks
-qemu-kvm
-qemu-img
 iotop
 iperf3
 wireguard-tools
@@ -67,3 +65,4 @@ python3-pip
 python3-setuptools
 python3-libs
 pipx
+

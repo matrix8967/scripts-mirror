@@ -12,7 +12,7 @@ sudo snap remove --purge bare
 sudo snap remove --purge snapd
 sudo apt remove -y --purge snapd
 sudo apt-mark hold snapd # avoid install snapd again
-sudo apt autoremove --purge snapd
+sudo apt autoremove --purge snapd sosreport
 
 sudo rm -rf /var/cache/snapd/
 

@@ -64,8 +64,6 @@ network-manager-openvpn-gnome
 mplayer
 most
 imagemagick
-cargo
-rustc
 golang
 qemu-kvm
 libvirt0

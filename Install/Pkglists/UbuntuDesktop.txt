@@ -49,8 +49,6 @@ mc
 mplayer
 most
 imagemagick
-cargo
-rustc
 golang
 tty-clock
 cmus

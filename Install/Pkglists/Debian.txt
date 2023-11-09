@@ -45,8 +45,6 @@ mc
 mplayer
 most
 imagemagick
-cargo
-rustc
 golang
 cmus
 w3m
@@ -59,3 +57,4 @@ httpie
 screen
 minicom
 bat
+lsd

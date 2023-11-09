@@ -45,7 +45,6 @@ asciinema
 powertop
 tlp
 tlp-rdw
-cargo
 nfs-utils
 thunderbird
 mono-complete
