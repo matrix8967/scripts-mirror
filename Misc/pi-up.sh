@@ -8,10 +8,13 @@ NC='\033[0m' # No Color
 
 # Raspbian Setup Jumpstart
 
+read -p "Enter SSID: " SSID
+read -p "Enter SSID Password: " SSIDPW
+
 sudo dpkg-reconfigure locales
 sudo dpkg-reconfigure keyboard-configuration
 sudo dpkg-reconfigure tzdata
-mkdir -p /home/pi/Git/Gitlab/scrolls/
+mkdir -p ~/Git/Gitlab/scrolls/
 sudo apt update && sudo apt install git -y
 git clone https://gitlab.com/matrix8967/scripts.git ~/Git/Gitlab/scrolls
 sudo cat <<EOF > /etc/wpa_supplicant/wpa_supplicant.conf
@@ -20,9 +23,9 @@ update_config=1
 country=US
 
 network={
-        ssid="$SSID"
+        ssid=$SSID
         scan_ssid=1
-        psk="$SSID-PW"
+        psk=$SSIDPW
 }
 EOF
 
