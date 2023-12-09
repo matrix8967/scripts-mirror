@@ -28,7 +28,7 @@ network={
         psk=$SSIDPW
 }
 EOF
-
+# sudo wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf
 sudo nmcli dev wifi list
 sudo nmcli --ask dev wifi connect $SSID hidden yes
 

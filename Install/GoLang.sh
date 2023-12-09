@@ -25,7 +25,9 @@ go install github.com/maaslalani/cue@latest
 go install github.com/c-grimshaw/gosniff@latest
 go install github.com/maaslalani/slides@latest
 go install github.com/fabio42/ssl-checker@latest
+go install github.com/mr-karan/doggo/cmd/doggo@latest
 
+# rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
 
 sudo cp $GOPATH/bin/* /usr/bin/
 
