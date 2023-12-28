@@ -26,7 +26,6 @@ intentions
 lang-gdscript
 language-ansible
 language-atom-notes
-language-caddyfile
 language-hcl
 language-markdown
 language-nginx
@@ -54,6 +53,5 @@ seti-ui
 ssh-config
 tango-syntax
 terminus
-tidy-markdown
 tool-bar
 tool-bar-markdown

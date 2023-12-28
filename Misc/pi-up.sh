@@ -11,9 +11,11 @@ NC='\033[0m' # No Color
 read -p "Enter SSID: " SSID
 read -p "Enter SSID Password: " SSIDPW
 
-sudo dpkg-reconfigure locales
-sudo dpkg-reconfigure keyboard-configuration
-sudo dpkg-reconfigure tzdata
+# sudo dpkg-reconfigure locales
+# sudo dpkg-reconfigure keyboard-configuration
+# sudo dpkg-reconfigure tzdata
+sudo update-locale LC_ALL="en_US.UTF-8"
+
 mkdir -p ~/Git/Gitlab/scrolls/
 sudo apt update && sudo apt install git -y
 git clone https://gitlab.com/matrix8967/scripts.git ~/Git/Gitlab/scrolls
