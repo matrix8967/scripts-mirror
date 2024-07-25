@@ -24,8 +24,8 @@ git clone https://github.com/zsh-users/zsh-autosuggestions /data/data/com.termux
 git clone https://github.com/redxtech/zsh-kitty /data/data/com.termux/files/home/.oh-my-zsh/custom/plugins/zsh-kitty
 
 # Install OhMyZsh, Powerlevel10K Configs:
-cp ../Configs/Shell/Android_p10k.zsh /data/data/com.termux/files/home/.p10k.zsh
-cp ../Configs/Shell/Android_zshrc /data/data/com.termux/files/home/.zshrc
+cp ../Configs/Shell/P10k/Android_p10k.zsh /data/data/com.termux/files/home/.p10k.zsh
+cp ../Configs/Shell/Zsh/Android_zshrc /data/data/com.termux/files/home/.zshrc
 
 # Install Tmux:
 cp ../Configs/Shell/tmux.conf /data/data/com.termux/files/home/.tmux.conf
