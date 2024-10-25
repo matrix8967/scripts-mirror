@@ -8,6 +8,10 @@ NC='\033[0m' # No Color
 sudo pro config set apt_news=false
 
 sudo snap remove --purge firefox
+sudo snap remove --purge desktop-security-center
+sudo snap remove --purge firmware-updater
+sudo snap remove --purge prompting-client
+sudo snap remove --purge thunderbird
 sudo snap remove --purge snap-store
 sudo snap remove --purge snapd-desktop-integration
 sudo snap remove --purge gtk-common-themes
@@ -20,6 +24,7 @@ sudo snap remove --purge snapd
 sudo apt remove -y --purge snapd
 sudo apt-mark hold snapd # avoid install snapd again
 sudo apt autoremove --purge snapd sosreport
+sudo apt autoremove --purge ubuntu-advantage-tools
 
 sudo rm -rf /var/cache/snapd/
 
@@ -33,7 +38,8 @@ Pin-Priority: -10
 EOF
 
 sudo mv /etc/apt/apt.conf.d/20apt-esm-hook.conf /etc/apt/apt.conf.d/20apt-esm-hook.conf.disabled
-sudo apt -o APT::Get::Always-Include-Phased-Updates=true upgrade
+sudo echo "APT::Get::Always-Include-Phased-Updates "true";" | sudo tee /etc/apt/apt.conf.d/30phased-upgrades
+# sudo apt -o APT::Get::Always-Include-Phased-Updates=true upgrade
 
 # Install Firefox via deb repo:
 
