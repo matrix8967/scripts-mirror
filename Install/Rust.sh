@@ -14,10 +14,13 @@ cargo install aarty \
 amdgpu_top \
 apkeep \
 bandwhich \
+basilk \
 bat \
 battop \
+binsider \
 bluetui \
 bottom \
+bpf-linker \
 cargo-bundle \
 cargo-update \
 cfonts \
@@ -36,6 +39,7 @@ fre \
 gitui \
 gpg-tui \
 gping \
+humble-cli \
 hurl \
 hx \
 imgcatr \
@@ -43,6 +47,7 @@ impala \
 just \
 kdash \
 kmon \
+lapce \
 libreddit \
 logss \
 lsd \
@@ -51,10 +56,14 @@ mdbook \
 names \
 navi \
 netop \
+netscanner \
+nvrs \
 oha \
 onefetch \
 osintui \
 oxker \
+pastel \
+pcap-minimizer \
 petname \
 pfetch \
 pixfetch \
@@ -68,13 +77,13 @@ rerun-cli \
 rfetch \
 rioterm \
 ripgrep \
-rustdesk \
 rustic-rs \
 rustscan \
 scryptenc-cli \
 sniffnet \
 spotifyd \
 spotify-tui \
+sshs \
 systeroid \
 systeroid-tui \
 tailspin \
@@ -82,6 +91,7 @@ taskwarrior-tui \
 toipe \
 tracexec \
 trippy \
+tui-journal \
 uefisettings \
 watchexec-cli \
 xsv \

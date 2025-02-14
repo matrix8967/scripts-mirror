@@ -26,6 +26,23 @@ go install github.com/c-grimshaw/gosniff@latest
 go install github.com/maaslalani/slides@latest
 go install github.com/fabio42/ssl-checker@latest
 go install github.com/mr-karan/doggo/cmd/doggo@latest
+go install github.com/TheZoraiz/ascii-image-converter@latest
+go install github.com/AkashRajpurohit/git-sync@latest
+go install github.com/aayushbtw/monit@latest
+go install github.com/Zebbeni/ansizalizer@latest
+go install github.com/BigJk/imeji/cmd/imeji@latest
+go install github.com/jordanella/go-ansi-paintbrush@latest
+go install github.com/bradfitz/embiggen-disk@latest
+go install github.com/DerTimonius/twkb@latest
+go install github.com/ddddddO/packemon/cmd/packemon@latest
+go install github.com/abhimanyu003/sttr@latest
+go install github.com/szktkfm/mdtt/cmd/mdtt@latest
+go install github.com/darkhz/bluetuith@latest
+go install github.com/Zxilly/go-size-analyzer/cmd/gsa@latest
+go install github.com/mrusme/planor@latest
+go install github.com/Lifailon/lazyjournal@latest
+go install github.com/ycd/dstp/cmd/dstp@latest
+go install github.com/codeshaine/curlify@latest
 
 # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
 
