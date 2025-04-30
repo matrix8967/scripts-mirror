@@ -18,7 +18,7 @@ export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME=powerlevel10k/powerlevel10k
 
-plugins=(zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible)
+plugins=(zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible aircrack-zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -28,23 +28,29 @@ source $ZSH/oh-my-zsh.sh
 
 # =====GoLang===== #
 
-export GOPATH=/home/$USER/Git/Misc/Go/
+export GOPATH=/home/$USER/Git/Misc/Go
 export PATH=$PATH:/usr/local/go/bin
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
 
 # =====Python===== #
 
-export PATH=$PATH:~/.local/bin/
+# export PATH=$PATH:~/.local/bin/
 eval "$(register-python-argcomplete pipx)"
-# eval "$(_PYMOBILEDEVICE3_COMPLETE=source_zsh pymobiledevice3)"
+eval "$(_PYMOBILEDEVICE3_COMPLETE=source_zsh pymobiledevice3)"
 
 # =====Ruby===== #
 
 export GEM_HOME=$HOME/.gems
-export PATH=$HOME/.gems/bin:$PATH
+# export PATH=$HOME/.gems/bin:$PATH
 
 # =====Rust===== #
 
-export PATH=$PATH:~/.cargo/bin/
+# export PATH=$PATH:~/.cargo/bin/
+
+# =====Env Path===== #
+
+export PATH="$PATH:/usr/local/go/bin:$GOBIN:~/.local/bin/:$HOME/.gems/bin:~/.cargo/bin:/usr/bin"
 
 # =====Editor===== #
 
@@ -52,8 +58,6 @@ export EDITOR="/usr/bin/vim"
 
 # =====Kitty Config===== #
 
-autoload -Uz compinit
-compinit
 # Completion for kitty
 # kitty + complete setup zsh | source /dev/stdin
 # zinit light redxtech/zsh-kitty
@@ -77,7 +81,7 @@ eval "$(register-python-argcomplete pmbootstrap)"
 
 # =====1PasswordCLI===== #
 
-# eval "$(op completion zsh)"; compdef _op op
+eval "$(op completion zsh)"; compdef _op op
 
 # =====Khal===== #
 
@@ -93,6 +97,9 @@ compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
+setopt autocd             # cd into directory by typing its name
+setopt correct            # Auto correct mistakes in commands
+setopt no_beep            # Turn off beeping
 setopt appendhistory
 setopt histignorealldups
 setopt HIST_SAVE_NO_DUPS
@@ -140,6 +147,12 @@ alias psmem='ps auxf | sort -nr -k 4'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias date='date +%m/%d/%y-%H:%M:%S'
 alias pwsh='pwsh-preview'
+alias wget_content='wget --content-disposition'
+alias ll='ls -lAh'
+alias la='ls -A'
+alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
 
 # =====Functions===== #
 
@@ -238,9 +251,21 @@ function Github_Pull {
 	done
 }
 
+#function Dir_Pull {
+#	for dir in $(pwd)/*/; do
+#		git -C $dir pull
+#	done
+#}
+
 function Dir_Pull {
-	for dir in $(pwd)/*/; do
-		git -C $dir pull
+	for dir in */; do
+		if [ -d "$dir/.git" ]; then
+			echo "Pulling updates for $dir..."
+			GIT_TERMINAL_PROMPT=0 git -C "$dir" pull --quiet 2>/dev/null
+			if [ $? -ne 0 ]; then
+				echo "Skipping $dir due to authentication failure or other errors."
+			fi
+		fi
 	done
 }
 
@@ -342,6 +367,7 @@ function ctrld_info {
 
 zstyle ':completion:*' menu select
 fpath+=~/.zfunc
+
 
 # JINA_CLI_BEGIN
 
