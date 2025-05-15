@@ -37,7 +37,7 @@ export PATH=$PATH:$GOBIN
 
 # export PATH=$PATH:~/.local/bin/
 eval "$(register-python-argcomplete pipx)"
-eval "$(_PYMOBILEDEVICE3_COMPLETE=source_zsh pymobiledevice3)"
+# eval "$(_PYMOBILEDEVICE3_COMPLETE=source_zsh pymobiledevice3)"
 
 # =====Ruby===== #
 
@@ -81,7 +81,7 @@ eval "$(register-python-argcomplete pmbootstrap)"
 
 # =====1PasswordCLI===== #
 
-eval "$(op completion zsh)"; compdef _op op
+# eval "$(op completion zsh)"; compdef _op op
 
 # =====Khal===== #
 

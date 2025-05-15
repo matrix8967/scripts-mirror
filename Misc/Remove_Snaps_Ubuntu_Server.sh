@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
-set -eE
+
+[[ "$TRACE" ]] && set -o xtrace
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o noclobber
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 sudo pro config set apt_news=false
-sudo snap remove --purge lxd
-sudo snap remove --purge snap-store
-sudo snap remove --purge core20
+# sudo snap remove --purge lxd
+# sudo snap remove --purge snap-store
+# sudo snap remove --purge core20
+sudo snap remove --purge multipass-sshfs
 sudo snap remove --purge bare
 sudo snap remove --purge snapd
 sudo apt remove -y --purge snapd
