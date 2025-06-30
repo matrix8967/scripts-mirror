@@ -18,7 +18,7 @@ export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME=powerlevel10k/powerlevel10k
 
-plugins=(zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible aircrack-zsh-completions)
+plugins=(zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -37,7 +37,7 @@ export PATH=$PATH:$GOBIN
 
 # export PATH=$PATH:~/.local/bin/
 eval "$(register-python-argcomplete pipx)"
-# eval "$(_PYMOBILEDEVICE3_COMPLETE=source_zsh pymobiledevice3)"
+eval "$(_PYMOBILEDEVICE3_COMPLETE=source_zsh pymobiledevice3)"
 
 # =====Ruby===== #
 
@@ -81,7 +81,7 @@ eval "$(register-python-argcomplete pmbootstrap)"
 
 # =====1PasswordCLI===== #
 
-# eval "$(op completion zsh)"; compdef _op op
+eval "$(op completion zsh)"; compdef _op op
 
 # =====Khal===== #
 
@@ -153,6 +153,8 @@ alias la='ls -A'
 alias l='ls -CF'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias scrcpy_ctrl='scrcpy --no-video --no-audio -KMG'
+alias scrcpy_default='scrcpy -SwK --max-fps=120 --gamepad=uhid --shortcut-mod=lctrl,lsuper'
 
 # =====Functions===== #
 
@@ -273,9 +275,9 @@ function strip_IPs {
 	sed -E -r 's/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/$IP_ADDRESSES/g' $1
 }
 
-function spotifydl {
-	spotify_dl -k -w -l "$1" -o ~/Music
-}
+#function spotifydl {
+#	spotifydl -k -w -l "$1" -o ~/Music
+#}
 
 function vid_dl {
 	ffmpeg -user_agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/601.7.8(KHTML, like Gecko) Version/9.1.3 Safari/537.86.7" -i "$1" -c:v copy -c:a copy -f mpegts "$2"
