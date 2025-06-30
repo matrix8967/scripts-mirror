@@ -10,22 +10,22 @@ NC='\033[0m' # No Color
 echo -e "Installing ${GREEN}NerdFonts, OhMyZsh${NC} and ${GREEN}PowerLevel10K${NC} Theme..."
 mkdir ~/.fonts
 
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Ubuntu.zip             -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/UbuntuSans.zip         -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/UbuntuMono.zip         -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Terminus.zip           -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/ShareTechMono.zip      -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/RobotoMono.zip         -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/ProggyClean.zip        -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Noto.zip               -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Mononoki.zip           -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Iosevka.zip            -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/IosevkaTerm.zip        -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraMono.zip           -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip           -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/ComicShannsMono.zip    -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Agave.zip              -P ~/.fonts/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/3270.zip               -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/Ubuntu.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/UbuntuSans.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/UbuntuMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/Terminus.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/ShareTechMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/RobotoMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/ProggyClean.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/Noto.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/Mononoki.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/Iosevka.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/IosevkaTerm.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/FiraMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/FiraCode.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/ComicShannsMono.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/Agave.zip -P ~/.fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/3.4.0/3270.zip -P ~/.fonts/
 
 unzip ~/.fonts/'*.zip' -d ~/.fonts/
 wget -O ~/.fonts/fira.tar.gz https://github.com/mozilla/Fira/archive/4.202.tar.gz
