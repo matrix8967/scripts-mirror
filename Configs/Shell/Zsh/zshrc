@@ -18,7 +18,7 @@ export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME=powerlevel10k/powerlevel10k
 
-plugins=(zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible)
+plugins=(zsh-ssh zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform termux themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible aircrack-zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -77,11 +77,11 @@ export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
 autoload bashcompinit
 bashcompinit
-eval "$(register-python-argcomplete pmbootstrap)"
+# eval "$(register-python-argcomplete pmbootstrap)"
 
 # =====1PasswordCLI===== #
 
-eval "$(op completion zsh)"; compdef _op op
+# eval "$(op completion zsh)"; compdef _op op
 
 # =====Khal===== #
 
@@ -357,6 +357,58 @@ function ctrld_info {
 	curl -s -X POST -H 'Content-Type: application/json' -d '{"uid": "$1" }' https://api.controld.com/utility\?platform\=ctrld\&version\=dev | jq
 }
 
+# acp() {
+#     # Check if gum is installed
+#     if ! command -v gum >/dev/null 2>&1; then
+#         echo 'Error: gum is not installed. Please install it from https://github.com/charmbracelet/gum'
+#         return 1
+#     fi
+
+#     # Stage all changes
+#     git add .
+
+#     # Prompt for commit message using gum
+#     commit_msg=$(gum input --placeholder 'commit message')
+#     if [ -z "$commit_msg" ]; then
+#         echo 'Error: Commit message cannot be empty'
+#         return 1
+#     fi
+
+#     # Commit changes
+#     git commit -m "$commit_msg"
+
+#     # Prompt for branch name using gum
+#     branch=$(git branch | gum choose | sed 's/^* //')
+#     if [ -z "$branch" ]; then
+#         echo 'Error: Branch name cannot be empty'
+#         return 1
+#     fi
+
+#     # Verify branch exists
+#     if ! git rev-parse --verify "$branch" >/dev/null 2>&1; then
+#         echo "Error: Branch $branch does not exist"
+#         return 1
+#     fi
+
+#     # Checkout the specified branch
+#     git checkout "$branch"
+
+#     # Get all remote names
+#     remotes=$(git remote)
+
+
+#     # Get all remote names into an array
+#     remotes=($(git remote))
+
+#     # Push to all remotes
+#     for remote in "${remotes[@]}"; do
+#         echo "Debug: Pushing to remote - $remote"
+#         git push "$remote" "$branch"
+#     done
+
+#     echo 'Changes added, committed, and pushed to all remotes'
+# }
+
 # =====Blur for Kitty Term===== #
 
 # if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|kitty$' ]]; then
@@ -399,3 +451,8 @@ ulimit -n 4096
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # JINA_CLI_END
+source /home/azazel/.vivi/vivi.plugin.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
