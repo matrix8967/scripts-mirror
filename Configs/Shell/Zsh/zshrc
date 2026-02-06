@@ -18,7 +18,7 @@ export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME=powerlevel10k/powerlevel10k
 
-plugins=(zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible)
+plugins=(zsh-ssh zsh-kitty archlinux extract encode64 gnu-utils golang history-substring-search ipfs httpie jira jsontools kate keychain kubectl microk8s nmap macos pass pip pipenv pyenv pylint python rbenv rsync ruby rust safe-paste screen shell-proxy ssh-agent sudo systemadmin systemd taskwarrior terraform termux themes tmux tmux-cssh tmuxinator torrent urltools vundle yum virtualenv zsh-autosuggestions zsh-syntax-highlighting gpg-agent gem git-extras firewalld docker-compose docker cp rust bundler aws autoupdate ansible aircrack-zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -37,7 +37,7 @@ export PATH=$PATH:$GOBIN
 
 # export PATH=$PATH:~/.local/bin/
 eval "$(register-python-argcomplete pipx)"
-# eval "$(_PYMOBILEDEVICE3_COMPLETE=source_zsh pymobiledevice3)"
+eval "$(_PYMOBILEDEVICE3_COMPLETE=source_zsh pymobiledevice3)"
 
 # =====Ruby===== #
 
@@ -77,11 +77,11 @@ export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
 autoload bashcompinit
 bashcompinit
-# eval "$(register-python-argcomplete pmbootstrap)"
+eval "$(register-python-argcomplete pmbootstrap)"
 
 # =====1PasswordCLI===== #
 
-# eval "$(op completion zsh)"; compdef _op op
+eval "$(op completion zsh)"; compdef _op op
 
 # =====Khal===== #
 
@@ -103,12 +103,12 @@ setopt no_beep            # Turn off beeping
 setopt appendhistory
 setopt histignorealldups
 setopt HIST_SAVE_NO_DUPS
-setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_dups       # ignore duplicated commands history list
-setopt hist_ignore_space      # ignore commands that start with space
-setopt hist_verify            # show command with history expansion to user before running it
+setopt hist_expire_dups_first # Delete duplicates first when HISTFILE size exceeds HISTSIZE.
+setopt hist_ignore_dups       # Ignore duplicated commands history list.
+setopt hist_ignore_space      # Ignore commands that start with space.
+setopt hist_verify            # Show command with history expansion to user before running it.
 
-export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
+export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..|jrnl *)"
 
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=999'
 
@@ -155,6 +155,11 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias scrcpy_ctrl='scrcpy --no-video --no-audio -KMG'
 alias scrcpy_default='scrcpy -SwK --max-fps=120 --gamepad=uhid --shortcut-mod=lctrl,lsuper'
+alias claude="~/.claude/local/claude"
+alias print_path:"echo $PATH | sed "s/:/\n/g""
+alias gearlever='flatpak run it.mijorus.gearlever'
+#alias ls_users='getent passwd| awk '{FS="[:]"; print $1}''
+#alias ls_groups='getent group | cut -d ":" -f 1'
 
 # =====Functions===== #
 
@@ -307,7 +312,8 @@ function git_log {
 }
 
 function CLI_LS {
-	compgen -ac | sort --ignore-case
+	compgen -A function -abck | sort --ignore-case
+	# compgen -ac | sort --ignore-case
 }
 
 function ctrld_update {
@@ -325,6 +331,19 @@ function yy() {
 		cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
+}
+
+function echo_path {
+	echo $PATH | sed "s/:/\n/g"
+}
+
+function prepend_path () {
+  case ":${PATH}:" in
+    *:"$1":*)
+    ;;
+    *)
+      PATH="$1:${PATH}"
+  esac
 }
 
 function dateplus(){ date -d "$date +$1 $2 +$3 $4 +$5 $6 +$7 $8" ; }
@@ -357,57 +376,60 @@ function ctrld_info {
 	curl -s -X POST -H 'Content-Type: application/json' -d '{"uid": "$1" }' https://api.controld.com/utility\?platform\=ctrld\&version\=dev | jq
 }
 
-# acp() {
-#     # Check if gum is installed
-#     if ! command -v gum >/dev/null 2>&1; then
-#         echo 'Error: gum is not installed. Please install it from https://github.com/charmbracelet/gum'
-#         return 1
-#     fi
+function ctrld_resolver {
+	ps aux | grep ctrld | grep -v grep | awk -F '--cd= ' '{print $2}' | awk '{print $1}'
+}
 
-#     # Stage all changes
-#     git add .
+acp() {
+    # Check if gum is installed
+    if ! command -v gum >/dev/null 2>&1; then
+        echo 'Error: gum is not installed. Please install it from https://github.com/charmbracelet/gum'
+        return 1
+    fi
 
-#     # Prompt for commit message using gum
-#     commit_msg=$(gum input --placeholder 'commit message')
-#     if [ -z "$commit_msg" ]; then
-#         echo 'Error: Commit message cannot be empty'
-#         return 1
-#     fi
+    # Stage all changes
+    git add .
 
-#     # Commit changes
-#     git commit -m "$commit_msg"
+    # Prompt for commit message using gum
+    commit_msg=$(gum input --placeholder 'commit message')
+    if [ -z "$commit_msg" ]; then
+        echo 'Error: Commit message cannot be empty'
+        return 1
+    fi
 
-#     # Prompt for branch name using gum
-#     branch=$(git branch | gum choose | sed 's/^* //')
-#     if [ -z "$branch" ]; then
-#         echo 'Error: Branch name cannot be empty'
-#         return 1
-#     fi
+    # Commit changes
+    git commit -m "$commit_msg"
 
-#     # Verify branch exists
-#     if ! git rev-parse --verify "$branch" >/dev/null 2>&1; then
-#         echo "Error: Branch $branch does not exist"
-#         return 1
-#     fi
+    # Prompt for branch name using gum
+    branch=$(git branch | gum choose | sed 's/^* //')
+    if [ -z "$branch" ]; then
+        echo 'Error: Branch name cannot be empty'
+        return 1
+    fi
 
-#     # Checkout the specified branch
-#     git checkout "$branch"
+    # Verify branch exists
+    if ! git rev-parse --verify "$branch" >/dev/null 2>&1; then
+        echo "Error: Branch $branch does not exist"
+        return 1
+    fi
 
-#     # Get all remote names
-#     remotes=$(git remote)
+    # Checkout the specified branch
+    git checkout "$branch"
 
+    # Get all remote names
+    remotes=$(git remote)
 
-#     # Get all remote names into an array
-#     remotes=($(git remote))
+    # Get all remote names into an array
+    remotes=($(git remote))
 
-#     # Push to all remotes
-#     for remote in "${remotes[@]}"; do
-#         echo "Debug: Pushing to remote - $remote"
-#         git push "$remote" "$branch"
-#     done
+    # Push to all remotes
+    for remote in "${remotes[@]}"; do
+        echo "Debug: Pushing to remote - $remote"
+        git push "$remote" "$branch"
+    done
 
-#     echo 'Changes added, committed, and pushed to all remotes'
-# }
+    echo 'Changes added, committed, and pushed to all remotes'
+}
 
 # =====Blur for Kitty Term===== #
 
@@ -452,6 +474,10 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 # JINA_CLI_END
 # source /home/azazel/.vivi/vivi.plugin.zsh
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH=$PATH:$HOME/.local/bin
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit

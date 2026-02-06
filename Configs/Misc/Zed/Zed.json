@@ -7,16 +7,46 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "assistant": {
-    "enabled": false,
-    "default_model": {
-      "provider": "openai",
-      "model": "gpt-3.5-turbo"
-    },
-    "version": "2"
+  "edit_predictions": {
+    "provider": "none"
   },
-  "features": {
-    "edit_prediction_provider": "none"
+  "restore_on_startup": "empty_tab",
+  "context_servers": {
+    "mcp-server-linear": {
+      "enabled": true,
+      "settings": {
+        "linear_api_key": "YOUR_LINEAR_ACCESS_TOKEN"
+      }
+    },
+    "mcp-server-context7": {
+      "enabled": true,
+      "settings": {
+        "default_minimum_tokens": "10000"
+      }
+    },
+    "mcp-server-gitlab": {
+      "enabled": true,
+      "settings": {
+        "gitlab_personal_access_token": "TOKEN-HERE"
+      }
+    },
+    "mcp-server-mui": {
+      "enabled": true,
+      "settings": {
+        "preferred_theme": "",
+        "component_filter": [""]
+      }
+    }
+  },
+  "icon_theme": "Material Icon Theme",
+  "agent": {
+    "always_allow_tool_actions": true,
+    "default_profile": "write",
+    "enabled": true,
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5-thinking-latest"
+    }
   },
   "ui_font_size": 16,
   "buffer_font_size": 16,
