@@ -1,0 +1,69 @@
+# macOS Configuration Toolkit - .gitignore
+# Excludes captured data and generated files
+# Keeps only the tools in version control
+
+# ========================================
+# CAPTURED CONFIGURATIONS (keep local)
+# ========================================
+captured-config/
+macos-config/
+MacOSConfigs/
+baseline/
+snapshots/
+backups/
+
+# ========================================
+# GENERATED SCRIPTS (regenerate as needed)
+# ========================================
+generated-macos-setup.sh
+generated-*.sh
+*-generated.sh
+Brewfile.lock.json
+
+# ========================================
+# HOMEBREW BUNDLE FILES (regenerate)
+# ========================================
+Brewfile
+*.lock.json
+
+# ========================================
+# SENSITIVE DATA
+# ========================================
+*-passwords.txt
+*-credentials.txt
+*-secrets.txt
+*-api-keys.txt
+*-tokens.txt
+*.pem
+*.key
+*.p12
+*.keychain
+
+# ========================================
+# MACOS SYSTEM FILES
+# ========================================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ========================================
+# TEMPORARY FILES
+# ========================================
+*.tmp
+*.log
+*.swp
+*.bak
+*.backup
+*.old
+
+# ========================================
+# EXCEPTIONS - Keep These
+# ========================================
+!capture-config.sh
+!generate-setup.sh
+!README.md
+!QUICKSTART.md
+!.gitignore
