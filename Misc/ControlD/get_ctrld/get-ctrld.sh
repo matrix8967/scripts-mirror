@@ -107,10 +107,12 @@ detect_platform() {
     CONFIG_PATH="/etc/controld"
     SERVICE_TYPE="systemd"
 
-    # Detect specific distro for better guidance
+    # Detect specific distro for better guidance (save VERSION first to avoid conflict)
     if [[ -f "/etc/os-release" ]]; then
+      local CTRLD_VERSION="$VERSION"
       . /etc/os-release
       PLATFORM_NAME="$NAME (systemd)"
+      VERSION="$CTRLD_VERSION"
     fi
     return
   fi
