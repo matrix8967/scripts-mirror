@@ -190,6 +190,121 @@ x11 \
 xauth \
 xquartz
 
+# ========================================
+# DOCK PREFERENCES
+# ========================================
+echo -e "${GREEN}[3/8] Configuring Dock...${NC}"
+
+defaults write com.apple.dock autohide -bool 1 2>/dev/null || defaults write com.apple.dock autohide 1
+defaults write com.apple.dock "show-recents" -bool 0 2>/dev/null || defaults write com.apple.dock "show-recents" 0
+
+# Restart Dock to apply changes
+killall Dock
+
+echo "✓ Dock configured"
+
+# ========================================
+# FINDER PREFERENCES
+# ========================================
+echo -e "${GREEN}[4/8] Configuring Finder...${NC}"
+
+# Show hidden files
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+# Show all file extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Show path bar
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Show status bar
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Disable warning when changing file extensions
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# Restart Finder
+killall Finder
+
+echo "✓ Finder configured"
+
+# ========================================
+# GLOBAL PREFERENCES
+# ========================================
+echo -e "${GREEN}[5/8] Configuring global preferences...${NC}"
+
+# Enable Dark Mode
+defaults write NSGlobalDomain AppleInterfaceStyle -string Dark
+
+# Expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+
+# Expand print panel by default
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+
+# Disable auto-correct
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+echo "✓ Global preferences configured"
+
+# ========================================
+# SCREENSHOT PREFERENCES
+# ========================================
+echo -e "${GREEN}[6/8] Configuring screenshots...${NC}"
+
+# Set screenshot location to ~/Pictures/Screenshots
+mkdir -p "$HOME/Pictures/Screenshots"
+defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots"
+
+# Set screenshot format to PNG
+defaults write com.apple.screencapture type -string "png"
+
+# Disable screenshot thumbnail
+defaults write com.apple.screencapture show-thumbnail -bool false
+
+# Restart SystemUIServer
+killall SystemUIServer
+
+echo "✓ Screenshot settings configured"
+
+# ========================================
+# TRACKPAD PREFERENCES
+# ========================================
+echo -e "${GREEN}[7/8] Configuring trackpad...${NC}"
+
+# Enable tap to click
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Enable three-finger drag
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+
+echo "✓ Trackpad configured"
+
+# ========================================
+# SHELL CONFIGURATION
+# ========================================
+echo -e "${GREEN}[8/8] Configuring shell...${NC}"
+
+# Set default shell to /bin/zsh
+if [ "$SHELL" != "/bin/zsh" ]; then
+    chsh -s /bin/zsh
+    echo "✓ Shell changed to /bin/zsh (logout/login required)"
+else
+    echo "✓ Shell already set to /bin/zsh"
+fi
+
+echo "✓ Shell configured"
+
+
+echo ""
+echo -e "${BLUE}╔════════════════════════════════════════════╗${NC}"
+echo -e "${BLUE}║   Setup Complete!                          ║${NC}"
+echo -e "${BLUE}╚════════════════════════════════════════════╝${NC}"
+echo ""
+
 # Install ohmyzsh
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
