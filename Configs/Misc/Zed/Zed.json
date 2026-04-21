@@ -7,10 +7,30 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "agent_servers": {
+    "gemini": {
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    },
+    "claude-acp": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    },
+    "cline": {
+      "type": "registry"
+    }
+  },
+  "ui_font_family": ".SystemUIFont",
+  "buffer_font_family": "Mononoki Nerd Font",
   "edit_predictions": {
+    "enabled_in_text_threads": false,
     "provider": "none"
   },
-  "restore_on_startup": "empty_tab",
+  "restore_on_startup": "launchpad",
   "context_servers": {
     "mcp-server-linear": {
       "enabled": true,
@@ -27,7 +47,7 @@
     "mcp-server-gitlab": {
       "enabled": true,
       "settings": {
-        "gitlab_personal_access_token": "TOKEN-HERE"
+        "gitlab_personal_access_token": "$GITLAB_TOKEN"
       }
     },
     "mcp-server-mui": {
@@ -40,12 +60,16 @@
   },
   "icon_theme": "Material Icon Theme",
   "agent": {
-    "always_allow_tool_actions": true,
-    "default_profile": "write",
+    "tool_permissions": {
+      "default": "allow"
+    },
+    "default_profile": "ask",
     "enabled": true,
     "default_model": {
+      "effort": "high",
+      "enable_thinking": true,
       "provider": "anthropic",
-      "model": "claude-sonnet-4-5-thinking-latest"
+      "model": "claude-sonnet-4-6-latest"
     }
   },
   "ui_font_size": 16,
@@ -54,5 +78,143 @@
   "telemetry": {
     "diagnostics": false,
     "metrics": false
-  }
+  },
+  "autoInstallExtensions": [
+    "ada",
+    "alpinejs-snippets",
+    "ansible",
+    "arch-mcp",
+    "asciidoc",
+    "asn1",
+    "ass",
+    "assembly",
+    "autohotkey",
+    "awk",
+    "azure-context-server",
+    "basher",
+    "bicep",
+    "browser-tools-context-server",
+    "caddyfile",
+    "cargo-tom",
+    "catppuccin",
+    "catppuccin-blur",
+    "catppuccin-icons",
+    "cfengine",
+    "chrome-devtools-mcp",
+    "csharp",
+    "csharp-snippets",
+    "csv",
+    "d2",
+    "dart",
+    "defold",
+    "demotape",
+    "desktop",
+    "docker-compose",
+    "dockerfile",
+    "dracula",
+    "duckyscript",
+    "editorconfig",
+    "env",
+    "fortran",
+    "gdscript",
+    "gdscript-snippets",
+    "gem",
+    "ghostty",
+    "git-firefly",
+    "github-actions",
+    "gitlab-ci-ls",
+    "go-snippets",
+    "golangci-lint",
+    "gosum",
+    "graphql",
+    "graphviz",
+    "hql",
+    "html",
+    "html-jinja",
+    "html-snippets",
+    "ical",
+    "ini",
+    "java",
+    "javascript-snippets",
+    "jinja2",
+    "jq",
+    "json5",
+    "jsonl",
+    "just",
+    "just-ls",
+    "kotlin",
+    "latex",
+    "less",
+    "log",
+    "logcat",
+    "logstash",
+    "lua",
+    "make",
+    "markdownlint",
+    "material-dark",
+    "material-icon-theme",
+    "mcp-server-brave-search",
+    "mcp-server-context7",
+    "mcp-server-github",
+    "mcp-server-gitlab",
+    "mcp-server-grafana",
+    "mcp-server-linear",
+    "mcp-server-mui",
+    "mcp-server-sequential-thinking",
+    "mermaid",
+    "neocmake",
+    "netlinx",
+    "new-darcula",
+    "nginx",
+    "nightfox",
+    "nix",
+    "nvim-nightfox",
+    "ocaml",
+    "oceanic-next",
+    "openfga",
+    "opentofu",
+    "palenight",
+    "pbxproj",
+    "perl",
+    "php",
+    "php-snippets",
+    "pkl",
+    "playdate",
+    "postgres-context-server",
+    "puppet",
+    "python-requirements",
+    "python-snippets",
+    "qml",
+    "r",
+    "redscript",
+    "regedit",
+    "ruby",
+    "rust-snippets",
+    "scss",
+    "snippets",
+    "sql",
+    "starlark",
+    "strace",
+    "structured-text",
+    "svelte",
+    "swift",
+    "tcl",
+    "termux",
+    "terraform",
+    "terraform-context-server",
+    "tmux",
+    "todotxt",
+    "tokyo-night",
+    "tombi",
+    "toml",
+    "tomorrow-theme",
+    "ucode",
+    "unity-snippets",
+    "vcard",
+    "vhs",
+    "vue",
+    "wow-toc",
+    "xdr-naive",
+    "xml"
+  ]
 }
