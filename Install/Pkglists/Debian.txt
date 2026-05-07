@@ -10,9 +10,9 @@ wavemon
 vim
 tmux
 fail2ban
-tldr
+tealdeer
 s-tui
-neofetch
+fastfetch
 zsh
 fonts-powerline
 kitty
@@ -26,6 +26,8 @@ openvpn
 dialog
 python3-pip
 python3-setuptools
+python3-argcomplete
+pipx
 libclang-dev
 cifs-utils
 neovim
