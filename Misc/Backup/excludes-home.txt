@@ -1,0 +1,165 @@
+# excludes-home.txt — rsync exclude patterns for $HOME
+#
+# Format: rsync filter rules. Patterns starting with "/" are anchored to the
+# top of the source ($HOME). Patterns without a leading slash match anywhere.
+# Comments and blank lines are ignored.
+#
+# To preview what would be excluded, append --dry-run --itemize-changes to
+# any rsync command using this file.
+
+# ---- generic ephemera ----
+.cache/
+.thumbnails/
+.local/share/Trash/
+.local/share/recently-used.xbel
+.xsession-errors
+.xsession-errors.old
+*.pyc
+*.pyo
+__pycache__/
+.gvfs/
+.dbus/
+.Xauthority
+core
+core.[0-9]*
+
+# ---- ssh agent / runtime sockets are not files; rsync skips sockets, but be explicit ----
+.gnupg/S.*
+.gnupg/*.lock
+
+# ---- containers, VMs (large, regenerable) ----
+.docker/buildx/
+.docker/desktop/
+.local/share/containers/storage/
+.local/share/containers/cache/
+.config/containers/storage/
+.local/share/libvirt/
+.local/share/gnome-boxes/
+
+# ---- flatpak / snap user caches (apps regenerate these) ----
+.var/app/*/cache/
+.var/app/*/.cache/
+snap/*/common/.cache/
+snap/*/*/.cache/
+
+# ---- browsers: keep profiles + bookmarks, drop disk caches ----
+.mozilla/firefox/*/cache2/
+.mozilla/firefox/*/startupCache/
+.mozilla/firefox/*/storage/default/*/cache/
+.mozilla/firefox/Crash Reports/
+.mozilla/firefox/Pending Pings/
+.cache/mozilla/
+
+.config/google-chrome/*/Cache/
+.config/google-chrome/*/Code Cache/
+.config/google-chrome/*/GPUCache/
+.config/google-chrome/*/Service Worker/CacheStorage/
+.config/google-chrome/*/Service Worker/ScriptCache/
+
+.config/BraveSoftware/Brave-Browser/*/Cache/
+.config/BraveSoftware/Brave-Browser/*/Code Cache/
+.config/BraveSoftware/Brave-Browser/*/GPUCache/
+.config/BraveSoftware/Brave-Browser/*/Service Worker/CacheStorage/
+
+.config/chromium/*/Cache/
+.config/chromium/*/Code Cache/
+.config/chromium/*/GPUCache/
+
+.config/microsoft-edge/*/Cache/
+.config/microsoft-edge/*/Code Cache/
+.config/microsoft-edge/*/GPUCache/
+
+.config/vivaldi/*/Cache/
+.config/vivaldi/*/Code Cache/
+.config/vivaldi/*/GPUCache/
+
+# ---- editors / IDEs (keep settings, drop caches) ----
+.config/Code/Cache/
+.config/Code/CachedData/
+.config/Code/CachedExtensions/
+.config/Code/CachedExtensionVSIXs/
+.config/Code/GPUCache/
+.config/Code/logs/
+.config/Code/Service Worker/CacheStorage/
+.config/Code/User/workspaceStorage/
+.vscode-server/
+.vscode-cli/
+.cursor/Cache/
+.cursor/Code Cache/
+.cursor/GPUCache/
+.zed/cache/
+
+.config/JetBrains/*/caches/
+.config/JetBrains/*/system/
+.config/JetBrains/*/log/
+.local/share/JetBrains/*/log/
+
+# ---- language toolchain caches (regenerable from lockfiles) ----
+.npm/_cacache/
+.npm/_logs/
+.yarn/cache/
+.yarn/install-state.gz
+.pnpm-store/
+.bun/install/cache/
+.cargo/registry/
+.cargo/git/
+.cargo/.package-cache
+.rustup/toolchains/*/share/doc/
+.rustup/downloads/
+.rustup/tmp/
+go/pkg/mod/cache/
+.gradle/caches/
+.gradle/daemon/
+.gradle/wrapper/dists/
+.m2/repository/
+.ivy2/cache/
+.sbt/boot/
+.cabal/store/
+.cabal/packages/
+.stack/programs/
+.stack/snapshots/
+.local/share/virtualenvs/
+.pyenv/versions/*/lib/python*/site-packages/__pycache__/
+
+# ---- builds inside arbitrary project trees ----
+node_modules/
+target/debug/
+target/release/
+target/wasm32-*/
+target/x86_64-*/
+target/aarch64-*/
+.next/cache/
+.nuxt/
+dist/
+build/
+.tox/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+.terraform/
+.pulumi/
+
+# ---- gaming (huge; reinstall via Steam/Lutris) ----
+.steam/
+.local/share/Steam/
+.local/share/steam/
+.var/app/com.valvesoftware.Steam/
+.local/share/lutris/runners/
+.local/share/lutris/runtime/
+.wine/drive_c/users/*/Temp/
+.PlayOnLinux/wineprefix/
+
+# ---- crash reports, anonymous metrics ----
+.local/share/sddm/
+.local/share/gnome-shell/runtime-state-*
+.local/share/applications/wine/
+.local/share/zeitgeist/
+
+# ---- secrets that should NOT leave the host without explicit consent ----
+# (keyrings, agent sockets — comment OUT lines below to include them)
+# .local/share/keyrings/
+# .ssh/agent-environment
+# .password-store/  # leave commented; pass(1) data is usually wanted
