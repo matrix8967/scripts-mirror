@@ -1,0 +1,40 @@
+# excludes-system.txt — rsync exclude patterns for /etc and other system trees
+#
+# These match content INSIDE the source root (so /etc/foo is matched by /foo
+# when rsyncing /etc/). Most files in /etc are configuration and should be
+# preserved; these excludes target machine-specific or regenerable artifacts.
+
+# ---- regenerable caches ----
+/ld.so.cache
+/.pwd.lock
+/mtab
+/apparmor.d/cache/
+/selinux/targeted/active/
+/selinux/targeted/policy/
+/X11/xorg.conf.d/10-quirks.conf
+/dconf/db/*.d/locks/
+
+# ---- runtime / generated ----
+/blkid.tab
+/blkid.tab.old
+/cups/subscriptions.conf*
+/cups/printers.conf.O
+/cups/classes.conf.O
+/printcap
+/network/run/
+
+# ---- machine identity (DO restore manually if cloning hardware identity) ----
+# Uncomment to exclude per-host identifiers:
+# /machine-id
+# /ssh/ssh_host_*
+# /ssh/ssh_host_*.pub
+
+# ---- swap / lock files of common editors landing in /etc ----
+*.swp
+*.swo
+*~
+.#*
+
+# ---- package manager state we capture separately as text ----
+# (We keep /etc/apt/sources.list.d for repos, but skip the binary state.)
+/apt/apt.conf.d/01autoremove-kernels
