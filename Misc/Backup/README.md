@@ -23,13 +23,22 @@ excludes-system.txt
 
 ## Defaults that matter
 
-| Flag                   | Default              | Why                                           |
-|------------------------|----------------------|-----------------------------------------------|
-| `--dry-run`            | **on**               | Prevents accidental writes.                   |
-| `--gpg-recipient` *or* | none — required      | One of the two encryption modes must be set. |
-| `--gpg-symmetric`      | none — required      | Same.                                         |
-| `--zstd-level`         | 19                   | Strong compression, still acceptable speed.   |
-| Inventories            | plain text           | So you can read them on a fresh install before decrypting anything. Pass `--encrypt-all` to wrap them. |
+| Flag                                 | Default              | Why                                           |
+|--------------------------------------|----------------------|-----------------------------------------------|
+| `--dry-run`                          | **on**               | Prevents accidental writes.                   |
+| One of `--gpg-recipient`, `--gpg-symmetric`, `--no-encrypt` | none — required | The script refuses to start without an explicit encryption decision. |
+| `--zstd-level`                       | 19                   | Strong compression, still acceptable speed.   |
+| Inventories                          | plain text           | So you can read them on a fresh install before decrypting anything. Pass `--encrypt-all` to wrap them. |
+
+### Encryption modes
+
+| Mode | Flag | When to use |
+|------|------|-------------|
+| Asymmetric (recommended) | `--gpg-recipient ID` | Day-to-day backups. Unattended runs — no passphrase prompt. Anyone with the secret key can decrypt. |
+| Symmetric                | `--gpg-symmetric`    | One-off backups when you don't have a key. Script prompts once for a passphrase and reuses it for every archive. |
+| **None**                 | `--no-encrypt`       | The destination is *already* encrypted (LUKS, encrypted NAS/SMB share, BitLocker), or the data is low-sensitivity (router config, etc.). Archives are plain `.tar.zst`. **The script prints a loud warning before and after the run.** |
+
+`--no-encrypt` exists because layering gpg on top of an already-encrypted target wastes CPU on small devices and gives a false sense of "extra" security. Use it when the threat model is "the disk gets stolen" and disk-level encryption already addresses that.
 
 ## Quickstart
 
@@ -51,6 +60,13 @@ excludes-system.txt
 ./backup-system.sh \
     --dest nfs://nas.local/volume1/backups \
     --gpg-symmetric --execute
+
+# unencrypted backup to an already-encrypted destination (LUKS-backed drive,
+# encrypted NAS share). The script will print a loud warning at the start
+# and again at the end. Output files are .tar.zst (no .gpg layer).
+./backup-system.sh \
+    --dest /mnt/luks-backup \
+    --no-encrypt --execute
 ```
 
 ## Destination URLs
@@ -114,10 +130,15 @@ Add extra paths to `custom` with repeated `--custom-path /srv` flags.
     lsblk.txt
     ...
   configs/
-    etc.tar.zst.gpg
-    home.tar.zst.gpg
-    custom.tar.zst.gpg
+    etc.tar.zst.gpg          # or etc.tar.zst when --no-encrypt
+    home.tar.zst.gpg         # or home.tar.zst
+    custom.tar.zst.gpg       # or custom.tar.zst
 ```
+
+When `--no-encrypt` is used:
+- Archives drop the `.gpg` extension and the gpg layer entirely.
+- `SHA256SUMS.sig` is *not* produced (no key context to sign with).
+- `restore-system.sh` auto-detects which extension is present per archive.
 
 Permissions after a successful run: session dir `0500`, archives `0400`,
 manifest/sums `0444`. Pass `--immutable` to also `chattr +i` the archives
@@ -190,6 +211,11 @@ tar --xattrs --acls --numeric-owner -C /mnt/backup/staging/etc -cf - . \
     | gpg --batch --yes --encrypt --recipient alex.m@controld.com \
           --output /mnt/backup/witchhammer-…/configs/etc.tar.zst.gpg
 
+# same operation, unencrypted (use when destination is already encrypted)
+tar --xattrs --acls --numeric-owner -C /mnt/backup/staging/etc -cf - . \
+    | zstd -19 -T0 \
+    > /mnt/backup/witchhammer-…/configs/etc.tar.zst
+
 # verify a session
 cd /mnt/backup/witchhammer-…           # contains SHA256SUMS
 sha256sum --check SHA256SUMS
@@ -197,10 +223,15 @@ gpg --verify SHA256SUMS.sig SHA256SUMS
 
 # peek inside an archive without decrypting to disk
 gpg --decrypt configs/home.tar.zst.gpg | zstd -d | tar -tvf - | less
+# unencrypted equivalent:
+zstd -d < configs/home.tar.zst | tar -tvf - | less
 
 # extract a single file
 gpg --decrypt configs/home.tar.zst.gpg \
     | zstd -d \
+    | tar -xf - -C /tmp/restore home/azazel/.bashrc
+# unencrypted equivalent:
+zstd -d < configs/home.tar.zst \
     | tar -xf - -C /tmp/restore home/azazel/.bashrc
 
 # restore /etc to a scratch dir (never overwrite live config blindly)
@@ -217,6 +248,41 @@ rsync --archive --acls --xattrs --hard-links --numeric-ids \
 sudo apt-get install -y --no-install-recommends $(< apt-manual.txt)
 xargs -a flatpak.txt -L1 -I@ sh -c 'set -- @; flatpak install -y "$2" "$1//$3"'
 ```
+
+## Progress & ETA
+
+The script tries hard not to look frozen during the slow parts:
+
+- **rsync staging** uses `--info=progress2,stats1`, which prints a single
+  updating line: `12,345,678   45%  120MB/s  0:00:14` (transferred / pct /
+  rate / ETA-for-just-this-section).
+- **tar | zstd | gpg pipeline** has no native progress output, so a
+  background heartbeat logs `[work] [home] compress+encrypt … still
+  running (0h01m30s elapsed)` every 15 seconds. Configure with
+  `--heartbeat SEC` (set to 0 to disable).
+
+A pre-flight workload estimate runs before the backup starts:
+
+```
+[info] estimating workload (cap: 90s; pass --no-eta to skip)
+[info] [eta] etc: 4,521 files, 32.1MiB
+[info] [eta] home: 89,213 files, 18.4GiB
+[info] [eta] custom: 122 files, 4.2MiB
+[info] [eta] total workload: 93,856 files, 18.4GiB
+[info] [eta] estimated time: 0h 2m 14s  (assumes ~160 MB/s; coarse estimate)
+```
+
+Implementation:
+- Each archive section gets a `rsync --dry-run --stats` probe with the
+  real exclude rules applied — so the estimate respects `excludes-home.txt`
+  and friends.
+- Total probe time is hard-capped (default 90s, override with
+  `--eta-budget SECONDS`). Hitting the cap turns the estimate into a lower
+  bound and tags it "incomplete"; the backup still runs.
+- Throughput numbers are coarse — they change with zstd level, encryption
+  on/off, and CPU speed. Expect ±2x error in either direction. The point
+  is "minutes vs hours", not a precise SLA.
+- Skip the whole probe with `--no-eta` if you don't want the upfront delay.
 
 ## Snapshot chain (incremental-ish)
 

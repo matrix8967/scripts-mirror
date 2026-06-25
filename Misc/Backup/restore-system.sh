@@ -54,8 +54,9 @@ SUBCOMMANDS
     inspect <session-dir>      Show manifest, sizes, and unencrypted contents.
     verify  <session-dir>      Check SHA256SUMS + GPG signature (if any).
     packages <session-dir>     Reinstall packages from the inventories.
-    configs  <session-dir>     Decrypt config archives, stage them, optionally
-                               apply.
+    configs  <session-dir>     Extract config archives, stage them, optionally
+                               apply. Auto-detects .tar.zst.gpg (encrypted)
+                               and .tar.zst (plain, --no-encrypt backups).
 
 GLOBAL OPTIONS
     --dest PATH                Destination root (only required for 'list' or
@@ -186,19 +187,46 @@ require_session() {
 }
 
 extract_archive_to() {
-    # extract_archive_to <encrypted_archive> <out_dir>
-    # Stream-decrypts and untars into <out_dir>, which must already exist.
+    # extract_archive_to <archive> <out_dir>
+    # Streams the archive contents into <out_dir>. Auto-detects whether
+    # the file has a .gpg layer (encrypted) or is a plain .tar.zst.
     local archive="$1" outdir="$2"
     [[ -f "$archive" ]] || die "archive not found: $archive"
     mkdir_p "$outdir"
+
+    local encrypted=0
+    [[ "$archive" == *.gpg ]] && encrypted=1
+
     if dry; then
-        log_dry "gpg --decrypt $archive | zstd -d | tar --xattrs --acls -C $outdir -xf -"
+        if (( encrypted )); then
+            log_dry "gpg --decrypt $archive | zstd -d | tar --xattrs --acls -C $outdir -xf -"
+        else
+            log_dry "zstd -d <$archive | tar --xattrs --acls -C $outdir -xf -"
+        fi
         return 0
     fi
-    ( set -o pipefail
-      gpg --batch --quiet --decrypt "$archive" \
-          | zstd -d -q \
-          | tar --xattrs --acls --numeric-owner -C "$outdir" -xf - )
+
+    if (( encrypted )); then
+        gpg --batch --quiet --decrypt "$archive" \
+            | zstd -d -q \
+            | tar --xattrs --acls --numeric-owner -C "$outdir" -xf -
+    else
+        zstd -d -q <"$archive" \
+            | tar --xattrs --acls --numeric-owner -C "$outdir" -xf -
+    fi
+}
+
+# Resolve <session>/configs/<name>.{tar.zst.gpg|tar.zst} → full path
+# (preferring encrypted over plain when both exist for the same name).
+resolve_archive_path() {
+    local session="$1" name="$2"
+    if   [[ -f "$session/configs/${name}.tar.zst.gpg" ]]; then
+        printf '%s' "$session/configs/${name}.tar.zst.gpg"
+    elif [[ -f "$session/configs/${name}.tar.zst" ]]; then
+        printf '%s' "$session/configs/${name}.tar.zst"
+    else
+        return 1
+    fi
 }
 
 # ---------------------------------------------------------------
@@ -303,10 +331,10 @@ cmd_packages() {
     require_session
     local pkgdir="$SESSION/packages"
     if [[ ! -d "$pkgdir" ]]; then
-        # --encrypt-all backup: inventories live inside an encrypted archive.
-        local enc="$SESSION/configs/inventories.tar.zst.gpg"
-        if [[ -f "$enc" ]]; then
-            log_info "decrypting inventories archive to scratch dir"
+        # --encrypt-all backup: inventories live inside an archive (plain or .gpg).
+        local enc
+        if enc="$(resolve_archive_path "$SESSION" inventories)"; then
+            log_info "extracting inventories archive to scratch dir ($enc)"
             local scratch
             scratch="$(mktemp -d -t scrolls-pkg.XXXXXX)"
             extract_archive_to "$enc" "$scratch"
@@ -417,12 +445,17 @@ cmd_packages() {
 # ---------------------------------------------------------------
 default_archives() {
     # If --archives wasn't passed, pick whatever's present in configs/.
-    local d="$SESSION/configs" base name
+    # Handles both .tar.zst.gpg (encrypted) and .tar.zst (plain) archives,
+    # deduping so a session with one mode doesn't list the same name twice.
+    local d="$SESSION/configs" base name f
     [[ -d "$d" ]] || return 0
-    for f in "$d"/*.tar.zst.gpg; do
+    local -A seen=()
+    for f in "$d"/*.tar.zst.gpg "$d"/*.tar.zst; do
         [[ -f "$f" ]] || continue
         base="$(basename "$f")"
-        name="${base%.tar.zst.gpg}"
+        name="${base%.tar.zst*}"
+        [[ -n "${seen[$name]:-}" ]] && continue
+        seen[$name]=1
         ARCHIVES+=("$name")
     done
 }
@@ -473,13 +506,16 @@ cmd_configs() {
 
     local name
     for name in "${ARCHIVES[@]}"; do
-        local archive="$SESSION/configs/${name}.tar.zst.gpg"
-        local out="$SCRATCH/$name"
-        if [[ ! -f "$archive" ]]; then
-            log_warn "[$name] no such archive: $archive — skipping"
+        local archive out="$SCRATCH/$name"
+        if ! archive="$(resolve_archive_path "$SESSION" "$name")"; then
+            log_warn "[$name] no archive (.tar.zst.gpg or .tar.zst) under $SESSION/configs/ — skipping"
             continue
         fi
-        log_info "[$name] decrypt + extract → $out"
+        if [[ "$archive" == *.gpg ]]; then
+            log_info "[$name] decrypt + extract → $out  (from $(basename "$archive"))"
+        else
+            log_info "[$name] extract → $out  (from $(basename "$archive"); unencrypted)"
+        fi
         extract_archive_to "$archive" "$out"
 
         if (( APPLY_IN_PLACE )); then
