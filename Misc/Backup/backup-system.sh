@@ -34,6 +34,7 @@ DEST=""
 USE_TUI="auto"
 GPG_RECIPIENT=""
 GPG_SYMMETRIC=0
+NO_ENCRYPT=0
 ENCRYPT_ALL=0
 IMMUTABLE=0
 KEEP_STAGING=0
@@ -42,6 +43,9 @@ ZSTD_LEVEL=19
 SMB_CREDENTIALS=""
 VERBOSE=0
 DEBUG=0
+COMPUTE_ETA=1
+ETA_BUDGET=90               # total seconds the ETA probe may consume
+HEARTBEAT_INTERVAL=15       # seconds between "still working" messages
 
 # Sections in default order. Each one may be skipped via --skip.
 declare -a ALL_SECTIONS=(packages desktop system etc home custom)
@@ -72,10 +76,17 @@ ENCRYPTION
     --gpg-recipient ID  GPG key ID, fingerprint, or email for asymmetric
                         encryption. Use this for unattended runs.
     --gpg-symmetric     Use passphrase-based symmetric encryption (AES256).
-                        gpg-agent will prompt once per archive unless cached.
+                        Script prompts for a passphrase once and feeds it
+                        to gpg via --pinentry-mode loopback.
+    --no-encrypt        Skip encryption entirely. Archives are written as
+                        plain .tar.zst files. ONLY use when the destination
+                        is already encrypted (LUKS, encrypted NAS, BitLocker)
+                        or for low-security data (router configs etc.).
+                        Anyone with read access can read the contents.
     --encrypt-all       Encrypt the package/system inventories too.
                         (Default: leave them as plain text so you can read
                         them on a fresh install before decrypting anything.)
+                        Has no effect when combined with --no-encrypt.
 
 CONTENT
     --include LIST      Comma-separated sections to include.
@@ -107,6 +118,16 @@ INTERFACE
     -v, --verbose       Echo every shell command before running it.
     --debug             set -x style trace + diagnostic output. Use this
                         when the TUI seems to exit without explanation.
+
+ETA / PROGRESS
+    --no-eta            Skip the pre-flight workload estimate. The backup
+                        still runs; you just don't get a time projection.
+    --eta-budget SEC    Max seconds the ETA probe may consume. Default: 90.
+                        Hits the cap → ETA labelled "incomplete" and the
+                        backup proceeds anyway.
+    --heartbeat SEC     How often to log "still working" during the tar/zstd
+                        pipeline (rsync has its own progress line). 0 = off.
+                        Default: 15.
 
 OTHER
     -h, --help          This message.
@@ -149,6 +170,7 @@ parse_args() {
             --gpg-recipient)   GPG_RECIPIENT="$2"; shift 2 ;;
             --gpg-recipient=*) GPG_RECIPIENT="${1#*=}"; shift ;;
             --gpg-symmetric)   GPG_SYMMETRIC=1; shift ;;
+            --no-encrypt)      NO_ENCRYPT=1; shift ;;
             --encrypt-all)     ENCRYPT_ALL=1; shift ;;
             --include)         IFS=',' read -ra SECTIONS <<<"$2"; shift 2 ;;
             --include=*)       IFS=',' read -ra SECTIONS <<<"${1#*=}"; shift ;;
@@ -168,6 +190,11 @@ parse_args() {
             --no-tui)          USE_TUI=no; shift ;;
             -v|--verbose)      VERBOSE=1; shift ;;
             --debug)           DEBUG=1; VERBOSE=1; shift ;;
+            --no-eta)          COMPUTE_ETA=0; shift ;;
+            --eta-budget)      ETA_BUDGET="$2"; shift 2 ;;
+            --eta-budget=*)    ETA_BUDGET="${1#*=}"; shift ;;
+            --heartbeat)       HEARTBEAT_INTERVAL="$2"; shift 2 ;;
+            --heartbeat=*)     HEARTBEAT_INTERVAL="${1#*=}"; shift ;;
             -h|--help)         usage; exit 0 ;;
             --version)         version; exit 0 ;;
             *)                 die "unknown argument: $1  (try --help)" ;;
@@ -242,6 +269,7 @@ configure_gpg_env() {
 # then reads it via --pinentry-mode loopback --passphrase-file, so no TTY
 # pinentry call is needed and the same passphrase works for every archive.
 setup_passphrase() {
+    (( NO_ENCRYPT )) && return 0
     (( GPG_SYMMETRIC )) || return 0
     dry && { log_dry "would prompt for symmetric passphrase"; return 0; }
 
@@ -269,7 +297,8 @@ setup_passphrase() {
 }
 
 # Compose gpg args into the named array. Routes around pinentry/TTY issues
-# entirely in the symmetric case.
+# entirely in the symmetric case. Caller must check NO_ENCRYPT first — this
+# helper is only meaningful when encryption is active.
 build_gpg_args() {
     local -n _out="$1"
     _out=(--batch --yes --quiet)
@@ -282,6 +311,158 @@ build_gpg_args() {
         )
     else
         _out+=(--encrypt --recipient "$GPG_RECIPIENT" --trust-model always)
+    fi
+}
+
+# Helper for callers: archive extension reflects encryption mode so the
+# filename itself tells you whether a .gpg layer is in the pipeline.
+archive_extension() {
+    if (( NO_ENCRYPT )); then printf 'tar.zst'
+    else                     printf 'tar.zst.gpg'
+    fi
+}
+
+# ---------------------------------------------------------------
+# Heartbeat — background ticker that prints "still working" during ops
+# that have no native progress output (tar | zstd | gpg pipeline). rsync
+# itself uses --info=progress2 so this is only needed for the compress leg.
+# ---------------------------------------------------------------
+HEARTBEAT_PID=""
+start_heartbeat() {
+    (( HEARTBEAT_INTERVAL > 0 )) || return 0
+    local msg="$1"
+    (
+        # Subshell — capture relative start time
+        local start_ts=$EPOCHSECONDS elapsed h m s
+        # Bash 5+: EPOCHSECONDS. Fall back to $(date +%s) on older shells.
+        [[ -n "${start_ts:-}" ]] || start_ts="$(date +%s)"
+        while sleep "$HEARTBEAT_INTERVAL"; do
+            local now=${EPOCHSECONDS:-$(date +%s)}
+            elapsed=$((now - start_ts))
+            h=$((elapsed / 3600)); m=$(( (elapsed % 3600) / 60 )); s=$((elapsed % 60))
+            printf '%s[work]%s %s … still running (%dh%02dm%02ds elapsed)\n' \
+                "$C_DIM" "$C_RST" "$msg" "$h" "$m" "$s" >&2
+        done
+    ) &
+    HEARTBEAT_PID=$!
+}
+
+stop_heartbeat() {
+    if [[ -n "$HEARTBEAT_PID" ]]; then
+        kill "$HEARTBEAT_PID" 2>/dev/null || true
+        wait "$HEARTBEAT_PID" 2>/dev/null || true
+        HEARTBEAT_PID=""
+    fi
+}
+add_cleanup_hook stop_heartbeat
+
+# ---------------------------------------------------------------
+# Pre-flight ETA — best-effort estimate; hard-capped at ETA_BUDGET seconds.
+# Uses `rsync --dry-run --stats` per archive section because that's the
+# only probe that honours our excludes (du would dramatically over-count
+# .cache / node_modules / Steam libraries).
+# ---------------------------------------------------------------
+compute_eta_if_requested() {
+    (( COMPUTE_ETA )) || return 0
+    dry && return 0          # in dry-run the user is already previewing
+
+    local deadline=$(($(date +%s) + ETA_BUDGET))
+    log_info "estimating workload (cap: ${ETA_BUDGET}s; pass --no-eta to skip)"
+
+    local total_bytes=0 total_files=0 incomplete=0
+    local s
+    for s in "${SECTIONS[@]}"; do
+        local -a probe_sources=()
+        case "$s" in
+            etc)    probe_sources=(/etc) ;;
+            home)   probe_sources=("$HOME") ;;
+            custom) probe_sources=("${CUSTOM_PATHS[@]}") ;;
+            *)      total_bytes=$((total_bytes + 524288))   # inventory: ~0.5MB guess
+                    continue ;;
+        esac
+
+        local -a present=()
+        local p
+        for p in "${probe_sources[@]}"; do
+            [[ -e "$p" ]] && present+=("$p")
+        done
+        (( ${#present[@]} )) || continue
+
+        local remaining=$((deadline - $(date +%s)))
+        if (( remaining < 3 )); then
+            incomplete=1
+            log_warn "[eta] section '$s' skipped — ETA budget exhausted"
+            continue
+        fi
+
+        local -a probe_args=(
+            --archive --acls --xattrs --hard-links --numeric-ids
+            --dry-run --stats
+        )
+        [[ -f "$SCRIPT_DIR/excludes-common.txt" ]] && probe_args+=(--exclude-from="$SCRIPT_DIR/excludes-common.txt")
+        case "$s" in
+            home)        probe_args+=(--exclude-from="$SCRIPT_DIR/excludes-home.txt") ;;
+            etc|custom)  probe_args+=(--exclude-from="$SCRIPT_DIR/excludes-system.txt") ;;
+        esac
+
+        local probe_out="" probe_rc=0
+        # Send to a sentinel destination — --dry-run never writes, so the
+        # path doesn't need to exist or be writable.
+        probe_out="$(timeout "$remaining" rsync "${probe_args[@]}" \
+            "${present[@]}" /tmp/scrolls-eta-probe-target/ 2>/dev/null)" || probe_rc=$?
+
+        if (( probe_rc == 124 )); then
+            log_warn "[eta] section '$s' probe timed out ($remaining s) — ETA will be a lower bound"
+            incomplete=1
+            continue
+        fi
+
+        local section_bytes section_files
+        section_bytes="$(awk '/^Total file size:/ {gsub(/,/, "", $4); print $4; exit}' <<<"$probe_out")"
+        section_files="$(awk '/^Number of files:/ {gsub(/,/, "", $4); print $4; exit}' <<<"$probe_out")"
+        section_bytes="${section_bytes:-0}"
+        section_files="${section_files:-0}"
+        log_info "[eta] $s: $section_files files, $(human_bytes "$section_bytes")"
+        total_bytes=$((total_bytes + section_bytes))
+        total_files=$((total_files + section_files))
+    done
+
+    if (( total_bytes == 0 )); then
+        log_info "[eta] no measurable data — skipping estimate"
+        return 0
+    fi
+
+    # Throughput numbers below come from ad-hoc benchmarking on a typical
+    # multi-core laptop. They will be off by 2x in either direction on
+    # very fast or very slow hardware. The point is to give the user a
+    # signal, not a precise SLO.
+    local throughput_mb
+    if (( NO_ENCRYPT )); then
+        if   (( ZSTD_LEVEL <= 3 ));  then throughput_mb=300
+        elif (( ZSTD_LEVEL <= 9 ));  then throughput_mb=180
+        elif (( ZSTD_LEVEL <= 15 )); then throughput_mb=130
+        else                              throughput_mb=90
+        fi
+    else
+        if   (( ZSTD_LEVEL <= 3 ));  then throughput_mb=250
+        elif (( ZSTD_LEVEL <= 9 ));  then throughput_mb=160
+        elif (( ZSTD_LEVEL <= 15 )); then throughput_mb=110
+        else                              throughput_mb=70
+        fi
+    fi
+
+    local eta_seconds=$(( total_bytes / (throughput_mb * 1024 * 1024) ))
+    (( eta_seconds < 1 )) && eta_seconds=1
+    local h=$((eta_seconds / 3600))
+    local m=$(( (eta_seconds % 3600) / 60 ))
+    local _s=$((eta_seconds % 60))
+
+    log_info "[eta] total workload: $total_files files, $(human_bytes "$total_bytes")"
+    local label="${h}h ${m}m ${_s}s"
+    if (( incomplete )); then
+        log_warn "[eta] estimated minimum time: $label  (incomplete — actual will be larger)"
+    else
+        log_info "[eta] estimated time: $label  (assumes ~${throughput_mb} MB/s; coarse estimate)"
     fi
 }
 
@@ -354,22 +535,41 @@ Examples:
 
     # ---- encryption mode ------------------------------------------------
     rc=0
-    out="$(tui_menu "GPG encryption (3/4)" \
-        "How would you like archives encrypted?" \
-        "asymmetric" "Use a GPG public key (recipient)" \
-        "symmetric"  "Passphrase / AES256")" || rc=$?
+    out="$(tui_menu "Encryption (3/4)" \
+        "How would you like archives protected?" \
+        "asymmetric" "GPG public key (recipient) — recommended" \
+        "symmetric"  "Passphrase / AES256" \
+        "none"       "NO ENCRYPTION — plain .tar.zst (caution)")" || rc=$?
     if (( rc != 0 )); then tui_explain_rc "$rc"; exit 1; fi
-    if [[ "$out" == "asymmetric" ]]; then
-        rc=0
-        out="$(tui_input "GPG recipient" \
-            "Enter the recipient (key ID, fingerprint, or email):" \
-            "${GPG_RECIPIENT:-}")" || rc=$?
-        if (( rc != 0 )); then tui_explain_rc "$rc"; exit 1; fi
-        [[ -n "$out" ]] || die "no GPG recipient provided"
-        GPG_RECIPIENT="$out"
-    else
-        GPG_SYMMETRIC=1
-    fi
+    case "$out" in
+        asymmetric)
+            rc=0
+            out="$(tui_input "GPG recipient" \
+                "Enter the recipient (key ID, fingerprint, or email):" \
+                "${GPG_RECIPIENT:-}")" || rc=$?
+            if (( rc != 0 )); then tui_explain_rc "$rc"; exit 1; fi
+            [[ -n "$out" ]] || die "no GPG recipient provided"
+            GPG_RECIPIENT="$out"
+            ;;
+        symmetric)
+            GPG_SYMMETRIC=1
+            ;;
+        none)
+            if ! tui_yesno "Disable encryption?" \
+"Archives will be written as PLAIN compressed .tar.zst files. Anyone with read access to the backup will be able to read everything.
+
+This is only appropriate when:
+
+  • the destination is already encrypted (LUKS, encrypted NAS, BitLocker)
+  • or the source data is low-sensitivity (router configs, etc.)
+
+Proceed without encryption?"; then
+                die "encryption disabled but not confirmed — aborting"
+            fi
+            NO_ENCRYPT=1
+            ;;
+        *)  die "unknown encryption mode: $out" ;;
+    esac
 
     # ---- final go/no-go -------------------------------------------------
     rc=0
@@ -388,14 +588,28 @@ Examples:
 # ---------------------------------------------------------------
 validate_args() {
     [[ -n "$DEST" ]]     || die "missing required --dest  (try --help)"
-    if (( ! GPG_SYMMETRIC )) && [[ -z "$GPG_RECIPIENT" ]]; then
-        die "encryption not configured: pass --gpg-recipient ID or --gpg-symmetric"
+
+    if (( NO_ENCRYPT )); then
+        if [[ -n "$GPG_RECIPIENT" ]] || (( GPG_SYMMETRIC )); then
+            die "--no-encrypt is mutually exclusive with --gpg-recipient and --gpg-symmetric"
+        fi
+    else
+        if (( ! GPG_SYMMETRIC )) && [[ -z "$GPG_RECIPIENT" ]]; then
+            die "encryption not configured: pass --gpg-recipient ID, --gpg-symmetric, or --no-encrypt"
+        fi
+        if [[ -n "$GPG_RECIPIENT" ]] && (( GPG_SYMMETRIC )); then
+            die "--gpg-recipient and --gpg-symmetric are mutually exclusive"
+        fi
     fi
-    if [[ -n "$GPG_RECIPIENT" ]] && (( GPG_SYMMETRIC )); then
-        die "--gpg-recipient and --gpg-symmetric are mutually exclusive"
-    fi
+
     if ! [[ "$ZSTD_LEVEL" =~ ^[0-9]+$ ]] || (( ZSTD_LEVEL < 1 || ZSTD_LEVEL > 22 )); then
         die "--zstd-level must be 1..22 (got: $ZSTD_LEVEL)"
+    fi
+    if ! [[ "$ETA_BUDGET" =~ ^[0-9]+$ ]]; then
+        die "--eta-budget must be a non-negative integer (got: $ETA_BUDGET)"
+    fi
+    if ! [[ "$HEARTBEAT_INTERVAL" =~ ^[0-9]+$ ]]; then
+        die "--heartbeat must be a non-negative integer (got: $HEARTBEAT_INTERVAL)"
     fi
     if [[ -n "$LINK_DEST" && ! -d "$LINK_DEST" ]]; then
         die "--link-dest does not exist or is not a directory: $LINK_DEST"
@@ -403,11 +617,24 @@ validate_args() {
     if [[ -n "$SMB_CREDENTIALS" && ! -r "$SMB_CREDENTIALS" ]]; then
         die "cannot read --smb-credentials file: $SMB_CREDENTIALS"
     fi
-    # Verify GPG recipient resolves to a usable public key
+    # Verify GPG recipient resolves to a usable public key (only when we're
+    # actually going to encrypt and this is a real run).
     if [[ -n "$GPG_RECIPIENT" ]] && ! dry; then
         gpg --list-keys --with-colons "$GPG_RECIPIENT" &>/dev/null \
             || die "gpg cannot find a public key for: $GPG_RECIPIENT"
     fi
+}
+
+# Loud, repeated warning when encryption is off so it can never be silent.
+warn_if_unencrypted() {
+    (( NO_ENCRYPT )) || return 0
+    log_warn "============================================================"
+    log_warn "  ENCRYPTION DISABLED — archives will be plain .tar.zst"
+    log_warn "  Anyone with read access to the backup can read everything."
+    log_warn "  Use only when the destination is already encrypted"
+    log_warn "  (LUKS, encrypted NAS, BitLocker, etc.) or the source is"
+    log_warn "  low-sensitivity (router configs, etc.)."
+    log_warn "============================================================"
 }
 
 # ---------------------------------------------------------------
@@ -612,7 +839,8 @@ archive_section() {
     local session_dir="$1"; shift
     local -a srcs=("$@")
     local staging="$session_dir/staging/$name"
-    local archive="$session_dir/configs/${name}.tar.zst.gpg"
+    local archive
+    archive="$session_dir/configs/${name}.$(archive_extension)"
 
     # Filter to existing source paths so missing /opt etc. don't abort
     local -a present=()
@@ -641,8 +869,16 @@ archive_section() {
         --sparse
         --numeric-ids
         --relative
-        --info=stats1
     )
+    # Live progress in execute mode; just stats in dry-run.
+    # The comma in --info=progress2,stats1 is rsync's flag-list separator,
+    # not a bash array delimiter — shellcheck SC2054 doesn't know that.
+    if dry; then
+        rsync_args+=(--info=stats1)
+    else
+        # shellcheck disable=SC2054
+        rsync_args+=(--info=progress2,stats1)
+    fi
     [[ "$VERBOSE" == 1 ]] && rsync_args+=(--verbose)
     [[ -f "$SCRIPT_DIR/excludes-common.txt" ]] \
         && rsync_args+=(--exclude-from="$SCRIPT_DIR/excludes-common.txt")
@@ -677,18 +913,34 @@ archive_section() {
         esac
     fi
 
-    log_info "[$name] tar | zstd -$ZSTD_LEVEL | gpg → $archive"
+    if (( NO_ENCRYPT )); then
+        log_info "[$name] tar | zstd -$ZSTD_LEVEL → $archive  (UNENCRYPTED)"
+    else
+        log_info "[$name] tar | zstd -$ZSTD_LEVEL | gpg → $archive"
+    fi
 
     if dry; then
-        log_dry "tar -C $staging -cf - . | zstd -$ZSTD_LEVEL -T0 | gpg ... > $archive"
+        if (( NO_ENCRYPT )); then
+            log_dry "tar -C $staging -cf - . | zstd -$ZSTD_LEVEL -T0 > $archive"
+        else
+            log_dry "tar -C $staging -cf - . | zstd -$ZSTD_LEVEL -T0 | gpg ... > $archive"
+        fi
     else
-        local -a gpg_args
-        build_gpg_args gpg_args
-        # pipefail is on at script level; no subshell needed (it just causes
-        # the ERR trap to fire twice on failure).
-        tar --xattrs --acls --numeric-owner -C "$staging" -cf - . \
-            | zstd "-$ZSTD_LEVEL" -T0 -q \
-            | gpg "${gpg_args[@]}" --output "$archive"
+        start_heartbeat "[$name] compress+encrypt"
+        if (( NO_ENCRYPT )); then
+            tar --xattrs --acls --numeric-owner -C "$staging" -cf - . \
+                | zstd "-$ZSTD_LEVEL" -T0 -q \
+                > "$archive"
+        else
+            local -a gpg_args
+            build_gpg_args gpg_args
+            # pipefail is on at script level; no subshell needed (it just causes
+            # the ERR trap to fire twice on failure).
+            tar --xattrs --acls --numeric-owner -C "$staging" -cf - . \
+                | zstd "-$ZSTD_LEVEL" -T0 -q \
+                | gpg "${gpg_args[@]}" --output "$archive"
+        fi
+        stop_heartbeat
         chmod 0400 "$archive"
     fi
 
@@ -705,7 +957,8 @@ archive_section() {
 # ---------------------------------------------------------------
 encrypt_inventories() {
     local session_dir="$1"
-    local archive="$session_dir/configs/inventories.tar.zst.gpg"
+    local archive
+    archive="$session_dir/configs/inventories.$(archive_extension)"
     mkdir_p "$session_dir/configs"
 
     local -a present=()
@@ -718,16 +971,34 @@ encrypt_inventories() {
         return 0
     fi
 
-    log_info "[encrypt-all] tar | zstd | gpg → $archive  (sources: ${present[*]})"
+    if (( NO_ENCRYPT )); then
+        log_info "[encrypt-all] tar | zstd → $archive (UNENCRYPTED; sources: ${present[*]})"
+    else
+        log_info "[encrypt-all] tar | zstd | gpg → $archive  (sources: ${present[*]})"
+    fi
+
     if dry; then
-        log_dry "tar -C $session_dir -cf - ${present[*]} | zstd -$ZSTD_LEVEL -T0 | gpg ... > $archive"
+        if (( NO_ENCRYPT )); then
+            log_dry "tar -C $session_dir -cf - ${present[*]} | zstd -$ZSTD_LEVEL -T0 > $archive"
+        else
+            log_dry "tar -C $session_dir -cf - ${present[*]} | zstd -$ZSTD_LEVEL -T0 | gpg ... > $archive"
+        fi
         return 0
     fi
-    local -a gpg_args
-    build_gpg_args gpg_args
-    tar -C "$session_dir" -cf - "${present[@]}" \
-        | zstd "-$ZSTD_LEVEL" -T0 -q \
-        | gpg "${gpg_args[@]}" --output "$archive"
+
+    start_heartbeat "[encrypt-all] compress+encrypt"
+    if (( NO_ENCRYPT )); then
+        tar -C "$session_dir" -cf - "${present[@]}" \
+            | zstd "-$ZSTD_LEVEL" -T0 -q \
+            > "$archive"
+    else
+        local -a gpg_args
+        build_gpg_args gpg_args
+        tar -C "$session_dir" -cf - "${present[@]}" \
+            | zstd "-$ZSTD_LEVEL" -T0 -q \
+            | gpg "${gpg_args[@]}" --output "$archive"
+    fi
+    stop_heartbeat
     chmod 0400 "$archive"
 
     log_info "[encrypt-all] removing plain-text inventories"
@@ -773,7 +1044,12 @@ write_manifest() {
             first=0
         done
         printf '],\n'
-        printf '  "encryption": "%s",\n'   "$( (( GPG_SYMMETRIC )) && echo gpg-symmetric || echo gpg-asymmetric )"
+        local _enc
+        if (( NO_ENCRYPT )); then    _enc="none"
+        elif (( GPG_SYMMETRIC )); then _enc="gpg-symmetric"
+        else                          _enc="gpg-asymmetric"
+        fi
+        printf '  "encryption": "%s",\n'   "$_enc"
         printf '  "gpg_recipient": "%s",\n' "${GPG_RECIPIENT}"
         printf '  "zstd_level": %s,\n'     "$ZSTD_LEVEL"
         printf '  "link_dest": "%s",\n'    "${LINK_DEST}"
@@ -805,6 +1081,10 @@ sign_checksums() {
     local file="$session_dir/SHA256SUMS"
     local sig="$session_dir/SHA256SUMS.sig"
 
+    if (( NO_ENCRYPT )); then
+        log_info "skipping signature (--no-encrypt mode)"
+        return 0
+    fi
     if (( GPG_SYMMETRIC )); then
         log_info "skipping signature (symmetric mode has no signing key context)"
         return 0
@@ -826,12 +1106,17 @@ apply_immutable() {
     local session_dir="$1"
     log_info "setting chattr +i on archives (requires root, ext*/xfs/btrfs only)"
     if dry; then
-        log_dry "sudo chattr +i $session_dir/configs/*.gpg $session_dir/SHA256SUMS*"
+        log_dry "sudo chattr +i $session_dir/configs/* $session_dir/SHA256SUMS*"
         return 0
     fi
-    sudo chattr +i "$session_dir"/configs/*.gpg \
-                   "$session_dir"/SHA256SUMS \
-                   "$session_dir"/SHA256SUMS.sig 2>/dev/null \
+    # Glob both .gpg and plain .zst; sig may or may not exist.
+    local -a targets=("$session_dir"/SHA256SUMS)
+    [[ -f "$session_dir/SHA256SUMS.sig" ]] && targets+=("$session_dir/SHA256SUMS.sig")
+    local f
+    for f in "$session_dir"/configs/*; do
+        [[ -f "$f" ]] && targets+=("$f")
+    done
+    sudo chattr +i "${targets[@]}" 2>/dev/null \
         || log_warn "chattr +i failed (filesystem may not support it; not fatal)"
 }
 
@@ -848,13 +1133,21 @@ print_summary() {
     fi
 
     printf '\n'
+    local enc_label
+    if (( NO_ENCRYPT )); then
+        enc_label="${C_YEL}NONE — plain .tar.zst (no GPG layer)${C_RST}"
+    elif (( GPG_SYMMETRIC )); then
+        enc_label="gpg symmetric (AES256)"
+    else
+        enc_label="gpg recipient $GPG_RECIPIENT"
+    fi
+
     printf '%s═══ backup summary ═══%s\n' "$C_BLU" "$C_RST"
     printf '  mode         : %s\n' "$(dry_label)"
     printf '  hostname     : %s\n' "$(hostname 2>/dev/null || echo unknown)"
     printf '  destination  : %s\n' "$session_dir"
     printf '  sections     : %s\n' "${SECTIONS[*]}"
-    printf '  encryption   : %s\n' "$( (( GPG_SYMMETRIC )) && echo "gpg symmetric (AES256)" \
-                                                       || echo "gpg recipient $GPG_RECIPIENT" )"
+    printf '  encryption   : %s\n' "$enc_label"
     printf '  zstd level   : %s\n' "$ZSTD_LEVEL"
     printf '  total size   : %s\n' "$size_text"
     if dry; then
@@ -863,10 +1156,14 @@ print_summary() {
     printf '\n'
     printf 'Verification commands (raw CLI, copy/paste-able):\n'
     printf "  cd '%s' && sha256sum --check SHA256SUMS\n" "$session_dir"
-    if (( ! GPG_SYMMETRIC )); then
+    if (( ! GPG_SYMMETRIC && ! NO_ENCRYPT )); then
         printf "  gpg --verify '%s/SHA256SUMS.sig' '%s/SHA256SUMS'\n" "$session_dir" "$session_dir"
     fi
-    printf "  gpg --decrypt '%s/configs/home.tar.zst.gpg' | zstd -d | tar -tvf - | head\n" "$session_dir"
+    if (( NO_ENCRYPT )); then
+        printf "  zstd -d < '%s/configs/home.tar.zst' | tar -tvf - | head\n" "$session_dir"
+    else
+        printf "  gpg --decrypt '%s/configs/home.tar.zst.gpg' | zstd -d | tar -tvf - | head\n" "$session_dir"
+    fi
     printf '\n'
 }
 
@@ -891,6 +1188,7 @@ main() {
     fi
 
     validate_args
+    warn_if_unencrypted          # before any heavy work, so the user sees it
     detect_tools
     preflight_root_advisory "${original_argv[@]}"
     setup_passphrase
@@ -910,6 +1208,8 @@ main() {
     if dry; then
         log_warn "DRY RUN — no files will be written. Pass --execute to commit."
     fi
+
+    compute_eta_if_requested
 
     # Run requested sections
     local s
@@ -942,6 +1242,7 @@ main() {
     fi
 
     print_summary "$session_dir"
+    warn_if_unencrypted           # repeat right before exit so it's the last thing the user sees
     log_ok "backup complete"
 }
 
