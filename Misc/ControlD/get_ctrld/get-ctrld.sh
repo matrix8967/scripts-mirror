@@ -2,7 +2,11 @@
 set -euo pipefail
 
 # get-ctrld.sh
-# Enhanced installer for ctrld with platform detection and guided setup
+# Enhanced installer for ctrld with platform detection and guided setup.
+# jq is used when available for robust JSON parsing, but is optional --
+# a built-in awk/grep/sed fallback is used when jq isn't installed
+# (common on embedded/router platforms without package managers).
+#
 # Usage: get-ctrld.sh [--version <v>] [--install] [--list] [--check] [--platform <type>] [--interactive] [--help]
 
 REPO="Control-D-Inc/ctrld"
@@ -491,6 +495,11 @@ Options:
                                  pfsense, linux-systemd, macos, freebsd
   -h, --help              Show this help message
 
+Notes:
+  jq is used for JSON parsing when available. If jq is not installed
+  (common on routers/embedded devices), a built-in awk/grep/sed fallback
+  parser is used automatically -- no flags needed.
+
 Examples:
   $(basename "$0")                          # Download latest for current platform
   $(basename "$0") --version 1.4.8 --install  # Install specific version
@@ -503,10 +512,18 @@ fi
 
 # --------------- Helpers ----------------
 need_cmd(){ command -v "$1" >/dev/null 2>&1 || err "Required tool not found: $1"; }
+has_cmd(){ command -v "$1" >/dev/null 2>&1; }
 
-# jq required for more reliable API parsing; curl must exist
+# curl and tar are hard requirements; jq is optional (see HAVE_JQ below)
 need_cmd curl
-need_cmd jq
+need_cmd tar
+
+HAVE_JQ=false
+if has_cmd jq; then
+  HAVE_JQ=true
+else
+  warn "jq not found -- using built-in fallback parser for GitHub API responses"
+fi
 
 # For checksum: try sha256sum then shasum -a 256
 calc_sha256(){
@@ -520,12 +537,59 @@ calc_sha256(){
   fi
 }
 
+# Parses GitHub's pretty-printed release JSON (each key on its own line) to
+# find a matching asset's browser_download_url. This is a fallback used only
+# when jq is unavailable (e.g. embedded/router environments without package
+# managers). Relies on GitHub's documented-in-practice one-key-per-line
+# response formatting rather than doing full JSON parsing.
+#
+# Args: <file> <pattern1> [pattern2]
+#   Patterns are POSIX ERE, matched case-insensitively against the asset
+#   "name" field. If pattern2 is given, both must match (AND condition).
+awk_find_asset() {
+  local file="$1" pattern1="$2" pattern2="${3:-}"
+  local p1_lc p2_lc
+  p1_lc="$(printf '%s' "$pattern1" | tr '[:upper:]' '[:lower:]')"
+  p2_lc="$(printf '%s' "$pattern2" | tr '[:upper:]' '[:lower:]')"
+  awk -v p1="$p1_lc" -v p2="$p2_lc" '
+    { gsub(/\r$/, "") }
+    /"name"[ \t]*:/ {
+      name=$0
+      sub(/^[^:]*:[ \t]*"/, "", name)
+      sub(/",?[ \t]*$/, "", name)
+      name = tolower(name)
+      next
+    }
+    /"browser_download_url"[ \t]*:/ {
+      url=$0
+      sub(/^[^:]*:[ \t]*"/, "", url)
+      sub(/",?[ \t]*$/, "", url)
+      if (name ~ p1 && (p2 == "" || name ~ p2)) {
+        print url
+        exit
+      }
+    }
+  ' "$file"
+}
+
 # --------------- List releases ---------------
 if $LIST; then
-  curl -s "https://api.github.com/repos/${REPO}/releases" \
-    | jq -r '.[].tag_name' \
-    | sed 's/^v//' \
-    | sort -Vr
+  releases_json="$(curl -fsSL "https://api.github.com/repos/${REPO}/releases")" \
+    || err "Failed to query releases: https://api.github.com/repos/${REPO}/releases"
+
+  if $HAVE_JQ; then
+    printf '%s' "$releases_json" \
+      | jq -r '.[].tag_name' \
+      | sed 's/^v//' \
+      | sort -Vr
+  else
+    printf '%s' "$releases_json" \
+      | grep '"tag_name"' \
+      | sed 's/.*"tag_name": *"//' \
+      | sed 's/^v//' \
+      | sed 's/".*//' \
+      | sort -Vr
+  fi
   exit 0
 fi
 
@@ -583,27 +647,31 @@ fi
 # Query release JSON
 info "Querying GitHub release info..."
 release_json="$(curl -fsSL "$api_url")" || err "Failed to query release info: $api_url"
+release_file="$TMP_DIR/release.json"
+printf '%s' "$release_json" > "$release_file"
 
 # --------------- Find matching asset ---------------
-asset_url=$(printf '%s' "$release_json" \
-  | jq -r --arg os "$OS" --arg arch "$ARCH" '
+if $HAVE_JQ; then
+  asset_url=$(jq -r --arg os "$OS" --arg arch "$ARCH" '
       .assets[]? | select(
         (.name | ascii_downcase | test($os)) and
         (.name | ascii_downcase | test($arch))
-      ) | .browser_download_url' \
-  | head -n1
-)
+      ) | .browser_download_url' "$release_file" | head -n1)
+else
+  asset_url=$(awk_find_asset "$release_file" "$OS" "$ARCH")
+fi
 
 if [[ -z "$asset_url" || "$asset_url" == "null" ]]; then
   err "No matching asset found for ${OS}-${ARCH} in release ${ver_label}"
 fi
 
 # Find any checksums asset (optional)
-checksums_url=$(printf '%s' "$release_json" \
-  | jq -r '
-      .assets[]? | select((.name|ascii_downcase) | test("checksums|sha256")) | .browser_download_url' \
-  | head -n1 || true
-)
+if $HAVE_JQ; then
+  checksums_url=$(jq -r '
+      .assets[]? | select((.name|ascii_downcase) | test("checksums|sha256")) | .browser_download_url' "$release_file" | head -n1 || true)
+else
+  checksums_url=$(awk_find_asset "$release_file" "checksums|sha256" "")
+fi
 
 if $CHECK; then
   echo "DRY RUN:"
@@ -614,6 +682,7 @@ if $CHECK; then
   echo "  URL:        $asset_url"
   [[ -n "$checksums_url" ]] && echo "  Checksums:  $checksums_url"
   [[ -n "$INSTALL_RECOMMENDATION" ]] && echo "  Install to: $INSTALL_RECOMMENDATION"
+  echo "  JSON parser: $([[ "$HAVE_JQ" == "true" ]] && echo "jq" || echo "awk fallback (no jq)")"
   exit 0
 fi
 
@@ -635,8 +704,7 @@ if [[ -f "$TMP_DIR/checksums.txt" ]]; then
   if [[ -z "$expected" ]]; then
     warn "Checksums file present but no entry for $archive_name; skipping verification"
   else
-    actual=$(calc_sha256 "$TMP_DIR/$archive_name")
-    actual="${actual,,}"
+    actual=$(calc_sha256 "$TMP_DIR/$archive_name" | tr '[:upper:]' '[:lower:]')
     if [[ "$expected" != "$actual" ]]; then
       err "Checksum mismatch! expected:$expected actual:$actual"
     fi
