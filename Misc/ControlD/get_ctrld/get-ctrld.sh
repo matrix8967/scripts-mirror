@@ -786,10 +786,16 @@ if $INSTALL; then
   # Show platform-specific guidance
   show_platform_guidance "$INSTALL_PATH"
 else
-  info "Install skipped. Binary available at: $TMP_DIR/ctrld"
+  # Relocate the binary out of TMP_DIR before the `trap cleanup EXIT` deletes
+  # it -- otherwise this message would point at a path that's already gone
+  # by the time the script returns control to the shell.
+  dest_path="$(pwd)/ctrld"
+  cp "$TMP_DIR/ctrld" "$dest_path" || err "Failed to copy binary to $dest_path"
+  chmod +x "$dest_path"
+  info "Install skipped. Binary available at: $dest_path"
 
   # Show platform-specific guidance
-  show_platform_guidance "$TMP_DIR/ctrld"
+  show_platform_guidance "$dest_path"
 fi
 
 # finished
