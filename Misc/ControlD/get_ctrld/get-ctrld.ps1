@@ -38,7 +38,7 @@ ControlD ctrld binary for Windows.
 
 Options:
   --version <tag>   Specify version (e.g. v1.4.8 or 1.4.8). Default: latest release.
-  --install         Install ctrld.exe into C:\Program Files\ctrld\
+  --install         Install ctrld.exe into C:\ControlD\
   --list            List available release tags (most recent first)
   --check           Dry-run: print detected OS/arch and download URL, then exit
   --verbose         Enable verbose logging.
@@ -254,7 +254,7 @@ try {
 
     ### Install (optional)
     if ($Install) {
-        $TargetDir = "C:\Program Files\ctrld"
+        $TargetDir = "C:\ControlD"
         if (-not (Test-Path $TargetDir)) {
             New-Item -ItemType Directory -Path $TargetDir | Out-Null
         }
