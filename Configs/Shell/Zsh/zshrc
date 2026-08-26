@@ -156,8 +156,8 @@ alias scrcpy_default='scrcpy -SwK --max-fps=120 --gamepad=uhid --shortcut-mod=lc
 alias claude="~/.claude/local/claude"
 alias print_path:"echo $PATH | sed "s/:/\n/g""
 alias gearlever='flatpak run it.mijorus.gearlever'
-#alias ls_users='getent passwd| awk '{FS="[:]"; print $1}''
-#alias ls_groups='getent group | cut -d ":" -f 1'
+alias ls_users='getent passwd| awk '{FS="[:]"; print $1}''
+alias ls_groups='getent group | cut -d ":" -f 1'
 
 # =====Functions===== #
 
@@ -256,12 +256,6 @@ function Github_Pull {
 	done
 }
 
-#function Dir_Pull {
-#	for dir in $(pwd)/*/; do
-#		git -C $dir pull
-#	done
-#}
-
 function Dir_Pull {
 	for dir in */; do
 		if [ -d "$dir/.git" ]; then
@@ -293,7 +287,6 @@ function ADB_Text {
 	text=${text//\"/\\\"}
 	adb shell input text "$text"
 	adb shell input keyevent 66
-
 }
 
 function rpi_bl_off {
@@ -306,12 +299,10 @@ function rpi_bl_on {
 
 function git_log {
 	git log --graph --abbrev-commit --no-decorate --date=format:'%Y-%m-%d %H:%M:%S'\'' --format=format:'\''%C(8)%>|(16)%h %C(7)%ad %C(8)%&lt;(16,trunc)%an %C(auto)%d %>|(1)%s'\'' --all'
-
 }
 
 function CLI_LS {
 	compgen -A function -abck | sort --ignore-case
-	# compgen -ac | sort --ignore-case
 }
 
 function ssh_pcap {

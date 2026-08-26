@@ -54,6 +54,8 @@ font-family = "Mononoki Nerd Font Mono"
 ## Shaders
 
 # custom-shader = /home/azazel/.config/ghostty/shaders/crt_02.glsl
+# custom-shader = /home/azazel/.config/ghostty/shaders/cursor_tail.glsl
+# custom-shader-animation = always
 # custom-shader-animation = true
 
 ## Quick terminal
