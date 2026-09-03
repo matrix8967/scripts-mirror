@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+## Note: This won't work if there are other Logitech Bolt USB Recievers connected?
+
 DeviceID="$(xinput |grep -m 1 "Logitech USB Receiver Mouse "| cut -d"=" -f 2| cut -d "[" -f 1)"
 
 xinput --set-button-map $DeviceID 1 2 3 4 5 6 7 8 2 10 11 12
